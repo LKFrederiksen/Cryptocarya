@@ -31,8 +31,7 @@ gwf = Workflow()
 def fastqc_raw(name,path_in ,path_out, done,):
     """Quality checking using fastqc as this should work on individual species"""
     inputs = []
-    # outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
-    outputs = [path_out+name+"_R1_fastqc.html", done]
+    outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
@@ -44,7 +43,7 @@ def fastqc_raw(name,path_in ,path_out, done,):
 
     conda activate fastqc
 
-    fastqc -o {path_out} {path_in}{name}.fastq
+    fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
     
     echo touching {done}
     touch {done}
@@ -259,15 +258,13 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ######################################################---- RUN ----#####################################################
 ########################################################################################################################
 
-# sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
-sp = ["a521_FKDL202573129-1a-D706-AK1680_HK73YDRXX_L2_1"]
-
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 #Species removed from pipeline as they had no gene recovery [3050,3188,3272,3300,3316, 3364, 3392, 3394]
 
 for i in range(len(sp)):
     #### Running fastqc on raw data
     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/RawData/",
+                                                        path_in= "/home/laurakf/cryptocarya/RawData/Test",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done"+sp[i]))
 
