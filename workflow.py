@@ -39,7 +39,11 @@ def fastqc_raw(name,path_in ,path_out, done,):
 
     echo {name}
 
-    /faststorage/project/cryptocarya/Programs/FastQC/fastqc -o {path_out} {path_in}{name}:_R1.fastq {path_in}{name}:_R2.fastq
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+    conda activate fastqc
+
+    fastqc -o {path_out} {path_in}{name}:_R1.fastq {path_in}{name}:_R2.fastq
     
     echo touching {done}
     touch {done}
