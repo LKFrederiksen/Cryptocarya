@@ -1,21 +1,21 @@
 
-------------------------------------------------------------------------------------------------------------------------
-This workflow is used to transform the raw sequence data into sequences ready for alignment.
-Workflow is the following
+# ------------------------------------------------------------------------------------------------------------------------
+# This workflow is used to transform the raw sequence data into sequences ready for alignment.
+# Workflow is the following
 
-1: Secapr quality check of the sequences
-2: Trimming of the sequences using trimmomatic
-3: Hybpipering the species in order to create the exons of the baits for each species
-4: Checking for Paralogs
-5: Running Intronerate again to get the Introns for each species
-6: Trimming for Coverage of sequencing and joining the exon and intron of each species to create supercontigs
+# 1: Secapr quality check of the sequences
+# 2: Trimming of the sequences using trimmomatic
+# 3: Hybpipering the species in order to create the exons of the baits for each species
+# 4: Checking for Paralogs
+# 5: Running Intronerate again to get the Introns for each species
+# 6: Trimming for Coverage of sequencing and joining the exon and intron of each species to create supercontigs
 
-------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------
-Author: Oscar Wrisberg
-Date: 10/11/2021
-------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------
+# Author: Oscar Wrisberg
+# Date: 10/11/2021
+# ------------------------------------------------------------------------------------------------------------------------
 
 from os import O_SYNC, name
 from gwf import Workflow
