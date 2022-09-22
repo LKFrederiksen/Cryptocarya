@@ -260,7 +260,7 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ########################################################################################################################
 
 # sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
-sp = ["a521_FKDL202573129-1a-D706-AK1680_HK73YDRXX_L2_1.fastq"]
+sp = ["a521_FKDL202573129-1a-D706-AK1680_HK73YDRXX_L2_1"]
 
 #Species removed from pipeline as they had no gene recovery [3050,3188,3272,3300,3316, 3364, 3392, 3394]
 
