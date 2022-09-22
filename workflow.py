@@ -266,7 +266,7 @@ sp = ["Ocotea-foetens-WE521"]
 for i in range(len(sp)):
     #### Running fastqc on raw data
     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/RawData/a521",
+                                                        path_in= "/home/laurakf/cryptocarya/RawData/a521/",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done"+sp[i]))
 
