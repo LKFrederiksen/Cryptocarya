@@ -43,7 +43,7 @@ def fastqc_raw(name,path_in ,path_out, done,):
 
     conda activate fastqc
 
-    fastqc -o {path_out} {path_in}{name}:_R1.fastq {path_in}{name}:_R2.fastq
+    fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
     
     echo touching {done}
     touch {done}
