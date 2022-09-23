@@ -267,7 +267,7 @@ for i in range(len(sp)):
     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
                                                         path_in= "/home/laurakf/cryptocarya/RawData/Test/",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done"+sp[i]))
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
 
     # #### Running Trimmomatic
