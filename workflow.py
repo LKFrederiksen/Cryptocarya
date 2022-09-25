@@ -13,8 +13,8 @@
 # ------------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------------------------------------------------
-# Author: Laura Kragh Frederiksen
-# Date: 23/9/2022
+# Author: 
+# Date: 
 # ------------------------------------------------------------------------------------------------------------------------
 
 from os import O_SYNC, name
@@ -48,36 +48,36 @@ def fastqc_raw(name,path_in ,path_out, done,):
     echo touching {done}
     touch {done}
 
-    """.format(path_in = path_in,name = name, path_out = path_out, done = done)
+    """.format(path_in = path_in, name = name, path_out = path_out, done = done)
 
     return (inputs, outputs, options, spec)
 
 ########################################################################################################################
 ################################################---- Multiqc quality check raw ----#######################################
 ########################################################################################################################
-# def multiqc_raw(name,path_in ,path_out, done,):
-#     """Quality checking using fastqc as this should work on individual species"""
-#     inputs = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
-#     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data", done]
-#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+def multiqc_raw(name,path_in ,path_out, done,):
+    """Quality checking using fastqc as this should work on individual species"""
+    inputs = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
+    outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data", done]
+    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-#     spec = """
+    spec = """
 
-#     echo {name}
+    echo {name}
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     conda activate multiqc
+    conda activate multiqc
 
-#     multiqc -o .
+    multiqc -o {path_out} {path_in}{name}_R1_fastqc.html
     
-#     echo touching {done}
-#     touch {done}
+    echo touching {done}
+    touch {done}
 
-#     """.format(path_in = path_in,name = name, path_out = path_out, done = done)
+    """.format(path_in = path_in, name = name, path_out = path_out, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 ########################################################################################################################
 ################################################---- Fastqc quality check trimmed ----#######################################
@@ -296,11 +296,11 @@ for i in range(len(sp)):
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
-    # #### Running multiqc on raw data
-    # gwf.target_from_template('multiqc_raw_'+str(i), fastqc_raw(name = sp[i],
-    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
-    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQCx/done/")
+    #### Running multiqc on raw data
+    gwf.target_from_template('multiqc_raw_'+str(i), fastqc_raw(name = sp[i],
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/")
 
 
     # #### Running Trimmomatic
