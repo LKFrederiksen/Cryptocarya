@@ -70,7 +70,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}{name}_R1_fastqc.html
+    multiqc -o {path_out} {path_in}
     
     echo touching {done}
     touch {done}
