@@ -58,7 +58,7 @@ def fastqc_raw(name,path_in ,path_out, done,):
 def multiqc_raw(name,path_in ,path_out, done,):
     """Quality checking using fastqc as this should work on individual species"""
     inputs = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
-    outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data", done]
+    outputs = [path_out+"multiqc_report.html", done]
     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
@@ -300,7 +300,7 @@ for i in range(len(sp)):
     gwf.target_from_template('multiqc_raw_'+str(i), fastqc_raw(name = sp[i],
                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/")
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/"+sp[i]))
 
 
     # #### Running Trimmomatic
