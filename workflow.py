@@ -99,7 +99,6 @@ def trimmomatic(name, path_in, path_out, done):
     MINLEN:40\
     2>> stderr_trim_loop_output.txt
 
-# Concatenating trimmed paired and unpaired reads before next quality chech and further analysis.
     echo combining {path_out}{name}_R1_Paired.fastq and {path_out}{name}_R1_Unpaired.fastq into {path_out}secapr_postrim/{name}_R1_PU.fastq 
     cat {path_out}{name}_R1_Paired.fastq {path_out}{name}_R1_Unpaired.fastq > {path_out}secapr_postrim/{name}_R1_PU.fastq 
 
@@ -328,6 +327,8 @@ for i in range(len(sp)):
 gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/multiqc_raw"))
+
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 
 for i in range(len(sp)):
     #### Running Trimmomatic
