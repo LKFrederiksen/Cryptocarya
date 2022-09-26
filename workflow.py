@@ -57,7 +57,7 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ########################################################################################################################
 def multiqc_raw(path_in ,path_out, done,):
     """Quality checking using multiqc"""
-    path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
+    path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"] # The files gwf looks for before it runs.
     outputs = [path_out+"multiqc_report.html", done]
     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
