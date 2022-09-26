@@ -129,7 +129,7 @@ def trimmomatic(name, path_in, path_out, done):
 def fastqc_trimmed(name,path_in ,path_out, done,):
      """Quality checking using fastqc as this should work on individual species"""
      path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
-     outputs = [path_out+species+"_1PU_fastqc.html", path_out+species+"_2PU_fastqc.html",path_out+species+"_UN_fastqc.html", done]
+     outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
      options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
