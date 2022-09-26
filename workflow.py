@@ -330,7 +330,7 @@ for i in range(len(sp)):
     #### Running multiqc on raw data
 gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/")
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/"))
 
 
     # #### Running Trimmomatic
