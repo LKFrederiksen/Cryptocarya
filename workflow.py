@@ -126,28 +126,28 @@ def trimmomatic(name, path_in, path_out, done):
 ########################################################################################################################
 ###########################################---- Fastqc quality check trimmed ----#######################################
 ########################################################################################################################
-# def fastqc_trimmed(name,path_in ,path_out, done,):
-#      """Quality checking using fastqc as this should work on individual species"""
-#      path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq","/home/laurakf/cryptocarya/workflow/Test/02_MultiQC/done/"+species] # The files gwf looks for before it runs.
-#      outputs = [path_out+species+"_1PU_fastqc.html", path_out+species+"_2PU_fastqc.html",path_out+species+"_UN_fastqc.html" ,done]
-#      options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"Coryphoideae"}
+def fastqc_trimmed(name,path_in ,path_out, done,):
+     """Quality checking using fastqc as this should work on individual species"""
+     path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
+     outputs = [path_out+species+"_1PU_fastqc.html", path_out+species+"_2PU_fastqc.html",path_out+species+"_UN_fastqc.html", done]
+     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-#      spec = """
+     spec = """
 
-#      echo {name}
+     echo {name}
      
-#      source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#      conda activate fastqc
+     conda activate fastqc
 
-#      fastqc -o {output} {path_in}{species}_1PU.fastq {path_in}{species}_2PU.fastq {path_in}{species}_UN.fastq
+     fastqc -o {output} {path_in}{species}_1PU.fastq {path_in}{species}_2PU.fastq {path_in}{species}_UN.fastq
     
-#      touch {done}
+     touch {done}
 
-#      """.format(path_in = path_in,species = species, output = path_out, done = done)
+     """.format(path_in = path_in, name = name, output = path_out, done = done)
 
-#      return (path_ins, outputs, options, spec)
+     return (path_ins, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -340,11 +340,23 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data
-    # gwf.target_from_template('fastqc_trimmed_'+sp[i], fastqc_trimmed(species = sp[i],
-    #                                                     path_in= "/home/owrisberg/Coryphoideae/work_flow/02_trimmed/secapr_postrim/",
-    #                                                     path_out = "/home/owrisberg/Coryphoideae/work_flow/00_secapr/1_trimmed/",
-    #                                                     done = "/home/owrisberg/Coryphoideae/work_flow/00_secapr/done/trimmed_data/"+sp[i]))                                                   
+    gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/secapr_postrim/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/done/"+sp[i]))                                                   
 
+
+#### Running multiqc on trimmed data
+# gwf.target_from_template('multiqc_trimmed', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/done/multiqc_trimmed"))
+
+
+# sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
+
+
+# for i in range(len(sp)):
+    
     # #### Running Hybpiper
     # gwf.target_from_template('Hybpiper_'+sp[i], hybpiper(species = sp[i],
     #                                                     p1 = "_1P.fastq",
