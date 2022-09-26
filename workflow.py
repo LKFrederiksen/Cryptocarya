@@ -328,7 +328,7 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
     #### Running multiqc on raw data
-gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/",
+gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/"))
 
