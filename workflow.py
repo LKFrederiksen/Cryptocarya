@@ -331,7 +331,7 @@ gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryp
 
 for i in range(len(sp)):
     #### Running Trimmomatic
-    gwf.target_from_template('trimmomatic_'+str[i], trimmomatic(name = sp[i],
+    gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/data", 
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/done/"+sp[i]))
