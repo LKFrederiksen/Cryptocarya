@@ -141,7 +141,7 @@ def fastqc_trimmed(name,path_in ,path_out, done,):
 
      conda activate fastqc
 
-     fastqc -o {output} {path_in}{species}_1PU.fastq {path_in}{species}_2PU.fastq {path_in}{species}_UN.fastq
+     fastqc -o {output} {path_in}{name}_1PU.fastq {path_in}{name}_2PU.fastq {path_in}{name}_UN.fastq
     
      touch {done}
 
