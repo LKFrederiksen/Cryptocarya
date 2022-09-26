@@ -55,76 +55,73 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ########################################################################################################################
 ##############################################---- Multiqc quality check raw ----#######################################
 ########################################################################################################################
-# def multiqc_raw(path_in ,path_out, done,):
-#     """Quality checking using multiqc"""
-#     path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"] # The files gwf looks for before it runs.
-#     outputs = [path_out+"multiqc_report.html", done]
-#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+def multiqc_raw(path_in ,path_out, done,):
+    """Quality checking using multiqc"""
+    inputs = [path_in+"Ocotea-foetens-WE521_R1_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R1_fastqc.html",path_in+"Ocotea-meziana-WE523_R1_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R1_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R1_fastqc.html",path_in+"Damburneya-gentlei-WE526_R1_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R1_fastqc.html",path_in+"Ocotea-complicata-WE528_R1_fastqc.html",path_in+"Ocotea-javitensis-WE529_R1_fastqc.html",path_in+"Ocotea-skutchii-WE530_R1_fastqc.html",path_in+"Ocotea-sinuata-WE531_R1_fastqc.html",path_in+"Ocotea-botrantha-WE532_R1_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R1_fastqc.html",path_in+"Ocotea-foetens-WE521_R2_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R2_fastqc.html",path_in+"Ocotea-meziana-WE523_R2_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R2_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R2_fastqc.html",path_in+"Damburneya-gentlei-WE526_R2_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R2_fastqc.html",path_in+"Ocotea-complicata-WE528_R2_fastqc.html",path_in+"Ocotea-javitensis-WE529_R2_fastqc.html",path_in+"Ocotea-skutchii-WE530_R2_fastqc.html",path_in+"Ocotea-sinuata-WE531_R2_fastqc.html",path_in+"Ocotea-botrantha-WE532_R2_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R2_fastqc.html"] 
+    outputs = [path_out+"multiqc_report.html", done]
+    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-#     spec = """
+    spec = """
 
-#     echo {name}
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate multiqc
 
-#     conda activate multiqc
-
-#     multiqc -o {path_out} {path_in}
+    multiqc -o {path_out} {path_in}
     
-#     echo touching {done}
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done)
 
-#     return (path_ins, outputs, options, spec)
-
-
-# # ########################################################################################################################
-# # ################################################---- Trimmomatic ----###################################################
-# # ########################################################################################################################
-# def trimmomatic(species, path_in, path_out, done):
-#     """Trimming raw data using trimmomatic with custom adapter.
-#     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
-#     to enable post-trimming secapr quality_check for comparability before and after trimming """
-#     path_ins = []
-#     outputs = [path_out+species+"_UN.fastq",path_out+"secapr_postrim/"+species+"_UN.fastq", done, path_out+species+"_1P.fastq", path_out+species+"_2P.fastq"]
-#     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"Coryphoideae"}
-
-#     spec = """
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate trimmomatic
-
-#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
-#     ILLUMINACLIP:/home/owrisberg/miniconda3/pkgs/trimmomatic-0.39-1/share/trimmomatic-0.39-1/adapters/TruSeq3-PE-2.fa:2:30:10:1:true\
-#     LEADING:3\
-#     TRAILING:3\
-#     MAXINFO:40:0.8\
-#     MINLEN:36\
-#     2>> stderr_trim_loop_output.txt
-
-#     echo combining {path_out}{species}_1P.fastq and {path_out}{species}_1U.fastq into {path_out}secapr_postrim/{species}_1PU.fastq 
-#     cat {path_out}{species}_1P.fastq {path_out}{species}_1U.fastq > {path_out}secapr_postrim/{species}_1PU.fastq 
-
-#     echo combining {path_out}{species}_2P.fastq and {path_out}{species}_2U.fastq into {path_out}secapr_postrim/{species}_2PU.fastq 
-#     cat {path_out}{species}_2P.fastq {path_out}{species}_2U.fastq > {path_out}secapr_postrim/{species}_2PU.fastq
-
-#     echo combining {path_out}{species}_1U.fastq {path_out}{species}_2U.fastq > {path_out}{species}_UN.fastq
-#     cat {path_out}{species}_1U.fastq {path_out}{species}_2U.fastq > {path_out}{species}_UN.fastq
-#     cp {path_out}{species}_UN.fastq {path_out}secapr_postrim/
+    return (inputs, outputs, options, spec)
 
 
-#     echo Removing {path_out}{species}_1U.fastq
-#     rm {path_out}{species}_1U.fastq
+########################################################################################################################
+################################################---- Trimmomatic ----###################################################
+########################################################################################################################
+def trimmomatic(species, path_in, path_out, done):
+    """Trimming raw data using trimmomatic with custom adapter.
+    Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
+    to enable post-trimming secapr quality_check for comparability before and after trimming """
+    path_ins = []
+    outputs = [path_out+species+"_UN.fastq",path_out+"secapr_postrim/"+species+"_UN.fastq", done, path_out+species+"_R1_Paired.fastq", path_out+species+"_R2_Paired.fastq"]
+    options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
-#     echo Removing {path_out}{species}_2U.fastq
-#     rm {path_out}{species}_2U.fastq
+    spec = """
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate trimmomatic
 
-#     touch {done}
+    trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
+    ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-1/share/trimmomatic-0.39-1/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
+    LEADING:30\
+    SLIDINGWINDOW:4:30\
+    MINLEN:40\
+    2>> stderr_trim_loop_output.txt
 
-#     """.format(path_in = path_in + species, output = path_out+species, done = done, species = species, path_out = path_out)
+# Concatenating trimmed paired and unpaired reads before next quality chech and further analysis.
+    echo combining {path_out}{species}_R1_Paired.fastq and {path_out}{species}_R1_Unpaired.fastq into {path_out}secapr_postrim/{species}_R1_PU.fastq 
+    cat {path_out}{species}_R1_Paired.fastq {path_out}{species}_R1_Unpaired.fastq > {path_out}secapr_postrim/{species}_R1_PU.fastq 
 
-#     return (path_ins, outputs, options, spec)
+    echo combining {path_out}{species}_R2_Paired.fastq and {path_out}{species}_R2_Unpaired.fastq into {path_out}secapr_postrim/{species}_R2_PU.fastq 
+    cat {path_out}{species}_R2_Paired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}secapr_postrim/{species}_R2_PU.fastq
+
+    echo combining {path_out}{species}_R1_Unpaired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}{species}_UN.fastq
+    cat {path_out}{species}_R1_Unpaired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}{species}_UN.fastq
+    cp {path_out}{species}_UN.fastq {path_out}secapr_postrim/
+
+
+    echo Removing {path_out}{species}_R1_Unpaired.fastq
+    rm {path_out}{species}_R1_Unpaired.fastq
+
+    echo Removing {path_out}{species}_R2_Unpaired.fastq
+    rm {path_out}{species}_R2_Unpaired.fastq
+
+    touch {done}
+
+    """.format(path_in = path_in + species, output = path_out+species, done = done, species = species, path_out = path_out)
+
+    return (path_ins, outputs, options, spec)
 
 
 ########################################################################################################################
@@ -157,26 +154,26 @@ def fastqc_raw(name,path_in ,path_out, done,):
 # ########################################################################################################################
 # ##########################################---- Multiqc quality check trimmed ----#######################################
 # ########################################################################################################################
-def multiqc_raw(path_in ,path_out, done,):
-    """Quality checking using multiqc"""
-    inputs = [path_in+"Ocotea-foetens-WE521_R1_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R1_fastqc.html",path_in+"Ocotea-meziana-WE523_R1_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R1_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R1_fastqc.html",path_in+"Damburneya-gentlei-WE526_R1_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R1_fastqc.html",path_in+"Ocotea-complicata-WE528_R1_fastqc.html",path_in+"Ocotea-javitensis-WE529_R1_fastqc.html",path_in+"Ocotea-skutchii-WE530_R1_fastqc.html",path_in+"Ocotea-sinuata-WE531_R1_fastqc.html",path_in+"Ocotea-botrantha-WE532_R1_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R1_fastqc.html",path_in+"Ocotea-foetens-WE521_R2_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R2_fastqc.html",path_in+"Ocotea-meziana-WE523_R2_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R2_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R2_fastqc.html",path_in+"Damburneya-gentlei-WE526_R2_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R2_fastqc.html",path_in+"Ocotea-complicata-WE528_R2_fastqc.html",path_in+"Ocotea-javitensis-WE529_R2_fastqc.html",path_in+"Ocotea-skutchii-WE530_R2_fastqc.html",path_in+"Ocotea-sinuata-WE531_R2_fastqc.html",path_in+"Ocotea-botrantha-WE532_R2_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R2_fastqc.html"] 
-    outputs = [path_out+"multiqc_report.html", done]
-    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def multiqc_trimmed(path_in ,path_out, done,):
+#     """Quality checking using multiqc"""
+#     inputs = [path_in+"Ocotea-foetens-WE521_R1_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R1_fastqc.html",path_in+"Ocotea-meziana-WE523_R1_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R1_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R1_fastqc.html",path_in+"Damburneya-gentlei-WE526_R1_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R1_fastqc.html",path_in+"Ocotea-complicata-WE528_R1_fastqc.html",path_in+"Ocotea-javitensis-WE529_R1_fastqc.html",path_in+"Ocotea-skutchii-WE530_R1_fastqc.html",path_in+"Ocotea-sinuata-WE531_R1_fastqc.html",path_in+"Ocotea-botrantha-WE532_R1_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R1_fastqc.html",path_in+"Ocotea-foetens-WE521_R2_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R2_fastqc.html",path_in+"Ocotea-meziana-WE523_R2_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R2_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R2_fastqc.html",path_in+"Damburneya-gentlei-WE526_R2_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R2_fastqc.html",path_in+"Ocotea-complicata-WE528_R2_fastqc.html",path_in+"Ocotea-javitensis-WE529_R2_fastqc.html",path_in+"Ocotea-skutchii-WE530_R2_fastqc.html",path_in+"Ocotea-sinuata-WE531_R2_fastqc.html",path_in+"Ocotea-botrantha-WE532_R2_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R2_fastqc.html"] 
+#     outputs = [path_out+"multiqc_report.html", done]
+#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate multiqc
+#     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}
+#     multiqc -o {path_out} {path_in}
     
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 
@@ -327,17 +324,17 @@ for i in range(len(sp)):
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
-    #### Running multiqc on raw data
+#### Running multiqc on raw data
 gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/"))
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/multiqc_raw"))
 
 
-    # #### Running Trimmomatic
-    # gwf.target_from_template('trimmomatic_'+sp[i], trimmomatic(species = sp[i],
-    #                                                     path_in= "/home/owrisberg/Coryphoideae/work_flow/01_data/",
-    #                                                     path_out = "/home/owrisberg/Coryphoideae/work_flow/02_trimmed/",
-    #                                                     done = "/home/owrisberg/Coryphoideae/work_flow/02_trimmed/done/"+sp[i]))
+    #### Running Trimmomatic
+    gwf.target_from_template('trimmomatic_'+str[i], trimmomatic(name = sp[i],
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/data", 
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data
     # gwf.target_from_template('fastqc_trimmed_'+sp[i], fastqc_trimmed(species = sp[i],
