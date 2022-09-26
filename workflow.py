@@ -55,29 +55,29 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ########################################################################################################################
 ##############################################---- Multiqc quality check raw ----#######################################
 ########################################################################################################################
-def multiqc_raw(path_in ,path_out, done,):
-    """Quality checking using multiqc"""
-    path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"] # The files gwf looks for before it runs.
-    outputs = [path_out+"multiqc_report.html", done]
-    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def multiqc_raw(path_in ,path_out, done,):
+#     """Quality checking using multiqc"""
+#     path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"] # The files gwf looks for before it runs.
+#     outputs = [path_out+"multiqc_report.html", done]
+#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    echo {name}
+#     echo {name}
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate multiqc
+#     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}
+#     multiqc -o {path_out} {path_in}
     
-    echo touching {done}
-    touch {done}
+#     echo touching {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (path_ins, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 
 # # ########################################################################################################################
@@ -157,26 +157,26 @@ def multiqc_raw(path_in ,path_out, done,):
 # ########################################################################################################################
 # ##########################################---- Multiqc quality check trimmed ----#######################################
 # ########################################################################################################################
-# def multiqc_raw(path_in ,path_out, done,):
-#     """Quality checking using multiqc"""
-#     inputs = [path_in+"Ocotea-foetens-WE521",path_in+"Ocotea-gabonensis-WE522",path_in+"Ocotea-meziana-WE523",path_in+"Pleurothyrium-cuneifolium-WE524",path_in+"Mespilodaphne-cymbarum-WE525",path_in+"Damburneya-gentlei-WE526",path_in+"Ocotea-glaucosericea-WE527",path_in+"Ocotea-complicata-WE528",path_in+"Ocotea-javitensis-WE529",path_in+"Ocotea-skutchii-WE530",path_in+"Ocotea-sinuata-WE531",path_in+"Ocotea-botrantha-WE532",path_in+"Nectandra-lineatifolia-WE533"] 
-#     outputs = [path_out+"multiqc_report.html", done]
-#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+def multiqc_raw(path_in ,path_out, done,):
+    """Quality checking using multiqc"""
+    inputs = [path_in+"Ocotea-foetens-WE521",path_in+"Ocotea-gabonensis-WE522",path_in+"Ocotea-meziana-WE523",path_in+"Pleurothyrium-cuneifolium-WE524",path_in+"Mespilodaphne-cymbarum-WE525",path_in+"Damburneya-gentlei-WE526",path_in+"Ocotea-glaucosericea-WE527",path_in+"Ocotea-complicata-WE528",path_in+"Ocotea-javitensis-WE529",path_in+"Ocotea-skutchii-WE530",path_in+"Ocotea-sinuata-WE531",path_in+"Ocotea-botrantha-WE532",path_in+"Nectandra-lineatifolia-WE533"] 
+    outputs = [path_out+"multiqc_report.html", done]
+    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-#     spec = """
+    spec = """
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     conda activate multiqc
+    conda activate multiqc
 
-#     multiqc -o {path_out} {path_in}
+    multiqc -o {path_out} {path_in}
     
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done)
 
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 
 
