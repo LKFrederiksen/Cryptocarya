@@ -176,7 +176,7 @@ def multiqc_raw(path_in ,path_out, done,):
 
     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (path_ins, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 
 
