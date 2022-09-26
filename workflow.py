@@ -80,12 +80,12 @@ def multiqc_raw(path_in ,path_out, done,):
 ########################################################################################################################
 ################################################---- Trimmomatic ----###################################################
 ########################################################################################################################
-def trimmomatic(species, path_in, path_out, done):
+def trimmomatic(name, path_in, path_out, done):
     """Trimming raw data using trimmomatic with custom adapter.
     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
     to enable post-trimming secapr quality_check for comparability before and after trimming """
     path_ins = []
-    outputs = [path_out+species+"_UN.fastq",path_out+"secapr_postrim/"+species+"_UN.fastq", done, path_out+species+"_R1_Paired.fastq", path_out+species+"_R2_Paired.fastq"]
+    outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_R1_Paired.fastq", path_out+name+"_R2_Paired.fastq"]
     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
     spec = """
@@ -100,26 +100,26 @@ def trimmomatic(species, path_in, path_out, done):
     2>> stderr_trim_loop_output.txt
 
 # Concatenating trimmed paired and unpaired reads before next quality chech and further analysis.
-    echo combining {path_out}{species}_R1_Paired.fastq and {path_out}{species}_R1_Unpaired.fastq into {path_out}secapr_postrim/{species}_R1_PU.fastq 
-    cat {path_out}{species}_R1_Paired.fastq {path_out}{species}_R1_Unpaired.fastq > {path_out}secapr_postrim/{species}_R1_PU.fastq 
+    echo combining {path_out}{name}_R1_Paired.fastq and {path_out}{name}_R1_Unpaired.fastq into {path_out}secapr_postrim/{name}_R1_PU.fastq 
+    cat {path_out}{name}_R1_Paired.fastq {path_out}{name}_R1_Unpaired.fastq > {path_out}secapr_postrim/{name}_R1_PU.fastq 
 
-    echo combining {path_out}{species}_R2_Paired.fastq and {path_out}{species}_R2_Unpaired.fastq into {path_out}secapr_postrim/{species}_R2_PU.fastq 
-    cat {path_out}{species}_R2_Paired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}secapr_postrim/{species}_R2_PU.fastq
+    echo combining {path_out}{name}_R2_Paired.fastq and {path_out}{name}_R2_Unpaired.fastq into {path_out}secapr_postrim/{name}_R2_PU.fastq 
+    cat {path_out}{name}_R2_Paired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}secapr_postrim/{name}_R2_PU.fastq
 
-    echo combining {path_out}{species}_R1_Unpaired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}{species}_UN.fastq
-    cat {path_out}{species}_R1_Unpaired.fastq {path_out}{species}_R2_Unpaired.fastq > {path_out}{species}_UN.fastq
-    cp {path_out}{species}_UN.fastq {path_out}secapr_postrim/
+    echo combining {path_out}{name}_R1_Unpaired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}{name}_UN.fastq
+    cat {path_out}{name}_R1_Unpaired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}{name}_UN.fastq
+    cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
 
 
-    echo Removing {path_out}{species}_R1_Unpaired.fastq
-    rm {path_out}{species}_R1_Unpaired.fastq
+    echo Removing {path_out}{name}_R1_Unpaired.fastq
+    rm {path_out}{name}_R1_Unpaired.fastq
 
-    echo Removing {path_out}{species}_R2_Unpaired.fastq
-    rm {path_out}{species}_R2_Unpaired.fastq
+    echo Removing {path_out}{name}_R2_Unpaired.fastq
+    rm {path_out}{name}_R2_Unpaired.fastq
 
     touch {done}
 
-    """.format(path_in = path_in + species, output = path_out+species, done = done, species = species, path_out = path_out)
+    """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
 
     return (path_ins, outputs, options, spec)
 
