@@ -13,7 +13,7 @@
 # ------------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------------------------------------------------
-# Author: 
+# Author: Laura Kragh Frederiksen (adapted from Oscar Wrisberg)
 # Date: 
 # ------------------------------------------------------------------------------------------------------------------------
 
@@ -26,11 +26,11 @@ import os.path
 gwf = Workflow()
 
 ########################################################################################################################
-################################################---- Fastqc quality check raw ----#######################################
+###############################################---- Fastqc quality check raw ----#######################################
 ########################################################################################################################
 def fastqc_raw(name,path_in ,path_out, done,):
     """Quality checking using fastqc as this should work on individual species"""
-    inputs = []
+    path_ins = []
     outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
@@ -50,14 +50,14 @@ def fastqc_raw(name,path_in ,path_out, done,):
 
     """.format(path_in = path_in, name = name, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 ########################################################################################################################
-################################################---- Multiqc quality check raw ----#######################################
+##############################################---- Multiqc quality check raw ----#######################################
 ########################################################################################################################
 def multiqc_raw(name,path_in ,path_out, done,):
-    """Quality checking using fastqc as this should work on individual species"""
-    inputs = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
+    """Quality checking using multiqc"""
+    path_ins = [path_in+name+"_R1_fastqc.html", path_in+name+"_R2_fastqc.html", "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+species] # The files gwf looks for before it runs.
     outputs = [path_out+"multiqc_report.html", done]
     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
@@ -77,29 +77,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
     """.format(path_in = path_in, name = name, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
-
-########################################################################################################################
-################################################---- Fastqc quality check trimmed ----#######################################
-########################################################################################################################
-# def fastqc_trimmed(species,path_in ,path_out, done,):
-#     """Quality checking using fastqc as this should work on individual species"""
-#     inputs = [path_in+species+"_UN.fastq", path_in+species+"_1PU.fastq", path_in+species+"_2PU.fastq","/home/owrisberg/Coryphoideae/work_flow/02_trimmed/done/"+species]
-#     outputs = [path_out+species+"_1PU_fastqc.html", path_out+species+"_2PU_fastqc.html",path_out+species+"_UN_fastqc.html" ,done]
-#     options = {'cores': 1, 'memory': "10g", 'walltime': "00:30:00", 'account':"Coryphoideae"}
-
-
-#     spec = """
-#     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
-#     conda activate secapr_env
-
-#     fastqc -o {output} {path_in}{species}_1PU.fastq {path_in}{species}_2PU.fastq {path_in}{species}_UN.fastq
-    
-#     touch {done}
-
-#     """.format(path_in = path_in,species = species, output = path_out, done = done)
-
-#     return (inputs, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 
 # # ########################################################################################################################
@@ -109,15 +87,15 @@ def multiqc_raw(name,path_in ,path_out, done,):
 #     """Trimming raw data using trimmomatic with custom adapter.
 #     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
 #     to enable post-trimming secapr quality_check for comparability before and after trimming """
-#     inputs = []
+#     path_ins = []
 #     outputs = [path_out+species+"_UN.fastq",path_out+"secapr_postrim/"+species+"_UN.fastq", done, path_out+species+"_1P.fastq", path_out+species+"_2P.fastq"]
 #     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"Coryphoideae"}
 
 #     spec = """
-#     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
-#     conda activate trimmomatic_env
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate trimmomatic
 
-#     trimmomatic PE -threads 16 -phred33 {input}_R1.fastq {input}_R2.fastq -baseout {output}.fastq\
+#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
 #     ILLUMINACLIP:/home/owrisberg/miniconda3/pkgs/trimmomatic-0.39-1/share/trimmomatic-0.39-1/adapters/TruSeq3-PE-2.fa:2:30:10:1:true\
 #     LEADING:3\
 #     TRAILING:3\
@@ -144,9 +122,62 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
 #     touch {done}
 
-#     """.format(input = path_in + species, output = path_out+species, done = done, species = species, path_out = path_out)
+#     """.format(path_in = path_in + species, output = path_out+species, done = done, species = species, path_out = path_out)
 
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
+
+
+########################################################################################################################
+###########################################---- Fastqc quality check trimmed ----#######################################
+########################################################################################################################
+# def fastqc_trimmed(name,path_in ,path_out, done,):
+#      """Quality checking using fastqc as this should work on individual species"""
+#      path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq","/home/laurakf/cryptocarya/workflow/Test/02_MultiQC/done/"+species] # The files gwf looks for before it runs.
+#      outputs = [path_out+species+"_1PU_fastqc.html", path_out+species+"_2PU_fastqc.html",path_out+species+"_UN_fastqc.html" ,done]
+#      options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"Coryphoideae"}
+
+
+#      spec = """
+
+#      echo {name}
+     
+#      source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+#      conda activate fastqc
+
+#      fastqc -o {output} {path_in}{species}_1PU.fastq {path_in}{species}_2PU.fastq {path_in}{species}_UN.fastq
+    
+#      touch {done}
+
+#      """.format(path_in = path_in,species = species, output = path_out, done = done)
+
+#      return (path_ins, outputs, options, spec)
+
+
+# ########################################################################################################################
+# ##########################################---- Multiqc quality check trimmed ----#######################################
+# ########################################################################################################################
+# def multiqc_raw(path_in ,path_out, done,):
+#     """Quality checking using multiqc"""
+#     inputs = [path_in+"Ocotea-foetens-WE521",path_in+"Ocotea-gabonensis-WE522",path_in+"Ocotea-meziana-WE523",path_in+"Pleurothyrium-cuneifolium-WE524",path_in+"Mespilodaphne-cymbarum-WE525",path_in+"Damburneya-gentlei-WE526",path_in+"Ocotea-glaucosericea-WE527",path_in+"Ocotea-complicata-WE528",path_in+"Ocotea-javitensis-WE529",path_in+"Ocotea-skutchii-WE530",path_in+"Ocotea-sinuata-WE531",path_in+"Ocotea-botrantha-WE532",path_in+"Nectandra-lineatifolia-WE533"] 
+#     outputs = [path_out+"multiqc_report.html", done]
+#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+
+
+#     spec = """
+
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+#     conda activate multiqc
+
+#     multiqc -o {path_out} {path_in}
+    
+#     touch {done}
+
+#     """.format(path_in = path_in, path_out = path_out, done = done)
+
+#     return (path_ins, outputs, options, spec)
+
 
 
 # ########################################################################################################################
@@ -154,7 +185,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 # ########################################################################################################################
 # def hybpiper(species, p1, p2, un, path_out, path_in, done):
 #     """Hybpiper."""
-#     inputs = [path_in + species +p1, path_in + species + p2, path_in + species + un] # The files which the job will look for before it runs
+#     path_ins = [path_in + species +p1, path_in + species + p2, path_in + species + un] # The files which the job will look for before it runs
 #     outputs = [path_out + species, done] # The files which will have to be created in order for the job to be "completed"
 #     options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"Coryphoideae"} #Slurm commands
 
@@ -176,7 +207,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 #     """.format(species=species, p1 = path_in + species + p1,p2 = path_in + species + p2, un = path_in + species + un , out = path_out, done = done)
 
 
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 # ########################################################################################################################
 # #############################################---- Paralogs ----#########################################################
@@ -184,7 +215,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
 # def paralogs(species,path_in, done, no_paralogs, in_done):
 #     """Find Paralog genes and write them in the file called paralog.txt"""
-#     inputs = [path_in + species, in_done]
+#     path_ins = [path_in + species, in_done]
 #     outputs = [done]
 #     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"Coryphoideae"}
 
@@ -204,11 +235,11 @@ def multiqc_raw(name,path_in ,path_out, done,):
 #     touch {done}
 
 #     """.format(sp = species, done = done, path_in = path_in, np = no_paralogs)
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 # def no_paralogs(species, path_in, done, no_paralogs):
 #     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-#     inputs = [path_in + species]
+#     path_ins = [path_in + species]
 #     outputs = [done]
 #     options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"Coryphoideae"}
 
@@ -218,7 +249,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 #     touch {np}
 
 #     """.format(done=done, np=no_paralogs)
-#     return(inputs, outputs, options, spec)
+#     return(path_ins, outputs, options, spec)
 
 # # ########################################################################################################################
 # # #############################################---- Intronerate ----######################################################
@@ -226,7 +257,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
 # def intronerate(species, path_in, done):
 #     """Intronerate the sequencec from hybpiper."""
-#     inputs = [path_in + species, path_in+"done/Hybpiper/"+species]
+#     path_ins = [path_in + species, path_in+"done/Hybpiper/"+species]
 #     outputs = [done]
 #     options = {'cores': 4, 'memory': "20g", 'walltime': "16:00:00", 'account':"Coryphoideae"}
 
@@ -243,14 +274,14 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
 #     """.format(sp = species, done = done, path_in = path_in)
 
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 # # ########################################################################################################################
 # # #############################################---- Coverage ----#########################################################
 # # ########################################################################################################################
 # def coverage(species, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out):
 #     """Calculating coverage of sequences."""
-#     inputs = [path_in+species, path_in+"done/Intronerate/"+species]
+#     path_ins = [path_in+species, path_in+"done/Intronerate/"+species]
 #     outputs = [path_out+species+all_bam,
 #      path_out+species+all_sorted_bam,
 #       path_out+species+all_sorted_bam_bai,
@@ -279,7 +310,7 @@ def multiqc_raw(name,path_in ,path_out, done,):
 
 #     """.format(sp = species, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out)
 
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 ########################################################################################################################
 ######################################################---- RUN ----#####################################################
@@ -297,10 +328,9 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
     #### Running multiqc on raw data
-    gwf.target_from_template('multiqc_raw_'+str(i), fastqc_raw(name = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/"+sp[i]))
+gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/",
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/")
 
 
     # #### Running Trimmomatic
