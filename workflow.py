@@ -85,7 +85,7 @@ def trimmomatic(name, path_in, path_out, done):
     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
     to enable post-trimming secapr quality_check for comparability before and after trimming """
     path_ins = []
-    outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_R1_Paired.fastq", path_out+name+"_R2_Paired.fastq"]
+    outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
     spec = """
@@ -99,22 +99,22 @@ def trimmomatic(name, path_in, path_out, done):
     MINLEN:40\
     2>> stderr_trim_loop_output.txt
 
-    echo combining {path_out}{name}_R1_Paired.fastq and {path_out}{name}_R1_Unpaired.fastq into {path_out}secapr_postrim/{name}_R1_PU.fastq 
-    cat {path_out}{name}_R1_Paired.fastq {path_out}{name}_R1_Unpaired.fastq > {path_out}secapr_postrim/{name}_R1_PU.fastq 
+    echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
+    cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
 
-    echo combining {path_out}{name}_R2_Paired.fastq and {path_out}{name}_R2_Unpaired.fastq into {path_out}secapr_postrim/{name}_R2_PU.fastq 
-    cat {path_out}{name}_R2_Paired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}secapr_postrim/{name}_R2_PU.fastq
+    echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
+    cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
 
-    echo combining {path_out}{name}_R1_Unpaired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}{name}_UN.fastq
-    cat {path_out}{name}_R1_Unpaired.fastq {path_out}{name}_R2_Unpaired.fastq > {path_out}{name}_UN.fastq
+    echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+    cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
     cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
 
 
-    echo Removing {path_out}{name}_R1_Unpaired.fastq
-    rm {path_out}{name}_R1_Unpaired.fastq
+    echo Removing {path_out}{name}_1U.fastq
+    rm {path_out}{name}_1U.fastq
 
-    echo Removing {path_out}{name}_R2_Unpaired.fastq
-    rm {path_out}{name}_R2_Unpaired.fastq
+    echo Removing {path_out}{name}_2U.fastq
+    rm {path_out}{name}_2U.fastq
 
     touch {done}
 
@@ -190,6 +190,8 @@ def trimmomatic(name, path_in, path_out, done):
 #     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
 
 #     conda activate base
+
+#     cd $TMPDIR
 
 #     cd /scratch/$SLURM_JOBID
         
