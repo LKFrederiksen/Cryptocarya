@@ -77,9 +77,55 @@ def multiqc_raw(path_in ,path_out, done,):
     return (inputs, outputs, options, spec)
 
 
-########################################################################################################################
-################################################---- Trimmomatic ----###################################################
-########################################################################################################################
+#######################################################################################################################################
+################################################---- Trimmomatic - SLidingwindow----###################################################
+#######################################################################################################################################
+# def trimmomatic(name, path_in, path_out, done):
+#     """Trimming raw data using trimmomatic with custom adapter.
+#     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
+#     to enable post-trimming secapr quality_check for comparability before and after trimming """
+#     path_ins = []
+#     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
+#     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate trimmomatic
+
+#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
+#     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
+#     LEADING:30\
+#     SLIDINGWINDOW:4:30\
+#     MINLEN:40\
+#     2>> stderr_trim_loop_output.txt
+
+#     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
+#     cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
+
+#     echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
+#     cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
+
+#     echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
+
+
+#     echo Removing {path_out}{name}_1U.fastq
+#     rm {path_out}{name}_1U.fastq
+
+#     echo Removing {path_out}{name}_2U.fastq
+#     rm {path_out}{name}_2U.fastq
+
+#     touch {done}
+
+#     """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
+
+#     return (path_ins, outputs, options, spec)
+
+
+#######################################################################################################################################
+################################################---- Trimmomatic - Maxinfo ----########################################################
+#######################################################################################################################################
 def trimmomatic(name, path_in, path_out, done):
     """Trimming raw data using trimmomatic with custom adapter.
     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
@@ -94,9 +140,10 @@ def trimmomatic(name, path_in, path_out, done):
 
     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
-    LEADING:30\
-    SLIDINGWINDOW:4:30\
-    MINLEN:40\
+    LEADING:3\
+    TRAILING:3\
+    MAXINFO:40:0.8\
+    MINLEN:36\
     2>> stderr_trim_loop_output.txt
 
     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
