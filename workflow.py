@@ -347,7 +347,7 @@ for i in range(len(sp)):
 
 
 #### Running multiqc on trimmed data
-gwf.target_from_template('multiqc_trimmed', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
+gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/done/multiqc_trimmed"))
 
