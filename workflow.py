@@ -93,7 +93,7 @@ def trimmomatic(name, path_in, path_out, done):
     conda activate trimmomatic
 
     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
-    ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-1/share/trimmomatic-0.39-1/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
+    ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
     LEADING:30\
     SLIDINGWINDOW:4:30\
     MINLEN:40\
@@ -183,7 +183,7 @@ def multiqc_trimmed(path_in ,path_out, done,):
 #     """Hybpiper."""
 #     path_ins = [path_in + species +p1, path_in + species + p2, path_in + species + un] # The files which the job will look for before it runs
 #     outputs = [path_out + species, done] # The files which will have to be created in order for the job to be "completed"
-#     options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"Coryphoideae"} #Slurm commands
+#     options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"cryptocarya"} #Slurm commands
 
 #     spec = """
 
