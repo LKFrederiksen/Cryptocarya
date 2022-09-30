@@ -80,52 +80,6 @@ def multiqc_raw(path_in ,path_out, done,):
 #######################################################################################################################################
 ################################################---- Trimmomatic - SLidingwindow----###################################################
 #######################################################################################################################################
-# def trimmomatic(name, path_in, path_out, done):
-#     """Trimming raw data using trimmomatic with custom adapter.
-#     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
-#     to enable post-trimming secapr quality_check for comparability before and after trimming """
-#     path_ins = []
-#     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
-#     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
-
-#     spec = """
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate trimmomatic
-
-#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
-#     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
-#     LEADING:30\
-#     SLIDINGWINDOW:4:30\
-#     MINLEN:40\
-#     2>> stderr_trim_loop_output.txt
-
-#     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
-#     cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
-
-#     echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
-#     cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
-
-#     echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
-#     cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
-#     cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
-
-
-#     echo Removing {path_out}{name}_1U.fastq
-#     rm {path_out}{name}_1U.fastq
-
-#     echo Removing {path_out}{name}_2U.fastq
-#     rm {path_out}{name}_2U.fastq
-
-#     touch {done}
-
-#     """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
-
-#     return (path_ins, outputs, options, spec)
-
-
-#######################################################################################################################################
-################################################---- Trimmomatic - Maxinfo ----########################################################
-#######################################################################################################################################
 def trimmomatic(name, path_in, path_out, done):
     """Trimming raw data using trimmomatic with custom adapter.
     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
@@ -140,10 +94,9 @@ def trimmomatic(name, path_in, path_out, done):
 
     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
-    LEADING:3\
-    TRAILING:3\
-    MAXINFO:40:0.8\
-    MINLEN:36\
+    LEADING:30\
+    SLIDINGWINDOW:4:30\
+    MINLEN:40\
     2>> stderr_trim_loop_output.txt
 
     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
@@ -168,6 +121,53 @@ def trimmomatic(name, path_in, path_out, done):
     """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
 
     return (path_ins, outputs, options, spec)
+
+
+#######################################################################################################################################
+################################################---- Trimmomatic - Maxinfo ----########################################################
+#######################################################################################################################################
+# def trimmomatic(name, path_in, path_out, done):
+#     """Trimming raw data using trimmomatic with custom adapter.
+#     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
+#     to enable post-trimming secapr quality_check for comparability before and after trimming """
+#     path_ins = []
+#     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
+#     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate trimmomatic
+
+#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
+#     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
+#     LEADING:3\
+#     TRAILING:3\
+#     MAXINFO:40:0.8\
+#     MINLEN:36\
+#     2>> stderr_trim_loop_output.txt
+
+#     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
+#     cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
+
+#     echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
+#     cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
+
+#     echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
+
+
+#     echo Removing {path_out}{name}_1U.fastq
+#     rm {path_out}{name}_1U.fastq
+
+#     echo Removing {path_out}{name}_2U.fastq
+#     rm {path_out}{name}_2U.fastq
+
+#     touch {done}
+
+#     """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
+
+#     return (path_ins, outputs, options, spec)
 
 
 ########################################################################################################################
@@ -383,20 +383,20 @@ for i in range(len(sp)):
     #### Running Trimmomatic
     gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/data/", 
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/done/"+sp[i]))
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data
     gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/secapr_postrim/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/done/"+sp[i]))                                                   
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/secapr_postrim/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/done/"+sp[i]))                                                   
 
 
 #### Running multiqc on trimmed data
-gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/done/multiqc_trimmed"))
+gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
 # sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
