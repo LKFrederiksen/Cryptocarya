@@ -405,7 +405,7 @@ sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","P
 for i in range(len(sp)):
     
     #### Running Hybpiper
-    gwf.target_from_template('Hybpiper_'+sp[i], hybpiper(name = sp[i],
+    gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
                                                         p1 = "_1P.fastq",
                                                         p2 = "_2P.fastq",
                                                         un = "_UN.fastq",
