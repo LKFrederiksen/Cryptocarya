@@ -238,8 +238,6 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     conda activate HybPiper
 
-    cd /scratch/$SLURM_JOBID
-
     cd $TMPDIR
         
     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
