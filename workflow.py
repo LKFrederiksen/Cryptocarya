@@ -230,7 +230,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
     """Hybpiper."""
     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-    options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"cryptocarya"} #Slurm commands
+    options = {'cores': 2, 'memory': "8g", 'walltime': "10:00:00", 'account':"cryptocarya"} #Slurm commands
 
     spec = """
 
@@ -416,9 +416,9 @@ for i in range(len(sp)):
 
     # #### Paralogs
     
-    # gwf.target_from_template('Paralogs_'+sp[i], paralogs(species = sp[i],
+    # gwf.target_from_template('Paralogs_'+sp[i], paralogs(name = sp[i],
     #                                                     path_in = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/",
-    #                                                     done = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/Paralogs/"+sp[i],
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
     #                                                     no_paralogs="/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/No_paralogs/"+sp[i],
     #                                                     in_done="/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/Hybpiper/"+sp[i]))
     # # else:
