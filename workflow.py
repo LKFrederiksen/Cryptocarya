@@ -411,7 +411,7 @@ for i in range(len(sp)):
                                                         un = "_UN.fastq",
                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],))
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
                                                                       
 
     # #### Paralogs
