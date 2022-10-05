@@ -223,36 +223,36 @@ def multiqc_trimmed(path_in ,path_out, done,):
 
 
 
-# ########################################################################################################################
-# ################################################---- Hybpiper ----######################################################
-# ########################################################################################################################
-# def hybpiper(species, p1, p2, un, path_out, path_in, done):
-#     """Hybpiper."""
-#     path_ins = [path_in + species +p1, path_in + species + p2, path_in + species + un] # The files which the job will look for before it runs
-#     outputs = [path_out + species, done] # The files which will have to be created in order for the job to be "completed"
-#     options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"cryptocarya"} #Slurm commands
+########################################################################################################################
+################################################---- Hybpiper ----######################################################
+########################################################################################################################
+def hybpiper(name, p1, p2, un, path_out, path_in, done):
+    """Hybpiper."""
+    path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
+    outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
+    options = {'cores': 1, 'memory': "20g", 'walltime': "100:00:00", 'account':"cryptocarya"} #Slurm commands
 
-#     spec = """
+    spec = """
 
-#     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     conda activate base
+    conda activate HybPiper
 
-#     cd $TMPDIR
+    cd /scratch/$SLURM_JOBID
 
-#     cd /scratch/$SLURM_JOBID
+    cd $TMPDIR
         
-#     /home/owrisberg/Coryphoideae/github_code/HybPiper/reads_first.py --cpu 1 --readfiles {p1} {p2} --unpaired {un} -b /home/owrisberg/Coryphoideae/target_sequence/PhyloPalms_loci_renamed_794-176_HEYcorrected.fasta --prefix {species} --bwa
+    hybpiper assemble --cpu 1 --readfiles {p1} {p2} --unpaired {un} -b /home/laurakf/cryptocarya/TargetFile/mega353.fasta --prefix {name} --bwa
 
-#     cp --recursive --update {species} /home/owrisberg/Coryphoideae/work_flow/03_hybpiper/
+    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Test/HybPiper/
 
-#     touch {done}
-#     touch {out}{species}
+    touch {done}
+    touch {out}{name}
 
-#     """.format(species=species, p1 = path_in + species + p1,p2 = path_in + species + p2, un = path_in + species + un , out = path_out, done = done)
+    """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out, done=done)
 
 
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 # ########################################################################################################################
 # #############################################---- Paralogs ----#########################################################
@@ -275,7 +275,7 @@ def multiqc_trimmed(path_in ,path_out, done,):
 #     else
 #         echo "the genes_with_paralog_warnings.txt does not exist and we run the no parallels part"
 #         touch {np}
-#     fi
+#     
     
 #     touch {done}
 
@@ -301,7 +301,7 @@ def multiqc_trimmed(path_in ,path_out, done,):
 # # ########################################################################################################################
 
 # def intronerate(species, path_in, done):
-#     """Intronerate the sequencec from hybpiper."""
+#     """Intronerate the sequences from hybpiper."""
 #     path_ins = [path_in + species, path_in+"done/Hybpiper/"+species]
 #     outputs = [done]
 #     options = {'cores': 4, 'memory': "20g", 'walltime': "16:00:00", 'account':"Coryphoideae"}
@@ -399,19 +399,19 @@ gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laur
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
-# sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 
 
-# for i in range(len(sp)):
+for i in range(len(sp)):
     
-    # #### Running Hybpiper
-    # gwf.target_from_template('Hybpiper_'+sp[i], hybpiper(species = sp[i],
-    #                                                     p1 = "_1P.fastq",
-    #                                                     p2 = "_2P.fastq",
-    #                                                     un = "_UN.fastq",
-    #                                                     path_out= "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/",
-    #                                                     path_in = "/home/owrisberg/Coryphoideae/work_flow/02_trimmed/",
-    #                                                     done = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/Hybpiper/"+sp[i],))
+    #### Running Hybpiper
+    gwf.target_from_template('Hybpiper_'+sp[i], hybpiper(name = sp[i],
+                                                        p1 = "_1P.fastq",
+                                                        p2 = "_2P.fastq",
+                                                        un = "_UN.fastq",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],))
                                                                       
 
     # #### Paralogs
