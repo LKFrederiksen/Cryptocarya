@@ -229,7 +229,7 @@ def multiqc_trimmed(path_in ,path_out, done,):
 def hybpiper(name, p1, p2, un, path_out, path_in, done):
     """Hybpiper."""
     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
-    outputs = [path_out+name"/", done] # The files which will have to be created in order for the job to be "completed"
+    outputs = [path_out+name+"/", done] # The files which will have to be created in order for the job to be "completed"
     options = {'cores': 2, 'memory': "8g", 'walltime': "10:00:00", 'account':"cryptocarya"} #Slurm commands
 
     spec = """
