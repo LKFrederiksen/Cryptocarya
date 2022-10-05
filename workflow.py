@@ -244,7 +244,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
         
     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/filtered_target_laurales_mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
 
-    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Test/HybPiper/
+    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/
 
     touch {done}
     touch {out}{name}
