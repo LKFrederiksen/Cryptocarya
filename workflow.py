@@ -242,7 +242,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     cd $TMPDIR
         
-    hybpiper assemble --cpu 1 --readfiles {p1} {p2} --unpaired {un} -b /home/laurakf/cryptocarya/TargetFile/mega353.fasta --prefix {name} --bwa
+    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
 
     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Test/HybPiper/
 
