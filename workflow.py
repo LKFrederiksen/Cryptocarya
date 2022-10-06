@@ -240,7 +240,9 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     cd $TMPDIR
         
-    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
+    /home/laurakf/cryptocarya/Programs/HybPiper-master/reads_first.py --cpu 2 -b /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
+
+    python /home/laurakf/cryptocarya/Programs/HybPiper-master/cleanup.py {name}
 
     mv {name} /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/
 
@@ -258,7 +260,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
 def paralogs(name, path_in, done, no_paralogs, in_done):
     """Find Paralog genes and write them in the file called paralog.txt"""
-    path_ins = [path_in + name, in_done]
+    path_ins = [path_in+name, in_done]
     outputs = [done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
@@ -268,10 +270,10 @@ def paralogs(name, path_in, done, no_paralogs, in_done):
     
     conda activate HybPiper
     
-    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}_genes_with_long_paralog_warnings.txt; then
-        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt exists" 
+    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}_genes_with_paralog_warnings.txt; then
+        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_paralog_warnings.txt exists" 
         cd {path_in}
-        hybpiper exonerate_hits {name} 2>> paralog.txt
+        python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
     else
         echo "the genes_with_paralog_warnings.txt does not exist and we run the no parallels part"
         touch {np}
@@ -400,7 +402,7 @@ for i in range(len(sp)):
 
 
 sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531"] 
-# Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work.
+# Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work. 
 
 for i in range(len(sp)):
     
