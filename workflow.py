@@ -399,8 +399,8 @@ for i in range(len(sp)):
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
-sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
-
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531"] 
+# Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work.
 
 for i in range(len(sp)):
     
