@@ -200,26 +200,26 @@ def fastqc_trimmed(name,path_in ,path_out, done,):
 # ########################################################################################################################
 # ##########################################---- Multiqc quality check trimmed ----#######################################
 # ########################################################################################################################
-def multiqc_trimmed(path_in ,path_out, done,):
-    """Quality checking using multiqc"""
-    inputs = [path_in+"Ocotea-foetens-WE521_1PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_1PU_fastqc.html",path_in+"Ocotea-meziana-WE523_1PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_1PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_1PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_1PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_1PU_fastqc.html",path_in+"Ocotea-complicata-WE528_1PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_1PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_1PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_1PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_1PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_1PU_fastqc.html",path_in+"Ocotea-foetens-WE521_2PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_2PU_fastqc.html",path_in+"Ocotea-meziana-WE523_2PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_2PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_2PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_2PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_2PU_fastqc.html",path_in+"Ocotea-complicata-WE528_2PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_2PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_2PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_2PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_2PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_2PU_fastqc.html",path_in+"Ocotea-foetens-WE521_UN_fastqc.html",path_in+"Ocotea-gabonensis-WE522_UN_fastqc.html",path_in+"Ocotea-meziana-WE523_UN_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_UN_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_UN_fastqc.html",path_in+"Damburneya-gentlei-WE526_UN_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_UN_fastqc.html",path_in+"Ocotea-complicata-WE528_UN_fastqc.html",path_in+"Ocotea-javitensis-WE529_UN_fastqc.html",path_in+"Ocotea-skutchii-WE530_UN_fastqc.html",path_in+"Ocotea-sinuata-WE531_UN_fastqc.html",path_in+"Ocotea-botrantha-WE532_UN_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_UN_fastqc.html"] 
-    outputs = [path_out+"multiqc_report.html", done]
-    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def multiqc_trimmed(path_in ,path_out, done,):
+#     """Quality checking using multiqc"""
+#     inputs = [path_in+"Ocotea-foetens-WE521_1PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_1PU_fastqc.html",path_in+"Ocotea-meziana-WE523_1PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_1PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_1PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_1PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_1PU_fastqc.html",path_in+"Ocotea-complicata-WE528_1PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_1PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_1PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_1PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_1PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_1PU_fastqc.html",path_in+"Ocotea-foetens-WE521_2PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_2PU_fastqc.html",path_in+"Ocotea-meziana-WE523_2PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_2PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_2PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_2PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_2PU_fastqc.html",path_in+"Ocotea-complicata-WE528_2PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_2PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_2PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_2PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_2PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_2PU_fastqc.html",path_in+"Ocotea-foetens-WE521_UN_fastqc.html",path_in+"Ocotea-gabonensis-WE522_UN_fastqc.html",path_in+"Ocotea-meziana-WE523_UN_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_UN_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_UN_fastqc.html",path_in+"Damburneya-gentlei-WE526_UN_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_UN_fastqc.html",path_in+"Ocotea-complicata-WE528_UN_fastqc.html",path_in+"Ocotea-javitensis-WE529_UN_fastqc.html",path_in+"Ocotea-skutchii-WE530_UN_fastqc.html",path_in+"Ocotea-sinuata-WE531_UN_fastqc.html",path_in+"Ocotea-botrantha-WE532_UN_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_UN_fastqc.html"] 
+#     outputs = [path_out+"multiqc_report.html", done]
+#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate multiqc
+#     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}
+#     multiqc -o {path_out} {path_in}
     
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 
@@ -256,43 +256,45 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-# def paralogs(species,path_in, done, no_paralogs, in_done):
-#     """Find Paralog genes and write them in the file called paralog.txt"""
-#     path_ins = [path_in + species, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"Coryphoideae"}
+def paralogs(name, path_in, done, no_paralogs, in_done):
+    """Find Paralog genes and write them in the file called paralog.txt"""
+    path_ins = [path_in + name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
-#     spec = """
-#     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
-#     conda activate base
+    spec = """
     
-#     if test -f /home/owrisberg/Coryphoideae/work_flow/03_hybpiper/{sp}/genes_with_paralog_warnings.txt; then
-#         echo "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/{sp}/genes_with_paralog_warnings.txt exists" 
-#         cd {path_in}
-#         python /home/owrisberg/Coryphoideae/github_code/HybPiper/paralog_investigator.py {sp} 2>> paralog.txt
-#     else
-#         echo "the genes_with_paralog_warnings.txt does not exist and we run the no parallels part"
-#         touch {np}
-#     
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     touch {done}
+    conda activate HybPiper
+    
+    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}_genes_with_long_paralog_warnings.txt; then
+        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt exists" 
+        cd {path_in}
+        python /home/laurakf/cryptocarya/Scripts/HybPiper/hybpiper/exonerate_hits.py {name} 2>> paralog.txt
+    else
+        echo "the genes_with_paralog_warnings.txt does not exist and we run the no parallels part"
+        touch {np}
+    
+    
+    touch {done}
 
-#     """.format(sp = species, done = done, path_in = path_in, np = no_paralogs)
-#     return (path_ins, outputs, options, spec)
+    """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
+    return (path_ins, outputs, options, spec)
 
-# def no_paralogs(species, path_in, done, no_paralogs):
-#     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-#     path_ins = [path_in + species]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"Coryphoideae"}
+def no_paralogs(name, path_in, done, no_paralogs):
+    """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
+    path_ins = [path_in + name]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     touch {done}
-#     touch {np}
+    touch {done}
+    touch {np}
 
-#     """.format(done=done, np=no_paralogs)
-#     return(path_ins, outputs, options, spec)
+    """.format(done=done, np=no_paralogs)
+    return(path_ins, outputs, options, spec)
 
 # # ########################################################################################################################
 # # #############################################---- Intronerate ----######################################################
@@ -391,10 +393,10 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/done/"+sp[i]))                                                   
 
 
-#### Running multiqc on trimmed data
-gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
+# #### Running multiqc on trimmed data
+# gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
 sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
@@ -412,18 +414,18 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
                                                                       
 
-    # #### Paralogs
+    #### Paralogs
     
-    # gwf.target_from_template('Paralogs_'+sp[i], paralogs(name = sp[i],
-    #                                                     path_in = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-    #                                                     no_paralogs="/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/No_paralogs/"+sp[i],
-    #                                                     in_done="/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/Hybpiper/"+sp[i]))
-    # # else:
-    # #     gwf.target_from_template('No_Paralogs_'+sp[i], no_paralogs(species = sp[i],
-    # #                                                             path_in = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/",
-    # #                                                             done = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/Paralogs/"+sp[i],
-    # #                                                             no_paralogs="/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/done/No_paralogs/"+sp[i]))
+    gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                        no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i],
+                                                        in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
+    else:
+        gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(species = sp[i],
+                                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                                done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                                no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i]))
      
     
     # #### Getting introns
