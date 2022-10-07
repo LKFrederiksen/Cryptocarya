@@ -268,10 +268,7 @@ def paralogs(name, path_in, done, in_done):
     
     conda activate HybPiper
     
-    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt:
-        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt exists" 
-        cd {path_in}
-        hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
     touch {done}
 
@@ -401,9 +398,10 @@ for i in range(len(sp)):
     #### Paralogs
     
     gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+sp[i],
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
+
 
      
     
