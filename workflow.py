@@ -234,12 +234,15 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     spec = """
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
-    conda activate HybPiper
-
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/blast-2.13.0-hf3cf87c_0/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/spades-3.15.5-h95f258a_1/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/samtools-1.15.1-h6899075_1/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/exonerate-2.4.0-h09da616_5/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/bwa-0.7.17-h7132678_9/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/parallel-20220922-ha770c72_0/bin #done
+    
     cd $TMPDIR
-        
+
     /home/laurakf/cryptocarya/Programs/HybPiper-master/reads_first.py --cpu 2 -b /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa
 
     python /home/laurakf/cryptocarya/Programs/HybPiper-master/cleanup.py {name}
@@ -258,45 +261,50 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-# def paralogs(name, path_in, done, no_paralogs, in_done):
-#     """Find Paralog genes and write them in the file called paralog.txt"""
-#     path_ins = [path_in+name, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
+def paralogs(name, path_in, done, no_paralogs, in_done):
+    """Find Paralog genes and write them in the file called paralog.txt"""
+    path_ins = [path_in+name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
     
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/blast-2.13.0-hf3cf87c_0/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/spades-3.15.5-h95f258a_1/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/samtools-1.15.1-h6899075_1/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/exonerate-2.4.0-h09da616_5/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/bwa-0.7.17-h7132678_9/bin #done
+    export PATH=$PATH:/home/laurakf/miniconda3/pkgs/parallel-20220922-ha770c72_0/bin #done
     
-#     conda activate HybPiper
+    cd $TMPDIR
     
-#     if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}_genes_with_paralog_warnings.txt; then
-#         echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_paralog_warnings.txt exists" 
-#         cd {path_in}
-#         python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
-#     else
-#         echo "the genes_with_paralog_warnings.txt does not exist and we run the no parallels part"
-#         touch {np}
+    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}_genes_with_long_paralog_warnings.txt; then
+        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt exists" 
+        cd {path_in}
+        python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
+    else
+        echo "the genes_with_long_paralog_warnings.txt does not exist and we run the no parallels part"
+        touch {np}
     
     
-#     touch {done}
+    touch {done}
 
-#     """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
-#     return (path_ins, outputs, options, spec)
+    """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
+    return (path_ins, outputs, options, spec)
 
-# def no_paralogs(name, path_in, done, no_paralogs):
-#     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-#     path_ins = [path_in + name]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
+def no_paralogs(name, path_in, done, no_paralogs):
+    """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
+    path_ins = [path_in + name]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     touch {done}
-#     touch {np}
+    touch {done}
+    touch {np}
 
-#     """.format(done=done, np=no_paralogs)
-#     return(path_ins, outputs, options, spec)
+    """.format(done=done, np=no_paralogs)
+    return(path_ins, outputs, options, spec)
 
 # # ########################################################################################################################
 # # #############################################---- Intronerate ----######################################################
@@ -418,16 +426,16 @@ for i in range(len(sp)):
 
     #### Paralogs
     
-    # gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-    #                                                     no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i],
-    #                                                     in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
-    # else:
-    #     gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
-    #                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-    #                                                             done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-    #                                                             no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i]))
+    gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                        no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i],
+                                                        in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
+    else:
+        gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
+                                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                                done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                                no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i]))
      
     
     # #### Getting introns
