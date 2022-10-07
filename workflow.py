@@ -268,7 +268,7 @@ def paralogs(name, path_in, done, in_done):
     
     conda activate HybPiper
     
-    hybpiper paralog_retriever {path_in}{name}"_genes_with_long_paralog_warnings.txt" -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    hybpiper paralog_retriever {path_in}{name}"/"{name}_genes_with_long_paralog_warnings.txt" -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
     touch {done}
 
