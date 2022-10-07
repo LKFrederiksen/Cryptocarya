@@ -256,11 +256,11 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-def paralogs(species,path_in, done, no_paralogs, in_done):
+def paralogs(name,path_in, done, no_paralogs, in_done):
     """Find Paralog genes and write them in the file called paralog.txt"""
-    inputs = [path_in + species, in_done]
+    inputs = [path_in + name, in_done]
     outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"Coryphoideae"}
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
     spec = """
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
@@ -277,7 +277,7 @@ def paralogs(species,path_in, done, no_paralogs, in_done):
     
     touch {done}
 
-    """.format(sp = species, done = done, path_in = path_in, np = no_paralogs)
+    """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
     return (inputs, outputs, options, spec)
 
 # def paralogs(name, path_in, done, in_done):
