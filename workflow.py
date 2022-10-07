@@ -256,26 +256,50 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-def paralogs(name, path_in, done, in_done):
+def paralogs(species,path_in, done, no_paralogs, in_done):
     """Find Paralog genes and write them in the file called paralog.txt"""
-    path_ins = [path_in + name, in_done]
+    inputs = [path_in + species, in_done]
     outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"Coryphoideae"}
 
     spec = """
-    
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
     conda activate HybPiper
     
-    cd {path_in}
-    hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt; then
+        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_paralog_warnings.txt exists" 
+        cd {path_in}
+        hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    else
+        echo "the genes_with_long_paralog_warnings.txt does not exist and we run the no parallels part"
+        touch {np}
+    fi
     
     touch {done}
 
-     """.format(name = name, done = done, path_in = path_in)
+    """.format(sp = species, done = done, path_in = path_in, np = no_paralogs)
+    return (inputs, outputs, options, spec)
+
+# def paralogs(name, path_in, done, in_done):
+#     """Find Paralog genes and write them in the file called paralog.txt"""
+#     path_ins = [path_in + name, in_done]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
+
+#     spec = """
     
-    return (path_ins, outputs, options, spec)
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+#     conda activate HybPiper
+    
+#     cd {path_in}
+#     hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    
+#     touch {done}
+
+#      """.format(name = name, done = done, path_in = path_in)
+    
+#     return (path_ins, outputs, options, spec)
 
 
 # # ########################################################################################################################
@@ -399,7 +423,7 @@ for i in range(len(sp)):
     #### Paralogs
     
     gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+sp[i]"/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
