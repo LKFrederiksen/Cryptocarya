@@ -268,11 +268,10 @@ def paralogs(name, path_in, done, no_paralogs, in_done):
     
     conda activate HybPiper
     
-    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt; then
+    if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt:
         echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt exists" 
         cd {path_in}
         hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
-
     else 
         echo "the genes_with_long_paralog_warnings.txt does not exist"
         touch {np}
