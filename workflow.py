@@ -256,7 +256,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-def paralogs(name, path_in, done, no_paralogs, in_done):
+def paralogs(name, path_in, done, in_done):
     """Find Paralog genes and write them in the file called paralog.txt"""
     path_ins = [path_in + name, in_done]
     outputs = [done]
@@ -405,6 +405,7 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
+     
     
     # #### Getting introns
     # gwf.target_from_template('Intronerate_'+sp[i], intronerate(species= sp[i],
