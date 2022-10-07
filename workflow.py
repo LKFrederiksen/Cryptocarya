@@ -399,7 +399,7 @@ for i in range(len(sp)):
     #### Paralogs
     
     gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+sp[i],
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
