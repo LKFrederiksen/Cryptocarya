@@ -415,13 +415,13 @@ for i in range(len(sp)):
 
     #### Paralogs
     
-    gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+    gwf.target_from_template('Paralogs_'+sp[i], paralogs(name = sp[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
-    gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
+    gwf.target_from_template('No_Paralogs_'+sp[i], no_paralogs(name = sp[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i]))
