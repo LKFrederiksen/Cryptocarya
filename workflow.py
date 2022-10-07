@@ -271,7 +271,7 @@ def paralogs(name, path_in, done, no_paralogs, in_done):
     if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt; then
         echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt exists" 
         cd {path_in}
-        hybpiper paralog_retriever {name} 2>> paralog.txt
+        hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta >> paralog.txt
     else
         echo "the genes_with_long_paralog_warnings.txt does not exist and we run the no parallels part"
         touch {np}
