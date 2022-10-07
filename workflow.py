@@ -272,13 +272,10 @@ def paralogs(name, path_in, done, no_paralogs, in_done):
         echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/{name}_genes_with_long_paralog_warnings.txt exists" 
         cd {path_in}
         hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
-    else 
-        echo "the genes_with_long_paralog_warnings.txt does not exist"
-        touch {np}
     
     touch {done}
 
-     """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
+     """.format(name = name, done = done, path_in = path_in)
     
     return (path_ins, outputs, options, spec)
 
@@ -406,10 +403,8 @@ for i in range(len(sp)):
     gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-                                                        no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
-     
     
     # #### Getting introns
     # gwf.target_from_template('Intronerate_'+sp[i], intronerate(species= sp[i],
