@@ -440,7 +440,7 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
-        else:
+        else
         gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
                                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
