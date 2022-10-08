@@ -267,7 +267,7 @@ def paralogs(name,path_in, done, no_paralogs, in_done):
     conda activate HybPiper
     
     if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt; then
-        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_paralog_warnings.txt exists" 
+        echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt exists" 2>> paralog.txt
         cd {path_in}
         hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     else
@@ -279,6 +279,20 @@ def paralogs(name,path_in, done, no_paralogs, in_done):
 
     """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
     return (inputs, outputs, options, spec)
+
+def no_paralogs(name, path_in, done, no_paralogs):
+    """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
+    inputs = [path_in + name]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
+
+    spec = """
+
+    touch {done}
+    touch {np}
+
+    """.format(done=done, np=no_paralogs)
+    return(inputs, outputs, options, spec)
 
 # def paralogs(name, path_in, done, in_done):
 #     """Find Paralog genes and write them in the file called paralog.txt"""
