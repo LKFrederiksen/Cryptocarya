@@ -294,7 +294,7 @@ def paralogs(name, path_in, done, in_done):
     conda activate HybPiper
     
     cd {path_in}{name}
-    hybpiper paralog_retriever {name}"_genes_with_long_paralog_warnings.txt" -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    hybpiper paralog_retriever {name}"_genes_with_long_paralog_warnings.txt" & {name}"_genes_with_stitched_contig.csv" -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
     touch {done}
 
