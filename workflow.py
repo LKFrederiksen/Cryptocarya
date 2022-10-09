@@ -293,7 +293,7 @@ def paralogs(name, path_in, done, in_done):
     
     conda activate HybPiper
     
-    cd {path_in}
+    cd {path_in}{name}
     hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
     touch {done}
