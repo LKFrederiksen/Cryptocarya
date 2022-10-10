@@ -304,31 +304,35 @@ def paralogs(name, path_in, done, in_done):
     return (path_ins, outputs, options, spec)
 
 
-# ########################################################################################################################
-# #############################################---- Intronerate ----######################################################
-# ########################################################################################################################
+# ##################################################################################################################################
+# #############################################---- Retrieve supercontigs ----######################################################
+# ##################################################################################################################################
 
-# def intronerate(name, path_in, done, p1, p2):
-#     """Intronerate the sequences from hybpiper."""
-#     path_ins = [path_in + name, path_in+"done/Paralogs/"+name]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
+def supercontig(name, path_in, done):
+    """Retrieve supercontig sequences using HybPiper"""
+    path_ins = [path_in + name, path_in+"done/Paralogs/"+name]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
     
-#     spec = """
+    spec = """
    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     conda activate HybPiper
+    conda activate HybPiper
 
-#     cd {path_in}
+    cd {path_in}
 
-#     hybpiper assemble -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta -r {p1} {p2} -- {name} --bwa --run_intronerate --start_from exonerate_contigs
-    
-#     touch {done}
+    hybpiper retrieve_sequences supercontig -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --sample_names {name} 
 
-#     """.format(sp = species, done = done, path_in = path_in, p1=path_in+name+p1, p2=path_in+name+p2)
+    hybpiper stats -t_dna test_targets.fasta gene {name}
 
-#     return (path_ins, outputs, options, spec)
+    hybpiper recovery_heatmap seq_lengths.tsv
+
+    touch {done}
+
+    """.format(name = name, done = done, path_in = path_in)
+
+    return (path_ins, outputs, options, spec)
 
 # # ########################################################################################################################
 # # #############################################---- Coverage ----#########################################################
@@ -350,7 +354,7 @@ def paralogs(name, path_in, done, in_done):
 #      path_out+species+fasta_sa,
 #       path_out+species+trimmed_fasta,
 #        path_out+species+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "20g", 'walltime': "08:00:00", 'account':"Coryphoideae"}
+#     options = {'cores': 4, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
 
 #     spec = """
 #     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
@@ -430,13 +434,10 @@ for i in range(len(sp)):
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
     
-    # # #### Getting introns
-    # gwf.target_from_template('Intronerate_'+str(i), intronerate(name= sp[i],
-    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-    #                                                     p1 = "_1P.fastq",
-    #                                                     p2 = "_2P.fastq",
-    #                                                     un = "_UN.fastq",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Intronerate/"+sp[i]))
+    #### Getting supercontig sequences
+    gwf.target_from_template('Supercontig_'+str(i), supercontig(name= sp[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/retrieve_supercontig/"+sp[i]))
 
 
     # #### Coverage
