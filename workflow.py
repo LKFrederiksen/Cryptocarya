@@ -334,7 +334,7 @@ def supercontig(name, path_in, done):
 
     cd {path_in}
 
-    hybpiper recovery_heatmap {path_in}{name}seq_lengths.tsv
+    hybpiper recovery_heatmap {path_in}seq_lengths.tsv
 
     touch {done}
 
