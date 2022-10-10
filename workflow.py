@@ -323,16 +323,10 @@ def supercontig(name, path_in, done):
     cd {path_in}
 
     # Recover DNA and amino-acid sequences
-
-    hybpiper retrieve_sequences -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta dna --sample_names namelist.txt --fasta_dir 01_dna_seqs
     
-    hybpiper retrieve_sequences -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta supercontig --sample_names {name} --fasta_dir 02_supercontig_seqs
+    hybpiper retrieve_sequences supercontig -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --sample_names {name} --fasta_dir 02_supercontig_seqs
 
-    cd {path_in}
-
-    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene namelist.txt
-
-    cd {path_in}
+    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene {path_in}namelist.txt
 
     hybpiper recovery_heatmap {path_in}seq_lengths.tsv
 
