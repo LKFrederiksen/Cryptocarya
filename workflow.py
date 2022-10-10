@@ -281,10 +281,10 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 #     return (inputs, outputs, options, spec)
 
 
-def paralogs(name, path_in, done, in_done):
+def paralogs(name, path_in, done, in_done, path_out):
     """Find Paralog genes and write them in the file called paralog.txt"""
     path_ins = [path_in + name, in_done]
-    outputs = [done]
+    outputs = [path_out+"paralogs_above_threshold_report.txt", done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
     spec = """
@@ -299,7 +299,7 @@ def paralogs(name, path_in, done, in_done):
     
     touch {done}
 
-     """.format(name = name, done = done, path_in = path_in)
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out)
     
     return (path_ins, outputs, options, spec)
 
@@ -425,6 +425,7 @@ for i in range(len(sp)):
     #### Paralogs
     gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                         in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
