@@ -239,7 +239,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
     conda activate HybPiper
 
     cd $TMPDIR
-        
+    
     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
 
     mv {name} /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/
@@ -322,11 +322,19 @@ def supercontig(name, path_in, done):
 
     cd {path_in}
 
-    hybpiper retrieve_sequences supercontig -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --sample_names {name} 
+    # Recover DNA and amino-acid sequences
 
-    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene {name}
+    hybpiper retrieve_sequences -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta dna --sample_names namelist.txt --fasta_dir 01_dna_seqs
+    
+    hybpiper retrieve_sequences -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta supercontig --sample_names {name} --fasta_dir 02_supercontig_seqs
 
-    hybpiper recovery_heatmap seq_lengths.tsv
+    cd {path_in}
+
+    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene namelist.txt
+
+    cd {path_in}
+
+    hybpiper recovery_heatmap {path_in}{name}seq_lengths.tsv
 
     touch {done}
 
