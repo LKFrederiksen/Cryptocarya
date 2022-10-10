@@ -324,7 +324,7 @@ def supercontig(name, path_in, done):
 
     hybpiper retrieve_sequences supercontig -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --sample_names {name} 
 
-    hybpiper stats -t_dna test_targets.fasta gene {name}
+    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene {name}
 
     hybpiper recovery_heatmap seq_lengths.tsv
 
