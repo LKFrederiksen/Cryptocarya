@@ -284,7 +284,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 def paralogs(name, path_in, done, in_done, path_out):
     """Find Paralog genes and write them in the file called paralog.txt"""
     path_ins = [path_in + name, in_done]
-    outputs = [path_out+"paralogs_above_threshold_report.txt", done]
+    outputs = [path_out+"/paralogs_above_threshold_report.txt", done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
     spec = """
