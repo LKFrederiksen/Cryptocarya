@@ -321,7 +321,7 @@ def stats(path_in, done, path_out):
 
 def paralogs(name, path_in, path_out, done):
    """Find Paralog genes and write them on the file called paralog.txt"""
-    path_ins = [path_in+name, in_done]
+    path_ins = [path_in + name, in_done]
     outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
     options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
@@ -471,7 +471,7 @@ sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","P
 ## paralogs
 for i in range(len(sp)):
     #### Paralogs
-    if os.path.isfile("/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/1.Hybpiper/"+name[i]+"/genes_with_paralog_warnings.txt"):
+    if os.path.isfile("/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+name[i]+"/genes_with_paralog_warnings.txt"):
         gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                             done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs//"+sp[i],
