@@ -262,7 +262,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # In this step you should run the statistics on the folder where we have the Hybpiper_results
 # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-def stats(path_in, done, path_out):
+def stats(path_in, done, path_out, in_done):
    """Gather statistics about the HybPiper run(s).""" 
    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png", done]  # The files which will have to be created in order for the job to be "completed"
@@ -288,7 +288,7 @@ def stats(path_in, done, path_out):
 
    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
 
    return (path_ins, outputs, options, spec) 
 
@@ -319,7 +319,7 @@ def stats(path_in, done, path_out):
     
 #     return (path_ins, outputs, options, spec)
 
-def paralogs(name, path_in, path_out, done):
+def paralogs(name, path_in, path_out, done, in_done):
    """Find Paralog genes and write them on the file called paralog.txt"""
    path_ins = [path_in+name, in_done]
    outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
@@ -339,11 +339,11 @@ def paralogs(name, path_in, path_out, done):
 
    touch {done}
 
-   """.format(name = name, done = done, path_in = path_in, path_out = path_out)
+   """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
 
    return (path_ins, outputs, options, spec)
 
-def no_paralogs(name, path_in, done, no_paralogs):
+def no_paralogs(name, path_in, done, no_paralogs, in_done):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
     inputs = [path_in+name, in_done]
     outputs = [done]
@@ -354,7 +354,7 @@ def no_paralogs(name, path_in, done, no_paralogs):
     touch {done}
     touch {np}
 
-    """.format(done=done, np=no_paralogs)
+    """.format(done=done, np=no_paralogs, in_done = in_done)
     
     return(inputs, outputs, options, spec)
 
@@ -476,8 +476,8 @@ for i in range(len(sp)):
                                                             path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/",
                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                             in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
-                                                            done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-                                                            ))
+                                                            done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i]))
+
     ## No paralogs
     else:
         gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
