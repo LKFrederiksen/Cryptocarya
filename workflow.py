@@ -321,7 +321,7 @@ def stats(path_in, done, path_out):
 
 def paralogs(name, path_in, path_out, done):
    """Find Paralog genes and write them on the file called paralog.txt"""
-    path_ins = [path_in + name, in_done]
+    path_ins = [path_in+name, in_done]
     outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
     options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
