@@ -340,23 +340,23 @@ def paralogs(name, path_in, path_out, done):
    touch {done}
 
    """.format(name = name, done = done, path_in = path_in, path_out = path_out)
-    
+
    return (path_ins, outputs, options, spec)
 
 def no_paralogs(name, path_in, done, no_paralogs):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-   inputs = [path_in+name, in_done]
-   outputs = [done]
-   options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
+    inputs = [path_in+name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
-   spec = """
+    spec = """
 
-   touch {done}
-   touch {np}
+    touch {done}
+    touch {np}
 
-   """.format(done=done, np=no_paralogs)
+    """.format(done=done, np=no_paralogs)
     
-   return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
 
 
 
