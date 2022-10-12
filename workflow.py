@@ -321,42 +321,42 @@ def stats(path_in, done, path_out):
 
 def paralogs(name, path_in, path_out, done):
    """Find Paralog genes and write them on the file called paralog.txt"""
-    path_ins = [path_in+name, in_done]
-    outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
-    options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+   path_ins = [path_in+name, in_done]
+   outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-    spec = """
+   spec = """
    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate HybPiper
+   conda activate HybPiper
 
-    cd {path_in}
+   cd {path_in}
 
-    python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
+   python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
    
-    mv paralog.txt {path_out}
+   mv paralog.txt {path_out}
 
-    touch {done}
+   touch {done}
 
-    """.format(name = name, done = done, path_in = path_in, path_out = path_out)
+   """.format(name = name, done = done, path_in = path_in, path_out = path_out)
     
-    return (path_ins, outputs, options, spec)
+   return (path_ins, outputs, options, spec)
 
 def no_paralogs(name, path_in, done, no_paralogs):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-    inputs = [path_in+name, in_done]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
+   inputs = [path_in+name, in_done]
+   outputs = [done]
+   options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
-    spec = """
+   spec = """
 
-    touch {done}
-    touch {np}
+   touch {done}
+   touch {np}
 
-    """.format(done=done, np=no_paralogs)
+   """.format(done=done, np=no_paralogs)
     
-    return(inputs, outputs, options, spec)
+   return(inputs, outputs, options, spec)
 
 
 
