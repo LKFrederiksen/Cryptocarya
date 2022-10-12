@@ -345,7 +345,7 @@ def paralogs(name, path_in, path_out, done):
 
 def no_paralogs(name, path_in, done, no_paralogs):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
-    inputs = [path_in+name]
+    inputs = [path_in+name, in_done]
     outputs = [done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
@@ -456,6 +456,7 @@ for i in range(len(sp)):
     gwf.target_from_template('Stats_'+str(i), stats(name = sp[i],
                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
                                                   
     # #### Paralogs
@@ -475,6 +476,7 @@ for i in range(len(sp)):
         gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
                                                             path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/",
                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                            in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                             done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                             ))
     ## No paralogs
@@ -482,6 +484,7 @@ for i in range(len(sp)):
         gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
                                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                                in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                                 no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
     # #### Coverage
