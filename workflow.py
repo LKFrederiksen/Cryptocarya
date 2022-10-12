@@ -454,7 +454,7 @@ for i in range(len(sp)):
 
     #### Getting stats and heatmap
     gwf.target_from_template('Stats_'+str(i), stats(name = sp[i],
-                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/stats_heatmap/",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
                                                   
@@ -473,13 +473,14 @@ for i in range(len(sp)):
     #### Paralogs
     if os.path.isfile("/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+name[i]+"/genes_with_paralog_warnings.txt"):
         gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+                                                            path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/",
                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-                                                            done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs//"+sp[i],
+                                                            done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                             ))
     ## No paralogs
     else:
         gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
-                                                                path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/1.Hybpiper/",
+                                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                                 no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
