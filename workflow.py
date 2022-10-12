@@ -453,11 +453,10 @@ for i in range(len(sp)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
     #### Getting stats and heatmap
-    gwf.target_from_template('Stats_'+str(i), stats(name = sp[i],
-                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-                                                        in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
+    gwf.target_from_template('Stats_'+str(i), stats(path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                    in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
                                                   
     # #### Paralogs
     # gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
