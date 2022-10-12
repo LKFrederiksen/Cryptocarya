@@ -341,7 +341,7 @@ def paralogs(name, path_in, path_out, done):
 
     """.format(name = name, done = done, path_in = path_in, path_out = path_out)
     
-    return (inputs, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 def no_paralogs(name, path_in, done, no_paralogs):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
