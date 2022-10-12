@@ -1,5 +1,5 @@
 
-# ------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------
 # This workflow is used to transform the raw sequence data into sequences ready for alignment.
 # Workflow is the following
 
@@ -10,12 +10,12 @@
 # 5: Running Intronerate again to get the Introns for each species
 # 6: Trimming for Coverage of sequencing and joining the exon and intron of each species to create supercontigs
 
-# ------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------------------------------------------------
-# Author: Laura Kragh Frederiksen (adapted from Oscar Wrisberg)
-# Date: 
-# ------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------
+# This code is a variant of species_workflow.py by Oscar Balslev Wrisberg and workflow_completed.py by Paola de Lima Ferreira 
+# Edited by Laura Kragh Frederiksen 12/10/2022
+# ----------------------------------------------------------------------------------------------------------------------------
 
 from os import O_SYNC, name
 from gwf import Workflow
@@ -238,6 +238,9 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     conda activate HybPiper
 
+    TMPDIR=/scratch/$SLURM_JOBID
+    export TMPDIR
+    mkdir -p $TMPDIR
     cd $TMPDIR
     
     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
@@ -252,89 +255,110 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 
     return (path_ins, outputs, options, spec)
 
+########################################################################################################################
+###################################################---- Stats ----######################################################
+########################################################################################################################
+
+# In this step you should run the statistics on the folder where we have the Hybpiper_results
+# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+
+def stats(path_in, done, path_out):
+   """Gather statistics about the HybPiper run(s).""" 
+   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png", done]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "4g", 'walltime': "1:00:00", 'account':"cryptocarya"} #Slurm commands
+
+   spec = """
+   
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+   conda activate HybPiper
+    
+   cd {path_in}
+    
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta 'gene' {path_in}namelist.txt # Get stats
+
+   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+
+   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+    
+   mv hybpiper_stats.tsv {path_out}
+
+   mv recovery_heatmap.png {path_out} 
+
+   touch {done}
+      
+   """.format(path_in = path_in, done = done, path_out = path_out)
+
+   return (path_ins, outputs, options, spec) 
+
+
 # ########################################################################################################################
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-# def paralogs(name,path_in, done, no_paralogs, in_done):
+# def paralogs(name, path_in, done, in_done):
 #     """Find Paralog genes and write them in the file called paralog.txt"""
-#     inputs = [path_in + name, in_done]
+#     path_ins = [path_in + name, in_done]
 #     outputs = [done]
 #     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
 #     spec = """
+    
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
 #     conda activate HybPiper
     
-#     if test -f /home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt; then
-#         echo "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/{name}/genes_with_long_paralog_warnings.txt exists"
-#         cd {path_in}
-#         hybpiper paralog_retriever {name} -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
-#     else
-#         echo "the genes_with_long_paralog_warnings.txt does not exist and we run the no parallels part"
-#         touch {np}
-#     fi
+#     cd {path_in}
+
+#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
 #     touch {done}
 
-#     """.format(name = name, done = done, path_in = path_in, np = no_paralogs)
-#     return (inputs, outputs, options, spec)
-
-
-def paralogs(name, path_in, done, in_done):
-    """Find Paralog genes and write them in the file called paralog.txt"""
-    path_ins = [path_in + name, in_done]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
-
-    spec = """
+#      """.format(name = name, done = done, path_in = path_in)
     
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-    conda activate HybPiper
-    
-    cd {path_in}
+#     return (path_ins, outputs, options, spec)
 
-    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
-    
-    touch {done}
-
-     """.format(name = name, done = done, path_in = path_in)
-    
-    return (path_ins, outputs, options, spec)
-
-
-# ##################################################################################################################################
-# #############################################---- Retrieve supercontigs ----######################################################
-# ##################################################################################################################################
-
-def supercontig(name, path_in, done):
-    """Retrieve supercontig sequences using HybPiper"""
-    path_ins = [path_in + name, path_in+"done/Paralogs/"+name]
-    outputs = [done]
+def paralogs(name, path_in, path_out, done):
+   """Find Paralog genes and write them on the file called paralog.txt"""
+    path_ins = [path_in+name, in_done]
+    outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
     options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
-    
+
     spec = """
    
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
+
     conda activate HybPiper
 
     cd {path_in}
 
-    # Recover DNA and amino-acid sequences
-    
-    hybpiper retrieve_sequences supercontig -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta --sample_names {name} --fasta_dir 02_supercontig_seqs
-
-    hybpiper stats -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta gene {path_in}namelist.txt
-
-    hybpiper recovery_heatmap {path_in}seq_lengths.tsv
+    python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
+   
+    mv paralog.txt {path_out}
 
     touch {done}
 
-    """.format(name = name, done = done, path_in = path_in)
+    """.format(name = name, done = done, path_in = path_in, path_out = path_out)
+    
+    return (inputs, outputs, options, spec)
 
-    return (path_ins, outputs, options, spec)
+def no_paralogs(name, path_in, done, no_paralogs):
+    """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
+    inputs = [path_in+name]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
+
+    spec = """
+
+    touch {done}
+    touch {np}
+
+    """.format(done=done, np=no_paralogs)
+    
+    return(inputs, outputs, options, spec)
+
+
 
 # # ########################################################################################################################
 # # #############################################---- Coverage ----#########################################################
@@ -427,20 +451,37 @@ for i in range(len(sp)):
                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
-                                                                      
 
+    #### Getting stats and heatmap
+    gwf.target_from_template('Stats_'+str(i), stats(name = sp[i],
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/stats_heatmap/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
+                                                  
+    # #### Paralogs
+    # gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+    #                                                     in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
+
+
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531"] 
+# Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work. 
+
+## paralogs
+for i in range(len(sp)):
     #### Paralogs
-    gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
-                                                        in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
-
-    
-    #### Getting supercontig sequences
-    gwf.target_from_template('Supercontig_'+str(i), supercontig(name= sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/retrieve_supercontig/"+sp[i]))
-
+    if os.path.isfile("/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/1.Hybpiper/"+name[i]+"/genes_with_paralog_warnings.txt"):
+        gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
+                                                            path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                            done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs//"+sp[i],
+                                                            ))
+    ## No paralogs
+    else:
+        gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
+                                                                path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/1.Hybpiper/",
+                                                                done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
+                                                                no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
     # #### Coverage
     # gwf.target_from_template('Coverage_'+sp[i], coverage(species = sp[i],
