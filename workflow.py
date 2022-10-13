@@ -456,6 +456,7 @@ for i in range(len(sp)):
 gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
+                                                name = sp[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
                                                   
     # #### Paralogs
