@@ -297,51 +297,57 @@ def stats(path_in, done, path_out, in_done, name):
 # #############################################---- Paralogs ----#########################################################
 # ########################################################################################################################
 
-# def paralogs(name, path_in, done, in_done):
-#     """Find Paralog genes and write them in the file called paralog.txt"""
-#     path_ins = [path_in + name, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
+def paralogs(name, path_in, done, in_done, path_out):
+    """Run HybPiper v. 2.1 - paralog retriever """
+    path_ins = [path_in+name, in_done]
+    outputs = [done, path_out"paralog_report.tsv", path_out"paralogs_above_threshold_report.txt", path_out"paralogs_all", path_out"paralogs_no_chimeras", path_out"paralog_heatmap.png"]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
     
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     conda activate HybPiper
+    conda activate HybPiper
     
-#     cd {path_in}
+    cd {path_in}
 
-#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
+    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353.fasta
     
-#     touch {done}
+    mv paralog_report.tsv {path_out}
+    mv paralogs_above_threshold_report.txt {path_out}
+    mv paralogs_all {path_out}
+    mv paralogs_no_chimeras {path_out}
+    mv paralog_heatmap.png {path_out}
 
-#      """.format(name = name, done = done, path_in = path_in)
+    touch {done}
+
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
     
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
-def paralogs(name, path_in, path_out, done, in_done):
-   """Find Paralog genes and write them on the file called paralog.txt"""
-   path_ins = [path_in+name, in_done]
-   outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
-   options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+# def paralogs(name, path_in, path_out, done, in_done):
+#    """Find Paralog genes and write them on the file called paralog.txt"""
+#    path_ins = [path_in+name, in_done]
+#    outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
+#    options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-   spec = """
+#    spec = """
    
-   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-   conda activate HybPiper
+#    conda activate HybPiper
 
-   cd {path_in}
+#    cd {path_in}
 
-   python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
+#    python /home/laurakf/cryptocarya/Programs/HybPiper-master/paralog_investigator.py {name} 2>> paralog.txt
    
-   mv paralog.txt {path_out}
+#    mv paralog.txt {path_out}
 
-   touch {done}
+#    touch {done}
 
-   """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+#    """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
 
-   return (path_ins, outputs, options, spec)
+#    return (path_ins, outputs, options, spec)
 
 def no_paralogs(name, path_in, done, no_paralogs, in_done):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
