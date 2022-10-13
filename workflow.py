@@ -300,7 +300,7 @@ def stats(path_in, done, path_out, in_done, name):
 def paralogs(name, path_in, done, in_done, path_out):
     """Run HybPiper v. 2.1 - paralog retriever """
     path_ins = [path_in+name, in_done]
-    outputs = [done, path_out+"paralog_report.tsv", path_out+"paralogs_above_threshold_report.txt", path_out+"paralogs_all", path_out+"paralogs_no_chimeras", path_out+"paralog_heatmap.png"]
+    outputs = [done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
     spec = """
