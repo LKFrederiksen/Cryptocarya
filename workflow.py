@@ -366,41 +366,52 @@ def no_paralogs(name, path_in, done, no_paralogs, in_done):
 
 
 
-# # ########################################################################################################################
-# # #############################################---- Coverage ----#########################################################
-# # ########################################################################################################################
-# def coverage(species, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out):
-#     """Calculating coverage of sequences."""
-#     path_ins = [path_in+species, path_in+"done/Intronerate/"+species]
-#     outputs = [path_out+species+all_bam,
-#      path_out+species+all_sorted_bam,
-#       path_out+species+all_sorted_bam_bai,
-#        path_out+species+bam,
-#     path_out+species+cov,
-#      path_out+species+fasta,
-#       path_out+species+fasta_amb,
-#        path_out+species+fasta_ann,
-#         path_out+species+fasta_bwt,
+# ########################################################################################################################
+# #############################################---- Coverage ----#########################################################
+# ########################################################################################################################
 
-#     path_out+species+fasta_pac,
-#      path_out+species+fasta_sa,
-#       path_out+species+trimmed_fasta,
-#        path_out+species+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
+#This script does the following:
+# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# Map paired and unpaired reads to that fasta using BWA mem
+# Deduplicate reads using Picard
+# Calculate depth using samtools
+# Mask/strip any bases with coverage <2
+# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
 
-#     spec = """
-#     source /home/owrisberg/miniconda3/etc/profile.d/conda.sh
-#     conda activate base
+def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out):
+    """Calculating coverage of sequences."""
+    path_ins = [path_in+name]
+    outputs = [path_out+name+all_bam,
+     path_out+name+all_sorted_bam,
+      path_out+name+all_sorted_bam_bai,
+       path_out+name+bam,
+    path_out+name+cov,
+     path_out+name+fasta,
+      path_out+name+fasta_amb,
+       path_out+name+fasta_ann,
+        path_out+name+fasta_bwt,
+
+    path_out+name+fasta_pac,
+     path_out+name+fasta_sa,
+      path_out+name+trimmed_fasta,
+       path_out+name+up_bam,done] #ALL the output files
+    options = {'cores': 4, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
+
+    spec = """
     
-#     cd {path_in}
-
-#     python3 /home/owrisberg/Coryphoideae/github_code/coryphoideae_species_tree/coverage.py {sp} {dir_in} {dir_out}
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     touch {done}
+    conda activate HybPiper
+    
+    cd {path_in}
 
-#     """.format(sp = species, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out)
+    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out}
+    
+    touch {done}
 
-#     return (path_ins, outputs, options, spec)
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out)
+
+    return (path_ins, outputs, options, spec)
 
 ########################################################################################################################
 ######################################################---- RUN ----#####################################################
@@ -493,24 +504,25 @@ for i in range(len(sp)):
                                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                                 no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
-    # #### Coverage
-    # gwf.target_from_template('Coverage_'+sp[i], coverage(species = sp[i],
-    #                                                     path_in = "/home/owrisberg/Coryphoideae/work_flow/03_hybpiper/",
-    #                                                     all_bam = "_all.bam",
-    #                                                     all_sorted_bam ="_all_sorted.bam",
-    #                                                     all_sorted_bam_bai="_all_sorted.bam.bai",
-    #                                                     bam =".bam",
-    #                                                     cov=".cov",
-    #                                                     fasta = ".fasta",
-    #                                                     fasta_amb = ".fasta.amb",
-    #                                                     fasta_ann = ".fasta.ann",
-    #                                                     fasta_bwt = ".fasta.bwt",
-    #                                                     fasta_pac = ".fasta.pac",
-    #                                                     fasta_sa = ".fasta.sa",
-    #                                                     trimmed_fasta = "_trimmed.fasta",
-    #                                                     up_bam = "_up.bam",
-    #                                                     path_out = "/home/owrisberg/Coryphoideae/work_flow/04_coverage/",
-    #                                                     done = "/home/owrisberg/Coryphoideae/work_flow/04_coverage/done/Coverage/"+sp[i],
-    #                                                     dir_in ="/home/owrisberg/Coryphoideae/work_flow/02_trimmed/", #Folder with raw reads
-    #                                                     dir_out ="/home/owrisberg/Coryphoideae/work_flow/04_coverage/")) # folder with coverage
+    #### Coverage
+
+    gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        all_bam = "_all.bam",
+                                                        all_sorted_bam ="_all_sorted.bam",
+                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
+                                                        bam =".bam",
+                                                        cov=".cov",
+                                                        fasta = ".fasta",
+                                                        fasta_amb = ".fasta.amb",
+                                                        fasta_ann = ".fasta.ann",
+                                                        fasta_bwt = ".fasta.bwt",
+                                                        fasta_pac = ".fasta.pac",
+                                                        fasta_sa = ".fasta.sa",
+                                                        trimmed_fasta = "_trimmed.fasta",
+                                                        up_bam = "_up.bam",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/done/Coverage/"+sp[i],
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
+                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
