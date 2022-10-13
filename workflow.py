@@ -479,7 +479,7 @@ sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","P
 for i in range(len(sp)):
     #### Paralogs
     if os.path.isfile("/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+sp[i]+"/"+sp[i]+"_genes_with_long_paralog_warnings.txt"):
-        gwf.target_from_template('paralogs', paralogs(name = sp[i],
+        gwf.target_from_template('para', paralogs(name = sp[i],
                                                             path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/",
                                                             path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                             in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
