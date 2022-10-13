@@ -262,7 +262,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 # In this step you should run the statistics on the folder where we have the Hybpiper_results
 # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-def stats(path_in, done, path_out, in_done):
+def stats(path_in, done, path_out, in_done, name):
    """Gather statistics about the HybPiper run(s).""" 
    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
@@ -288,7 +288,7 @@ def stats(path_in, done, path_out, in_done):
 
    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
 
    return (path_ins, outputs, options, spec) 
 
