@@ -378,7 +378,7 @@ def no_paralogs(name, path_in, done, no_paralogs, in_done):
 # Mask/strip any bases with coverage <2
 # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
 
-def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out):
+def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
     """Calculating coverage of sequences."""
     path_ins = [path_in+name]
     outputs = [path_out+name+all_bam,
@@ -405,11 +405,11 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
     
     cd {path_in}
 
-    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out}
+    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
     
     touch {done}
 
-    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out)
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
 
     return (path_ins, outputs, options, spec)
 
@@ -523,6 +523,7 @@ for i in range(len(sp)):
                                                         up_bam = "_up.bam",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/done/Coverage/"+sp[i],
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
