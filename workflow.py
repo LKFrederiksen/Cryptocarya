@@ -562,5 +562,5 @@ for i in range(len(sp)):
     gwf.target_from_template('retrieve', retrieve(name = sp[i],
                                                 path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"))
+                                                done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
 
