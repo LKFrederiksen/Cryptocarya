@@ -434,6 +434,8 @@ def retrieve(path_in, name, path_out, done):
 
     ls *trimmed.fasta > filelist.txt
 
+    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+
     touch {done}
 
     """.format(path_in = path_in, path_out = path_out, name = name, done = done)
