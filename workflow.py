@@ -419,30 +419,30 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 #Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
 
 # def retrieve(path_in, name, path_out, done):
-#     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-#     inputs = [path_in+name+"_trimmed.fasta"]
-#     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt", done]
-#     options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+    """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
+    inputs = [path_in+name+"_trimmed.fasta"]
+    outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt", done]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     conda activate HybPiper
+    conda activate HybPiper
 
-#     cd {path_in}
+    cd {path_in}
 
-#     ls *trimmed.fasta > filelist.txt
+    ls *trimmed.fasta > filelist.txt
 
-#     python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
 
-#     touch /home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt
+    touch /home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, name = name, done = done)
+    """.format(path_in = path_in, path_out = path_out, name = name, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
     
 ###Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
 
@@ -561,9 +561,9 @@ for i in range(len(sp)):
                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
-    # #### Retrieve sequences and sort into files with gene names
-    # gwf.target_from_template('Retrieve', retrieve(name = sp[i],
-    #                                             path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
-    #                                             path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
-    #                                             done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
+    #### Retrieve sequences and sort into files with gene names
+    gwf.target_from_template('Retrieve', retrieve(name = sp[i],
+                                                path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
+                                                path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
+                                                done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
 
