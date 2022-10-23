@@ -436,6 +436,8 @@ def retrieve(path_in, name, path_out, done):
 
     python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
 
+    touch /home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt
+
     touch {done}
 
     """.format(path_in = path_in, path_out = path_out, name = name, done = done)
