@@ -426,9 +426,11 @@ def retrieve(path_in, name, path_out, done):
 
     spec = """
 
-    source activate HybPiper
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
 
-    cd {path_in} /home/laurakf/cryptocarya/Workflow/Test/07_Coverage/
+    cd {path_in}
 
     ls *trimmed.fasta > filelist.txt
 
@@ -556,7 +558,7 @@ for i in range(len(sp)):
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
     #### Retrieve sequences and sort into files with gene names
-    gwf.target_from_template('retrieve', retrieve(name = sp[i],
+    gwf.target_from_template('Retrieve', retrieve(name = sp[i],
                                                 path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
