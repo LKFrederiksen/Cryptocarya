@@ -390,7 +390,6 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
       path_out+name+fasta_amb,
        path_out+name+fasta_ann,
         path_out+name+fasta_bwt,
-
     path_out+name+fasta_pac,
      path_out+name+fasta_sa,
       path_out+name+trimmed_fasta,
@@ -414,10 +413,43 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
     return (path_ins, outputs, options, spec)
 
 ########################################################################################################################
+#############################################---- Retrieve ----#########################################################
+########################################################################################################################
+
+#Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
+
+def retrieve(path_in):
+    """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
+    inputs = [path_in+name+"_trimmed.fasta"]
+    outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt"]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+
+    spec = """
+
+    source activate HybPiper
+
+    cd {path_in} /home/laurakf/cryptocarya/Workflow/Test/07_Coverage/
+
+    ls *trimmed.fasta > filelist.txt
+
+    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+
+    touch {done}
+
+    """.format(path_in = path_in, path_out = path_out, name = name)
+
+    return (inputs, outputs, options, spec)
+    
+###Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
+
+
+
+
+########################################################################################################################
 ######################################################---- RUN ----#####################################################
 ########################################################################################################################
 
-#Species removed from pipeline as they had no gene recovery [3050,3188,3272,3300,3316, 3364, 3392, 3394]
+#Species removed from pipeline as they had no gene recovery.
 sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 
 
@@ -505,7 +537,6 @@ for i in range(len(sp)):
                                                                 no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
     #### Coverage
-
     gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         all_bam = "_all.bam",
@@ -526,4 +557,10 @@ for i in range(len(sp)):
                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
+
+    #### Retrieve sequences and sort into files with gene names
+    gwf.target_from_template('retrieve', retrieve(name = sp[i],
+                                                path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
+                                                path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
+                                                done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"))
 
