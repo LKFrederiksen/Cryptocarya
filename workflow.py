@@ -418,7 +418,7 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 
 #Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
 
-def retrieve(path_in):
+def retrieve(path_in, name, path_out, done):
     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
     inputs = [path_in+name+"_trimmed.fasta"]
     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt"]
@@ -432,11 +432,9 @@ def retrieve(path_in):
 
     ls *trimmed.fasta > filelist.txt
 
-    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
-
     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, name = name)
+    """.format(path_in = path_in, path_out = path_out, name = name, done = done)
 
     return (inputs, outputs, options, spec)
     
