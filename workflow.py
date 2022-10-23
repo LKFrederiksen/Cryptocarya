@@ -420,7 +420,7 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 
 def retrieve(path_in, name, path_out, done):
     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-    inputs = [path_in+name+"_trimmed.fasta"]
+    path_ins = [path_in+name+"_trimmed.fasta"]
     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt", done]
     options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
@@ -442,7 +442,7 @@ def retrieve(path_in, name, path_out, done):
 
     """.format(path_in = path_in, path_out = path_out, name = name, done = done)
 
-    return (inputs, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
     
 ###Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
 
