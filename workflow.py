@@ -418,9 +418,9 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 
 #Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
 
-def retrieve(path_in, name, path_out, done):
+def retrieve(path_in, path_out, done):
     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-    path_ins = [path_in+name+"_trimmed.fasta"]
+    path_ins = [path_in+"Pleurothyrium-cuneifolium-WE524_trimmed.fasta", path_in+"Ocotea-skutchii-WE530_trimmed.fasta", path_in+"Ocotea-sinuata-WE531_trimmed.fasta", path_in+"Ocotea-meziana-WE523_trimmed.fasta", path_in+"Ocotea-javitensis-WE529_trimmed.fasta", path_in+"Ocotea-glaucosericea-WE527_trimmed.fasta", path_in+"Ocotea-gabonensis-WE522_trimmed.fasta", path_in+"Ocotea-foetens-WE521_trimmed.fasta", path_in+"Ocotea-complicata-WE528_trimmed.fasta", path_in+"Mespilodaphne-cymbarum-WE525_trimmed.fasta", path_in+"Damburneya-gentlei-WE526_trimmed.fasta"]
     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt", done]
     options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
@@ -440,7 +440,7 @@ def retrieve(path_in, name, path_out, done):
 
     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, name = name, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done)
 
     return (path_ins, outputs, options, spec)
     
@@ -562,8 +562,7 @@ for i in range(len(sp)):
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
     #### Retrieve sequences and sort into files with gene names
-    gwf.target_from_template('Retrieve', retrieve(name = sp[i],
-                                                path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
+    gwf.target_from_template('Retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
 
