@@ -430,7 +430,7 @@ def retrieve(path_in):
     
     conda activate HybPiper
 
-    cd {path_in}
+    cd /home/laurakf/cryptocarya/Workflow/Test/07_Coverage/
 
     ls *trimmed.fasta > filelist.txt
 
