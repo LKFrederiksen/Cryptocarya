@@ -562,7 +562,7 @@ for i in range(len(sp)):
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
     #### Retrieve sequences and sort into files with gene names
-    gwf.target_from_template('Retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
+    gwf.target_from_template('Retrieve'+str(i), retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
 
