@@ -425,8 +425,6 @@ def retrieve(path_in):
     options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
-
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
     conda activate HybPiper
 
@@ -434,7 +432,7 @@ def retrieve(path_in):
 
     ls *trimmed.fasta > filelist.txt
 
-    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+    python3 sample2genes.py > outstats.csv
 
     touch /home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt
 
