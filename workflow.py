@@ -846,8 +846,8 @@ genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA",
 #### MAFFT
 for i in range(len(genes)):
     gwf.target_from_template('Mafft_'+str(i), mafft(genes = genes[i],
-                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/.FNA",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/.FNA",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
                                                         gene = gene[i],
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/done/"+genes[i]))
 
