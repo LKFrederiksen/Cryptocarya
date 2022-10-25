@@ -31,8 +31,8 @@ gwf = Workflow()
 def fastqc_raw(name,path_in ,path_out, done,):
     """Quality checking using fastqc as this should work on individual species"""
     path_ins = []
-    outputs = [path_out+name+"_R1_fastqc.html.FNA",path_out+name+"_R2_fastqc.html.FNA", done]
-    options = {'cores': 1, 'memory': "8g.FNA", 'walltime': "00:30:00.FNA", 'account':"cryptocarya"}
+    outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
+    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
     spec = """
@@ -57,9 +57,9 @@ def fastqc_raw(name,path_in ,path_out, done,):
 ########################################################################################################################
 def multiqc_raw(path_in ,path_out, done,):
     """Quality checking using multiqc"""
-    inputs = [path_in+"Ocotea-foetens-WE521_R1_fastqc.html.FNA",path_in+"Ocotea-gabonensis-WE522_R1_fastqc.html.FNA",path_in+"Ocotea-meziana-WE523_R1_fastqc.html.FNA",path_in+"Pleurothyrium-cuneifolium-WE524_R1_fastqc.html.FNA",path_in+"Mespilodaphne-cymbarum-WE525_R1_fastqc.html.FNA",path_in+"Damburneya-gentlei-WE526_R1_fastqc.html.FNA",path_in+"Ocotea-glaucosericea-WE527_R1_fastqc.html.FNA",path_in+"Ocotea-complicata-WE528_R1_fastqc.html.FNA",path_in+"Ocotea-javitensis-WE529_R1_fastqc.html.FNA",path_in+"Ocotea-skutchii-WE530_R1_fastqc.html.FNA",path_in+"Ocotea-sinuata-WE531_R1_fastqc.html.FNA",path_in+"Ocotea-botrantha-WE532_R1_fastqc.html.FNA",path_in+"Nectandra-lineatifolia-WE533_R1_fastqc.html.FNA",path_in+"Ocotea-foetens-WE521_R2_fastqc.html.FNA",path_in+"Ocotea-gabonensis-WE522_R2_fastqc.html.FNA",path_in+"Ocotea-meziana-WE523_R2_fastqc.html.FNA",path_in+"Pleurothyrium-cuneifolium-WE524_R2_fastqc.html.FNA",path_in+"Mespilodaphne-cymbarum-WE525_R2_fastqc.html.FNA",path_in+"Damburneya-gentlei-WE526_R2_fastqc.html.FNA",path_in+"Ocotea-glaucosericea-WE527_R2_fastqc.html.FNA",path_in+"Ocotea-complicata-WE528_R2_fastqc.html.FNA",path_in+"Ocotea-javitensis-WE529_R2_fastqc.html.FNA",path_in+"Ocotea-skutchii-WE530_R2_fastqc.html.FNA",path_in+"Ocotea-sinuata-WE531_R2_fastqc.html.FNA",path_in+"Ocotea-botrantha-WE532_R2_fastqc.html.FNA",path_in+"Nectandra-lineatifolia-WE533_R2_fastqc.html"] 
-    outputs = [path_out+"multiqc_report.html.FNA", done]
-    options = {'cores': 1, 'memory': "8g.FNA", 'walltime': "00:30:00.FNA", 'account':"cryptocarya"}
+    inputs = [path_in+"Ocotea-foetens-WE521_R1_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R1_fastqc.html",path_in+"Ocotea-meziana-WE523_R1_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R1_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R1_fastqc.html",path_in+"Damburneya-gentlei-WE526_R1_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R1_fastqc.html",path_in+"Ocotea-complicata-WE528_R1_fastqc.html",path_in+"Ocotea-javitensis-WE529_R1_fastqc.html",path_in+"Ocotea-skutchii-WE530_R1_fastqc.html",path_in+"Ocotea-sinuata-WE531_R1_fastqc.html",path_in+"Ocotea-botrantha-WE532_R1_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R1_fastqc.html",path_in+"Ocotea-foetens-WE521_R2_fastqc.html",path_in+"Ocotea-gabonensis-WE522_R2_fastqc.html",path_in+"Ocotea-meziana-WE523_R2_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_R2_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_R2_fastqc.html",path_in+"Damburneya-gentlei-WE526_R2_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_R2_fastqc.html",path_in+"Ocotea-complicata-WE528_R2_fastqc.html",path_in+"Ocotea-javitensis-WE529_R2_fastqc.html",path_in+"Ocotea-skutchii-WE530_R2_fastqc.html",path_in+"Ocotea-sinuata-WE531_R2_fastqc.html",path_in+"Ocotea-botrantha-WE532_R2_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_R2_fastqc.html"] 
+    outputs = [path_out+"multiqc_report.html", done]
+    options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
     spec = """
@@ -85,8 +85,8 @@ def trimmomatic(name, path_in, path_out, done):
     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
     to enable post-trimming secapr quality_check for comparability before and after trimming """
     path_ins = []
-    outputs = [path_out+name+"_UN.fastq.FNA",path_out+"secapr_postrim/"+name+"_UN.fastq.FNA", done, path_out+name+"_1P.fastq.FNA", path_out+name+"_2P.fastq"]
-    options = {'cores': 16, 'memory': "10g.FNA", 'walltime': "01:00:00.FNA", 'account':"cryptocarya"}
+    outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
+    options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
     spec = """
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
@@ -131,8 +131,8 @@ def trimmomatic(name, path_in, path_out, done):
 #     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
 #     to enable post-trimming secapr quality_check for comparability before and after trimming """
 #     path_ins = []
-#     outputs = [path_out+name+"_UN.fastq.FNA",path_out+"secapr_postrim/"+name+"_UN.fastq.FNA", done, path_out+name+"_1P.fastq.FNA", path_out+name+"_2P.fastq"]
-#     options = {'cores': 16, 'memory': "10g.FNA", 'walltime': "01:00:00.FNA", 'account':"cryptocarya"}
+#     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
+#     options = {'cores': 16, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 #     spec = """
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
@@ -175,9 +175,9 @@ def trimmomatic(name, path_in, path_out, done):
 ########################################################################################################################
 def fastqc_trimmed(name,path_in ,path_out, done,):
      """Quality checking using fastqc as this should work on individual species"""
-     path_ins = [path_in+name+"_UN.fastq.FNA", path_in+name+"_1PU.fastq.FNA", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
-     outputs = [path_out+name+"_1PU_fastqc.html.FNA", path_out+name+"_2PU_fastqc.html.FNA",path_out+name+"_UN_fastqc.html.FNA", done]
-     options = {'cores': 1, 'memory': "8g.FNA", 'walltime': "00:30:00.FNA", 'account':"cryptocarya"}
+     path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
+     outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
+     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
      spec = """
@@ -202,9 +202,9 @@ def fastqc_trimmed(name,path_in ,path_out, done,):
 # ########################################################################################################################
 # def multiqc_trimmed(path_in ,path_out, done,):
 #     """Quality checking using multiqc"""
-#     inputs = [path_in+"Ocotea-foetens-WE521_1PU_fastqc.html.FNA",path_in+"Ocotea-gabonensis-WE522_1PU_fastqc.html.FNA",path_in+"Ocotea-meziana-WE523_1PU_fastqc.html.FNA",path_in+"Pleurothyrium-cuneifolium-WE524_1PU_fastqc.html.FNA",path_in+"Mespilodaphne-cymbarum-WE525_1PU_fastqc.html.FNA",path_in+"Damburneya-gentlei-WE526_1PU_fastqc.html.FNA",path_in+"Ocotea-glaucosericea-WE527_1PU_fastqc.html.FNA",path_in+"Ocotea-complicata-WE528_1PU_fastqc.html.FNA",path_in+"Ocotea-javitensis-WE529_1PU_fastqc.html.FNA",path_in+"Ocotea-skutchii-WE530_1PU_fastqc.html.FNA",path_in+"Ocotea-sinuata-WE531_1PU_fastqc.html.FNA",path_in+"Ocotea-botrantha-WE532_1PU_fastqc.html.FNA",path_in+"Nectandra-lineatifolia-WE533_1PU_fastqc.html.FNA",path_in+"Ocotea-foetens-WE521_2PU_fastqc.html.FNA",path_in+"Ocotea-gabonensis-WE522_2PU_fastqc.html.FNA",path_in+"Ocotea-meziana-WE523_2PU_fastqc.html.FNA",path_in+"Pleurothyrium-cuneifolium-WE524_2PU_fastqc.html.FNA",path_in+"Mespilodaphne-cymbarum-WE525_2PU_fastqc.html.FNA",path_in+"Damburneya-gentlei-WE526_2PU_fastqc.html.FNA",path_in+"Ocotea-glaucosericea-WE527_2PU_fastqc.html.FNA",path_in+"Ocotea-complicata-WE528_2PU_fastqc.html.FNA",path_in+"Ocotea-javitensis-WE529_2PU_fastqc.html.FNA",path_in+"Ocotea-skutchii-WE530_2PU_fastqc.html.FNA",path_in+"Ocotea-sinuata-WE531_2PU_fastqc.html.FNA",path_in+"Ocotea-botrantha-WE532_2PU_fastqc.html.FNA",path_in+"Nectandra-lineatifolia-WE533_2PU_fastqc.html.FNA",path_in+"Ocotea-foetens-WE521_UN_fastqc.html.FNA",path_in+"Ocotea-gabonensis-WE522_UN_fastqc.html.FNA",path_in+"Ocotea-meziana-WE523_UN_fastqc.html.FNA",path_in+"Pleurothyrium-cuneifolium-WE524_UN_fastqc.html.FNA",path_in+"Mespilodaphne-cymbarum-WE525_UN_fastqc.html.FNA",path_in+"Damburneya-gentlei-WE526_UN_fastqc.html.FNA",path_in+"Ocotea-glaucosericea-WE527_UN_fastqc.html.FNA",path_in+"Ocotea-complicata-WE528_UN_fastqc.html.FNA",path_in+"Ocotea-javitensis-WE529_UN_fastqc.html.FNA",path_in+"Ocotea-skutchii-WE530_UN_fastqc.html.FNA",path_in+"Ocotea-sinuata-WE531_UN_fastqc.html.FNA",path_in+"Ocotea-botrantha-WE532_UN_fastqc.html.FNA",path_in+"Nectandra-lineatifolia-WE533_UN_fastqc.html"] 
-#     outputs = [path_out+"multiqc_report.html.FNA", done]
-#     options = {'cores': 1, 'memory': "8g.FNA", 'walltime': "00:30:00.FNA", 'account':"cryptocarya"}
+#     inputs = [path_in+"Ocotea-foetens-WE521_1PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_1PU_fastqc.html",path_in+"Ocotea-meziana-WE523_1PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_1PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_1PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_1PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_1PU_fastqc.html",path_in+"Ocotea-complicata-WE528_1PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_1PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_1PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_1PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_1PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_1PU_fastqc.html",path_in+"Ocotea-foetens-WE521_2PU_fastqc.html",path_in+"Ocotea-gabonensis-WE522_2PU_fastqc.html",path_in+"Ocotea-meziana-WE523_2PU_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_2PU_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_2PU_fastqc.html",path_in+"Damburneya-gentlei-WE526_2PU_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_2PU_fastqc.html",path_in+"Ocotea-complicata-WE528_2PU_fastqc.html",path_in+"Ocotea-javitensis-WE529_2PU_fastqc.html",path_in+"Ocotea-skutchii-WE530_2PU_fastqc.html",path_in+"Ocotea-sinuata-WE531_2PU_fastqc.html",path_in+"Ocotea-botrantha-WE532_2PU_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_2PU_fastqc.html",path_in+"Ocotea-foetens-WE521_UN_fastqc.html",path_in+"Ocotea-gabonensis-WE522_UN_fastqc.html",path_in+"Ocotea-meziana-WE523_UN_fastqc.html",path_in+"Pleurothyrium-cuneifolium-WE524_UN_fastqc.html",path_in+"Mespilodaphne-cymbarum-WE525_UN_fastqc.html",path_in+"Damburneya-gentlei-WE526_UN_fastqc.html",path_in+"Ocotea-glaucosericea-WE527_UN_fastqc.html",path_in+"Ocotea-complicata-WE528_UN_fastqc.html",path_in+"Ocotea-javitensis-WE529_UN_fastqc.html",path_in+"Ocotea-skutchii-WE530_UN_fastqc.html",path_in+"Ocotea-sinuata-WE531_UN_fastqc.html",path_in+"Ocotea-botrantha-WE532_UN_fastqc.html",path_in+"Nectandra-lineatifolia-WE533_UN_fastqc.html"] 
+#     outputs = [path_out+"multiqc_report.html", done]
+#     options = {'cores': 1, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 
 #     spec = """
@@ -230,7 +230,7 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
     """Hybpiper."""
     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-    options = {'cores': 2, 'memory': "8g.FNA", 'walltime': "10:00:00.FNA", 'account':"cryptocarya"} #Slurm commands
+    options = {'cores': 2, 'memory': "8g", 'walltime': "10:00:00", 'account':"cryptocarya"} #Slurm commands
 
     spec = """
 
@@ -265,8 +265,8 @@ def hybpiper(name, p1, p2, un, path_out, path_in, done):
 def stats(path_in, done, path_out, in_done, name):
    """Gather statistics about the HybPiper run(s).""" 
    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
-   outputs = [path_out+"seq_lengths.tsv.FNA", path_out+"hybpiper_stats.tsv.FNA", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-   options = {'cores': 2, 'memory': "4g.FNA", 'walltime': "1:00:00.FNA", 'account':"cryptocarya"} #Slurm commands
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "4g", 'walltime': "1:00:00", 'account':"cryptocarya"} #Slurm commands
 
    spec = """
    
@@ -301,7 +301,7 @@ def paralogs(name, path_in, done, in_done, path_out):
     """Run HybPiper v. 2.1 - paralog retriever """
     path_ins = [path_in+name, in_done]
     outputs = [done]
-    options = {'cores': 2, 'memory': "10g.FNA", 'walltime': "0:30:00.FNA", 'account':"cryptocarya"}
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:30:00", 'account':"cryptocarya"}
 
     spec = """
     
@@ -328,8 +328,8 @@ def paralogs(name, path_in, done, in_done, path_out):
 # def paralogs(name, path_in, path_out, done, in_done):
 #    """Find Paralog genes and write them on the file called paralog.txt"""
 #    path_ins = [path_in+name, in_done]
-#    outputs = [path_out+"paralog.txt.FNA", done]  # The files which will have to be created in order for the job to be "completed"
-#    options = {'cores': 2, 'memory': "10g.FNA", 'walltime': "1:00:00.FNA", 'account':"cryptocarya"}
+#    outputs = [path_out+"paralog.txt", done]  # The files which will have to be created in order for the job to be "completed"
+#    options = {'cores': 2, 'memory': "10g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
 #    spec = """
    
@@ -353,7 +353,7 @@ def no_paralogs(name, path_in, done, no_paralogs, in_done):
     """Wrapper script to continue pipeline when Hybpiper finds no paralogs"""
     inputs = [path_in+name, in_done]
     outputs = [done]
-    options = {'cores': 2, 'memory': "10g.FNA", 'walltime': "0:05:00.FNA", 'account':"cryptocarya"}
+    options = {'cores': 2, 'memory': "10g", 'walltime': "0:05:00", 'account':"cryptocarya"}
 
     spec = """
 
@@ -394,7 +394,7 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
      path_out+name+fasta_sa,
       path_out+name+trimmed_fasta,
        path_out+name+up_bam,done] #ALL the output files
-    options = {'cores': 4, 'memory': "20g.FNA", 'walltime': "08:00:00.FNA", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
 
     spec = """
     
@@ -420,9 +420,9 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 
 def retrieve(path_in, done):
     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-    path_ins = [path_in+"Pleurothyrium-cuneifolium-WE524_trimmed.fasta.FNA", path_in+"Ocotea-skutchii-WE530_trimmed.fasta.FNA", path_in+"Ocotea-sinuata-WE531_trimmed.fasta.FNA", path_in+"Ocotea-meziana-WE523_trimmed.fasta.FNA", path_in+"Ocotea-javitensis-WE529_trimmed.fasta.FNA", path_in+"Ocotea-glaucosericea-WE527_trimmed.fasta.FNA", path_in+"Ocotea-gabonensis-WE522_trimmed.fasta.FNA", path_in+"Ocotea-foetens-WE521_trimmed.fasta.FNA", path_in+"Ocotea-complicata-WE528_trimmed.fasta.FNA", path_in+"Mespilodaphne-cymbarum-WE525_trimmed.fasta.FNA", path_in+"Damburneya-gentlei-WE526_trimmed.fasta"]
+    path_ins = [path_in+"Pleurothyrium-cuneifolium-WE524_trimmed.fasta", path_in+"Ocotea-skutchii-WE530_trimmed.fasta", path_in+"Ocotea-sinuata-WE531_trimmed.fasta", path_in+"Ocotea-meziana-WE523_trimmed.fasta", path_in+"Ocotea-javitensis-WE529_trimmed.fasta", path_in+"Ocotea-glaucosericea-WE527_trimmed.fasta", path_in+"Ocotea-gabonensis-WE522_trimmed.fasta", path_in+"Ocotea-foetens-WE521_trimmed.fasta", path_in+"Ocotea-complicata-WE528_trimmed.fasta", path_in+"Mespilodaphne-cymbarum-WE525_trimmed.fasta", path_in+"Damburneya-gentlei-WE526_trimmed.fasta"]
     outputs = [done]
-    options = {'cores': 4, 'memory': "5g.FNA", 'walltime': "1:00:00.FNA", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
     
@@ -457,7 +457,7 @@ def mafft(genes, path_in, path_out, done, gene):
     """Aligning all the sequences for each gene."""
     path_ins = [path_in+genes]
     outputs = [done, path_out+gene+"_aligned.fasta"] 
-    options = {'cores': 4, 'memory': "4g.FNA", 'walltime': "4:00:00.FNA", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "4g", 'walltime': "4:00:00", 'account':"cryptocarya"}
 
     spec = """
 
@@ -467,7 +467,7 @@ def mafft(genes, path_in, path_out, done, gene):
 
     cd {path_in}
 
-    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes} > {path_out}{genes}_aligned.fasta
+    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes} > {path_out}{gene}_aligned.fasta
 
     touch {done}
 
@@ -489,7 +489,7 @@ def mafft(genes, path_in, path_out, done, gene):
 #     """ Use trimal for trimming all alignments for each of the GT values specified"""
 #     inputs = [path_in+genes+"_aligned.fasta"]
 #     outputs = [done]
-#     options = {'cores': 1, 'memory': "20g.FNA", 'walltime': "12:00:00.FNA", 'account':"cryptocarya"}
+#     options = {'cores': 1, 'memory': "20g", 'walltime': "12:00:00", 'account':"cryptocarya"}
 
 #     spec="""
 #     
@@ -523,8 +523,8 @@ def mafft(genes, path_in, path_out, done, gene):
 # #def amas_raw(path_in):
 # #    """Creating summary files for all the trimmed alignments for each raw alignment"""
 # #    inputs = [path_in]
-# #    outputs = [path_in+"summary_0.txt.FNA", path_in+"summary_0.95.txt"]
-# #    options = {'cores': 1, 'memory': "10g.FNA", 'walltime': "12:00:00.FNA", 'account':"cryptocarya"}
+# #    outputs = [path_in+"summary_0.txt", path_in+"summary_0.95.txt"]
+# #    options = {'cores': 1, 'memory': "10g", 'walltime': "12:00:00", 'account':"cryptocarya"}
 
 # #    spec="""
 
@@ -549,11 +549,11 @@ def mafft(genes, path_in, path_out, done, gene):
 # #Getting the best alignment for each gene 
 # def optrim(path_in, path_out, done = done):
 #     """Select the best alignments according to the gt value"""
-#     inputs = [done, path_in+"summary_0.txt.FNA",path_in+"summary_0.1.txt.FNA",path_in+"summary_0.15.txt.FNA",path_in+"summary_0.2.txt.FNA",path_in+"summary_0.25.txt.FNA",path_in+"summary_0.3.txt.FNA",
-#     path_in+"summary_0.35.txt.FNA",path_in+"summary_0.4.txt.FNA",path_in+"summary_0.45.txt.FNA",path_in+"summary_0.5.txt.FNA",path_in+"summary_0.55.txt.FNA",path_in+"summary_0.6.txt.FNA",path_in+"summary_0.65.txt.FNA",
-#     path_in+"summary_0.7.txt.FNA",path_in+"summary_0.75.txt.FNA",path_in+"summary_0.8.txt.FNA",path_in+"summary_0.85.txt.FNA",path_in+"summary_0.9.txt.FNA",path_in+"summary_0.95.txt"]
-#     outputs = ["/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/9.Best_alignments/optrimal_final_results/.FNA", done]
-#     options = {'cores': 10, 'memory': "20g.FNA", 'walltime': "08:00:00.FNA", 'account':"cryptocarya"}
+#     inputs = [done, path_in+"summary_0.txt",path_in+"summary_0.1.txt",path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
+#     path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
+#     path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt",path_in+"summary_0.95.txt"]
+#     outputs = ["/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/9.Best_alignments/optrimal_final_results/", done]
+#     options = {'cores': 10, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
 
 #     spec="""
 
@@ -588,8 +588,8 @@ def mafft(genes, path_in, path_out, done, gene):
 # def cialign1(genes, path_in, path_out, done):
 #     """Cleaning alignments using cialign default."""
 #     inputs = [path_in + genes + "_aligned.fasta.old"]
-#     outputs = [path_out+genes+"_cialign.fasta_cleaned.fasta.FNA", done]
-#     options = {'cores': 8, 'memory': "100g.FNA", 'walltime': "12:00:00.FNA", 'account':"cryptocarya"}
+#     outputs = [path_out+genes+"_cialign.fasta_cleaned.fasta", done]
+#     options = {'cores': 8, 'memory': "100g", 'walltime': "12:00:00", 'account':"cryptocarya"}
 
 #     spec = """
 #     source activate CIAlign
@@ -612,9 +612,9 @@ def mafft(genes, path_in, path_out, done, gene):
 
 # def taper(path_in, genes, path_out, done):
 #     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
-#     inputs = [path_in+genes+"_cialign.fasta_cleaned.fasta.FNA", done]
-#     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"+genes+"_output_tapper.fasta.FNA", done]
-#     options = {'cores': 1, 'memory': "40g.FNA", 'walltime': "02:00:00.FNA", 'account':"cryptocarya"}
+#     inputs = [path_in+genes+"_cialign.fasta_cleaned.fasta", done]
+#     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"+genes+"_output_tapper.fasta", done]
+#     options = {'cores': 1, 'memory': "40g", 'walltime': "02:00:00", 'account':"cryptocarya"}
 
 #     spec = """
      
@@ -640,9 +640,9 @@ def mafft(genes, path_in, path_out, done, gene):
 
 # def iqtree(path_in, genes, done):
 #     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
-#     inputs = [path_in+genes+"_output_tapper.fasta.FNA", done]
-#     outputs = [path_out+genes+"_output_tapper.fasta.treefile.FNA", done]
-#     options = {'cores': 2, 'memory': "40g.FNA", 'walltime': "12:00:00.FNA", 'account':"cryptocarya"}
+#     inputs = [path_in+genes+"_output_tapper.fasta", done]
+#     outputs = [path_out+genes+"_output_tapper.fasta.treefile", done]
+#     options = {'cores': 2, 'memory': "40g", 'walltime': "12:00:00", 'account':"cryptocarya"}
 
 #     spec = """
      
@@ -704,9 +704,9 @@ def mafft(genes, path_in, path_out, done, gene):
 
 # def astral_tapper(path_in, gene_tree_file, output, done):
 #     """Using Astral to construct a species tree based on the genetrees"""
-#     inputs = [path_in+"gene_trees.nex.FNA", done]
+#     inputs = [path_in+"gene_trees.nex", done]
 #     outputs = [path_in + output, done]
-#     options = {'cores': 20, 'memory': "40g.FNA", 'walltime': "48:00:00.FNA", 'account':"cryptocarya"}
+#     options = {'cores': 20, 'memory': "40g", 'walltime': "48:00:00", 'account':"cryptocarya"}
 
 #     spec = """
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
@@ -726,72 +726,72 @@ def mafft(genes, path_in, path_out, done, gene):
 ########################################################################################################################
 
 #Species removed from pipeline as they had no gene recovery.
-sp = ["Ocotea-foetens-WE521.FNA","Ocotea-gabonensis-WE522.FNA","Ocotea-meziana-WE523.FNA","Pleurothyrium-cuneifolium-WE524.FNA","Mespilodaphne-cymbarum-WE525.FNA","Damburneya-gentlei-WE526.FNA","Ocotea-glaucosericea-WE527.FNA","Ocotea-complicata-WE528.FNA","Ocotea-javitensis-WE529.FNA","Ocotea-skutchii-WE530.FNA","Ocotea-sinuata-WE531.FNA","Ocotea-botrantha-WE532.FNA","Nectandra-lineatifolia-WE533"] 
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 
 
 for i in range(len(sp)):
     #### Running fastqc on raw data
     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/RawData/Test/.FNA",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/.FNA",
+                                                        path_in= "/home/laurakf/cryptocarya/RawData/Test/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/done/"+sp[i]))
 
 #### Running multiqc on raw data
-gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/.FNA",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/.FNA",
+gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/",
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/02_MultiQC/done/multiqc_raw"))
 
-sp = ["Ocotea-foetens-WE521.FNA","Ocotea-gabonensis-WE522.FNA","Ocotea-meziana-WE523.FNA","Pleurothyrium-cuneifolium-WE524.FNA","Mespilodaphne-cymbarum-WE525.FNA","Damburneya-gentlei-WE526.FNA","Ocotea-glaucosericea-WE527.FNA","Ocotea-complicata-WE528.FNA","Ocotea-javitensis-WE529.FNA","Ocotea-skutchii-WE530.FNA","Ocotea-sinuata-WE531.FNA","Ocotea-botrantha-WE532.FNA","Nectandra-lineatifolia-WE533"] 
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531","Ocotea-botrantha-WE532","Nectandra-lineatifolia-WE533"] 
 
 for i in range(len(sp)):
     #### Running Trimmomatic
     gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/data/.FNA", 
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/.FNA",
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/01_FastQC/data/", 
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data
     gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/secapr_postrim/.FNA",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/.FNA",
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/secapr_postrim/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/done/"+sp[i]))                                                   
 
 
 # #### Running multiqc on trimmed data
-# gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/.FNA",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/.FNA",
+# gwf.target_from_template('multiqc_trimmed', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Test/04_FastQC/slidingwindow/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/",
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
-sp = ["Ocotea-foetens-WE521.FNA","Ocotea-gabonensis-WE522.FNA","Ocotea-meziana-WE523.FNA","Pleurothyrium-cuneifolium-WE524.FNA","Mespilodaphne-cymbarum-WE525.FNA","Damburneya-gentlei-WE526.FNA","Ocotea-glaucosericea-WE527.FNA","Ocotea-complicata-WE528.FNA","Ocotea-javitensis-WE529.FNA","Ocotea-skutchii-WE530.FNA","Ocotea-sinuata-WE531"] 
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531"] 
 # Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work. 
 
 for i in range(len(sp)):
     
     #### Running Hybpiper
     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
-                                                        p1 = "_1P.fastq.FNA",
-                                                        p2 = "_2P.fastq.FNA",
-                                                        un = "_UN.fastq.FNA",
-                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/.FNA",
+                                                        p1 = "_1P.fastq",
+                                                        p2 = "_2P.fastq",
+                                                        un = "_UN.fastq",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
 #### Getting stats and heatmap
-gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/.FNA",
-                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
+gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Stats_Heatmap/",
+                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                 name = sp[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Stats/"+sp[i]))
                                                   
     # #### Paralogs
     # gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
+    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
     #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
     #                                                     in_done="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i]))
 
 
-sp = ["Ocotea-foetens-WE521.FNA","Ocotea-gabonensis-WE522.FNA","Ocotea-meziana-WE523.FNA","Pleurothyrium-cuneifolium-WE524.FNA","Mespilodaphne-cymbarum-WE525.FNA","Damburneya-gentlei-WE526.FNA","Ocotea-glaucosericea-WE527.FNA","Ocotea-complicata-WE528.FNA","Ocotea-javitensis-WE529.FNA","Ocotea-skutchii-WE530.FNA","Ocotea-sinuata-WE531"] 
+sp = ["Ocotea-foetens-WE521","Ocotea-gabonensis-WE522","Ocotea-meziana-WE523","Pleurothyrium-cuneifolium-WE524","Mespilodaphne-cymbarum-WE525","Damburneya-gentlei-WE526","Ocotea-glaucosericea-WE527","Ocotea-complicata-WE528","Ocotea-javitensis-WE529","Ocotea-skutchii-WE530","Ocotea-sinuata-WE531"] 
 # Taken "Ocotea-botrantha-WE532" and "Nectandra-lineatifolia-WE533" out. They do not seem to work. 
 
 ## paralogs
@@ -799,43 +799,43 @@ for i in range(len(sp)):
     #### Paralogs
     if os.path.isfile("/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/"+sp[i]+"/"+sp[i]+"_genes_with_long_paralog_warnings.txt"):
         gwf.target_from_template('Paralogs_'+str(i), paralogs(name = sp[i],
-                                                            path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/.FNA",
-                                                            path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
+                                                            path_out = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/Paralogs/",
+                                                            path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                             in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                             done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i]))
 
     ## No paralogs
     else:
         gwf.target_from_template('No_Paralogs_'+str(i), no_paralogs(name = sp[i],
-                                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
+                                                                path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
                                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/Paralogs/"+sp[i],
                                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/HybPiper/"+sp[i],
                                                                 no_paralogs="/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/done/No_Paralogs/"+sp[i]))                   
 
     #### Coverage
     gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
-                                                        all_bam = "_all.bam.FNA",
-                                                        all_sorted_bam ="_all_sorted.bam.FNA",
-                                                        all_sorted_bam_bai="_all_sorted.bam.bai.FNA",
-                                                        bam =".bam.FNA",
-                                                        cov=".cov.FNA",
-                                                        fasta = ".fasta.FNA",
-                                                        fasta_amb = ".fasta.amb.FNA",
-                                                        fasta_ann = ".fasta.ann.FNA",
-                                                        fasta_bwt = ".fasta.bwt.FNA",
-                                                        fasta_pac = ".fasta.pac.FNA",
-                                                        fasta_sa = ".fasta.sa.FNA",
-                                                        trimmed_fasta = "_trimmed.fasta.FNA",
-                                                        up_bam = "_up.bam.FNA",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/.FNA",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        all_bam = "_all.bam",
+                                                        all_sorted_bam ="_all_sorted.bam",
+                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
+                                                        bam =".bam",
+                                                        cov=".cov",
+                                                        fasta = ".fasta",
+                                                        fasta_amb = ".fasta.amb",
+                                                        fasta_ann = ".fasta.ann",
+                                                        fasta_bwt = ".fasta.bwt",
+                                                        fasta_pac = ".fasta.pac",
+                                                        fasta_sa = ".fasta.sa",
+                                                        trimmed_fasta = "_trimmed.fasta",
+                                                        up_bam = "_up.bam",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/done/Coverage/"+sp[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/.FNA",
-                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/.FNA", #Folder with clean reads + unpaired
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Test/06_HybPiper/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Test/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/")) # folder with coverage
 
 #### Retrieve sequences and sort into files with gene names
-gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/.FNA", 
+gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/", 
                                               done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/retrieve/"))
 
 
@@ -855,8 +855,8 @@ for i in range(len(genes)):
 # #### Trimal according to a pre-defined gt values
 # for i in range(len(genes)):
 #    gwf.target_from_template('gt_trimming_'+genes[i], gt_trimming(genes = genes[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/.FNA",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/.FNA",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+genes[i]))
 
 # #### Generating AMAS statistics for raw_alignments
@@ -864,7 +864,7 @@ for i in range(len(genes)):
 
 
 # #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/.FNA",
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
 #                                                          done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
 #                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
 
@@ -872,15 +872,15 @@ for i in range(len(genes)):
 # # Running CIAlign on the trimmed_fasta - Including Paralogs
 # for i in range(0, len(genes)):
 #     gwf.target_from_template('Cialign1'+str(i), cialign1(genes = genes[i],
-#                                               path_in = ""/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optimal_final_results/.FNA",
-#                                               path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/.FNA",
+#                                               path_in = ""/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optimal_final_results/",
+#                                               path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
 #                                               done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+genes[i]))
 
 # ## Running TAPER after CIALIGN
 # for i in range(0, len(genes)):
 #     gwf.target_from_template('Taper_'+str(i), taper(genes = genes[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/.FNA",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/.FNA",
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done"+genes[i]))
                                                     
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
@@ -889,8 +889,8 @@ for i in range(len(genes)):
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"))  
                                                     
 # # Running ASTRAL 
-# gwf.target_from_template('astral_tapper', astral_tapper(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/13.Astral/.FNA",
-#                                                     gene_tree_file="gene_trees.nex.FNA",
+# gwf.target_from_template('astral_tapper', astral_tapper(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/13.Astral/",
+#                                                     gene_tree_file="gene_trees.nex",
 #                                                     output="astral_tree_only_posterior_probability.tre"))
 
 
