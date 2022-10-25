@@ -426,13 +426,15 @@ def retrieve(path_in):
 
     spec = """
     
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
     conda activate HybPiper
 
     cd /home/laurakf/cryptocarya/Workflow/Test/07_Coverage/
 
     ls *trimmed.fasta > filelist.txt
 
-    python3 sample2genes.py > outstats.csv
+    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
 
     touch /home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/Retrieve_all_done.txt
 
@@ -440,9 +442,282 @@ def retrieve(path_in):
 
     return (path_ins, outputs, options, spec)
     
-###Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
+### Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
 
 
+# ##########################################################################################################################
+# ###############################################---- MAFFT ----#############################################################
+# ##########################################################################################################################
+
+# # Here go to folder 6.Retrieve and ls -1
+# # Get the gene names and write them in genes = []
+# # We found 3432 genes for Ceroxyloids using the Arecoideae target file.
+
+# def mafft(genes, path_in, path_out, done):
+#     """Aligning all the sequences for each gene."""
+#     path_ins = [path_in+genes]
+#     outputs = [done, path_out+genes+"_aligned.fasta"] 
+#     options = {'cores': 4, 'memory': "4g", 'walltime': "4:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+
+#     source activate Mafft
+
+#     cd {path_in}
+
+#     mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes} > {path_out}{genes}_aligned.fasta
+
+#     touch {done}
+
+#     """.format(genes = genes, done = done, path_in = path_in, path_out = path_out)
+
+#     return (path_ins, outputs, options, spec)
+    
+# #It is a good idea to rename the fasta files here.
+
+
+# ########################################################################################################################
+# ###############################################---- TRIMAL ----#########################################################
+# ########################################################################################################################
+
+# #Cleaning according trimal
+# #Get raw alignments and trim them according to a gap threshold.
+
+# def gt_trimming(path_in, path_out, done, genes):
+#     """ Use trimal for trimming all alignments for each of the GT values specified"""
+#     inputs = [path_in+genes+"_aligned.fasta"]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "20g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+
+#     spec="""
+#     
+#     #Activating Trimal
+#     source activate Trimal
+
+#     #Go to alignments folder
+#     cd {path_in}
+
+#     #Running gaptrimming.sh
+#     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {genes}_aligned.fasta.old
+
+#     mv {genes}_aligned.fasta.old {path_out}
+
+#     touch {done}
+
+#     """.format(path_in = path_in, path_out = path_out, done = done, genes = genes)
+
+#     return(inputs, outputs, options, spec)
+    
+    
+# ########################################################################################################################
+# #################################################---- AMAS ----#########################################################
+# ########################################################################################################################
+
+
+# ######## Calculating amas summary
+
+
+# # For raw alignments
+# #def amas_raw(path_in):
+# #    """Creating summary files for all the trimmed alignments for each raw alignment"""
+# #    inputs = [path_in]
+# #    outputs = [path_in+"summary_0.txt", path_in+"summary_0.95.txt"]
+# #    options = {'cores': 1, 'memory': "10g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+
+# #    spec="""
+
+#     #Activating trimal_env
+#     source activate Trimal
+    
+#     #Calculating amas summary
+# #    bash /home/paola/faststorage/0.scripts/5.Ceroxyloideae/amas_raw.sh
+# #    bash /home/paola/faststorage/0.scripts/5.Ceroxyloideae/amas_gt.sh
+    
+# #    """.format(path_in = path_in)
+
+# #    return(inputs, outputs, options, spec)
+
+
+# #Hereafter you need to do some manual work and remove the headlines statistics.
+    
+# ########################################################################################################################
+# #############################################---- Optrimal ----#########################################################
+# ########################################################################################################################
+
+# #Getting the best alignment for each gene 
+# def optrim(path_in, path_out, done = done):
+#     """Select the best alignments according to the gt value"""
+#     inputs = [done, path_in+"summary_0.txt",path_in+"summary_0.1.txt",path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
+#     path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
+#     path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt",path_in+"summary_0.95.txt"]
+#     outputs = ["/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/9.Best_alignments/optrimal_final_results/", done]
+#     options = {'cores': 10, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
+
+#     spec="""
+
+#     #Going to folder with trimmed files
+#     cd {path_in}
+
+#     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+
+#     mv dldp_* {path_out}+"optrim_output/"
+    
+#     mv optimal_final_results {path_out}+"optimal_final_results/"
+
+#     touch {done}
+
+#     """.format(path_in = path_in, path_out = path_out, done = done)
+
+#     return(inputs, outputs, options, spec)
+
+# #Here we should include remove empty files?
+
+# #HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
+# # Download all the summary and cutoff files.
+# # Run the R code in your computer
+# # Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
+# # Copy the genes that you delete from raw_alignments to the trimal_output
+
+
+# ##########################################################################################################################
+# ##############################################---- CIALIGN ----###########################################################
+# ##########################################################################################################################
+
+# def cialign1(genes, path_in, path_out, done):
+#     """Cleaning alignments using cialign default."""
+#     inputs = [path_in + genes + "_aligned.fasta.old"]
+#     outputs = [path_out+genes+"_cialign.fasta_cleaned.fasta", done]
+#     options = {'cores': 8, 'memory': "100g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+#     source activate CIAlign
+
+#     cd {path_in}
+
+#     CIAlign --infile {genes}_aligned.fasta.old --all --outfile_stem {path_out}{genes}_cialign.fasta
+
+#     touch {done}
+
+#     """.format(genes = genes, done = done, path_in = path_in, path_out = path_out)
+
+#     return (inputs, outputs, options, spec)
+    
+# #Here we lost the gene 2683. This gene is too divergent
+
+# ########################################################################################################################
+# ###############################################---- TAPER ----##########################################################
+# ########################################################################################################################
+
+# def taper(path_in, genes, path_out, done):
+#     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
+#     inputs = [path_in+genes+"_cialign.fasta_cleaned.fasta", done]
+#     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"+genes+"_output_tapper.fasta", done]
+#     options = {'cores': 1, 'memory': "40g", 'walltime': "02:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+     
+#     cd {path_in}
+        
+#     #Activate the enviroment
+#     source activate Taper
+        
+#     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {genes}_cialign.fasta_cleaned.fasta > {genes}_output_tapper.fasta 
+    
+#     mv *_output_tapper.fasta {path_out}
+
+#     touch {done}
+        
+#     """.format(path_in = path_in, genes = genes, path_out = path_out, done = done)
+
+#     return (inputs, outputs, options, spec)
+    
+
+# ########################################################################################################################
+# ##############################################---- IQTREE ----##########################################################
+# ########################################################################################################################
+
+# def iqtree(path_in, genes, done):
+#     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
+#     inputs = [path_in+genes+"_output_tapper.fasta", done]
+#     outputs = [path_out+genes+"_output_tapper.fasta.treefile", done]
+#     options = {'cores': 2, 'memory': "40g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+     
+#     cd {path_in}
+        
+#     #Activate the enviroment
+#     source activate IQtree
+        
+#     iqtree2 -s {genes}_output_tapper.fasta -T AUTO -m MFP -B 1000 
+    
+#     mv *treefile {path_out}
+#     mv *_output_tapper.fasta.model.gz {path_out}
+#     mv *output_tapper.fasta.contree {path_out}
+#     mv *output_tapper.fasta.bionj {path_out}
+#     mv *output_tapper.fasta.ckp.gz {path_out}
+#     mv *_output_tapper.fasta.iqtree {path_out}
+#     mv *_output_tapper.fasta.log {path_out}
+#     mv *tapper.fasta.mldist {path_out}
+#     mv *tapper.fasta.splits.nex {path_out}
+#     mv *output_tapper.fasta.uniqueseq.phy {path_out}
+
+#     touch {done}
+    
+#     """.format(path_in = path_in, genes = genes, done = done)
+
+#     return (inputs, outputs, options, spec) 
+ 
+# # We also lost the gene: because it has less 4 species only, and it does not make sense to perform a bootstrap (Iqtree)
+# #Iqtree_32
+# #Iqtree_320
+# #Iqtree_509
+# #Iqtree_536
+# #Iqtree_709
+# #Iqtree_774
+# #Iqtree_870
+# #Iqtree_873
+# #Iqtree_874
+# #Iqtree_881
+# #Iqtree_1111
+# #Iqtree_1204
+# #Iqtree_1421
+# #Iqtree_1576
+# #Iqtree_1654
+# #Iqtree_1687
+# #Iqtree_2480
+# #Iqtree_2584
+# #Iqtree_2661
+# #Iqtree_2680
+# #Iqtree_2973
+
+# # Therefore we have removed all the genes cited + 2683 (too divergent and excluded by CIalign) 
+
+# #Here you should stop and go to folder /home/paola/faststorage/17.Final_organization/5.Ceroxyloids/12.IQtree and do cat *treefile > gene_trees.nex
+
+# ########################################################################################################################
+# #####################################---- Astral Tree Search ----#####################################################
+# ########################################################################################################################
+
+
+# def astral_tapper(path_in, gene_tree_file, output, done):
+#     """Using Astral to construct a species tree based on the genetrees"""
+#     inputs = [path_in+"gene_trees.nex", done]
+#     outputs = [path_in + output, done]
+#     options = {'cores': 20, 'memory': "40g", 'walltime': "48:00:00", 'account':"cryptocarya"}
+
+#     spec = """
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+                     
+#     cd {path_in} 
+  
+#     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i {gene_tree_file} -o {output} 2> log_out.log
+    
+#     bash rename.sh
+
+#     """.format(path_in = path_in, gene_tree_file = gene_tree_file, output = output, done = done)
+
+#     return (inputs, outputs, options, spec)
 
 ########################################################################################################################
 ######################################################---- RUN ----#####################################################
@@ -559,4 +834,57 @@ for i in range(len(sp)):
 
 #### Retrieve sequences and sort into files with gene names
 gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/"))
+
+
+# genes = [""] 
+
+# #### MAFFT
+# for i in range(len(genes)):
+#     gwf.target_from_template('Mafft_'+str(i), mafft(genes = genes[i],
+#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/done/"+genes[i]))
+
+# #### Trimal according to a pre-defined gt values
+# for i in range(len(genes)):
+#    gwf.target_from_template('gt_trimming_'+genes[i], gt_trimming(genes = genes[i],
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+genes[i]))
+
+# #### Generating AMAS statistics for raw_alignments
+# #gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/8.Trimal/"))
+
+
+# #### Optrimal
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+#                                                          done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
+#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
+
+                                               
+# # Running CIAlign on the trimmed_fasta - Including Paralogs
+# for i in range(0, len(genes)):
+#     gwf.target_from_template('Cialign1'+str(i), cialign1(genes = genes[i],
+#                                               path_in = ""/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optimal_final_results/",
+#                                               path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
+#                                               done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+genes[i]))
+
+# ## Running TAPER after CIALIGN
+# for i in range(0, len(genes)):
+#     gwf.target_from_template('Taper_'+str(i), taper(genes = genes[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done"+genes[i]))
+                                                    
+# #Running IQTREE for files trimmed with trimal and CIAlign                                             
+# for i in range(0, len(genes)):
+#    gwf.target_from_template('Iqtree_'+str(i), iqtree(genes = genes[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"))  
+                                                    
+# # Running ASTRAL 
+# gwf.target_from_template('astral_tapper', astral_tapper(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/13.Astral/",
+#                                                     gene_tree_file="gene_trees.nex",
+#                                                     output="astral_tree_only_posterior_probability.tre"))
+
+
 
