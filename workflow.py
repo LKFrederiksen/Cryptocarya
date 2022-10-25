@@ -453,7 +453,7 @@ def retrieve(path_in, done):
 # Get the gene names and write them in genes = []
 # We found 3432 genes for Ceroxyloids using the Arecoideae target file.
 
-def mafft(genes, path_in, path_out, done):
+def mafft(genes, path_in, path_out, done, FNA):
     """Aligning all the sequences for each gene."""
     path_ins = [path_in+genes]
     outputs = [done, path_out+genes+"_aligned.fasta"] 
@@ -467,11 +467,11 @@ def mafft(genes, path_in, path_out, done):
 
     cd {path_in}
 
-    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes}.FNA > {path_out}{genes}_aligned.fasta
+    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes}{FNA} > {path_out}{genes}_aligned.fasta
 
     touch {done}
 
-    """.format(genes = genes, done = done, path_in = path_in, path_out = path_out)
+    """.format(genes = genes, done = done, path_in = path_in, path_out = path_out, FNA = FNA)
 
     return (path_ins, outputs, options, spec)
     
@@ -847,6 +847,7 @@ for i in range(len(genes)):
     gwf.target_from_template('Mafft_'+str(i), mafft(genes = genes[i],
                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/",
+                                                        FNA = ".FNA",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/done/"+genes[i]))
 
 
