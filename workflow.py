@@ -467,7 +467,7 @@ def mafft(genes, path_in, path_out, done):
 
     cd {path_in}
 
-    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes} > {path_out}{genes}_aligned.fasta
+    mafft --thread 4 --globalpair --adjustdirectionaccurately --maxiterate 1000 {genes}.FNA > {path_out}{genes}_aligned.fasta
 
     touch {done}
 
