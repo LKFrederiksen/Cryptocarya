@@ -834,7 +834,7 @@ for i in range(len(sp)):
 
 #### Retrieve sequences and sort into files with gene names
 gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Test/07_Coverage/", 
-                                              done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/"+sp[i]))
+                                              done = "/home/laurakf/cryptocarya/Workflow/Test/08_Retrieve/done/retrieve"))
 
 
 # genes = [""] 
