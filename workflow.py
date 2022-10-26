@@ -502,6 +502,7 @@ def gt_trimming(path_in, path_out, done, gene):
     cp *.fasta {path_out}
 
     #Running gaptrimming.sh
+    cd {path_out}
     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
 
     touch {done}
