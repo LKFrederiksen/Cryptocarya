@@ -485,7 +485,7 @@ def mafft(genes, path_in, path_out, done, gene):
 #Cleaning according trimal
 #Get raw alignments and trim them according to a gap threshold.
 
-def gt_trimming(path_in, done, gene):
+def gt_trimming(path_in, path_out, done, gene):
     """ Use trimal for trimming all alignments for each of the GT values specified"""
     inputs = [path_in+gene+"_aligned.fasta"]
     outputs = [done]
@@ -499,13 +499,14 @@ def gt_trimming(path_in, done, gene):
 
     #Go to alignments folder
     cd {path_in}
+    cp *.fasta {path_out}
 
     #Running gaptrimming.sh
     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
 
     touch {done}
 
-    """.format(path_in = path_in, done = done, gene = gene)
+    """.format(path_in = path_in, done = done, gene = gene, path_out = path_out)
 
     return(inputs, outputs, options, spec)
     
@@ -855,6 +856,7 @@ for i in range(len(genes)):
 for i in range(len(gene)):
    gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+gene[i]))
 
 # #### Generating AMAS statistics for raw_alignments
