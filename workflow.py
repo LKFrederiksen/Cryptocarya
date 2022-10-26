@@ -551,7 +551,7 @@ def optrim(path_in, path_out, done):
     """Select the best alignments according to the gt value"""
     inputs = [path_in+"0.1",path_in+"0.15",path_in+"0.20",path_in+"0.25",path_in+"0.30",
     path_in+"0.35",path_in+"0.40",path_in+"0.45",path_in+"0.50",path_in+"0.55",path_in+"0.60",path_in+"0.65",
-    path_in+"0.70",path_in+"0.75",path_in+"0.80",path_in+"0.85",path_in+"0.90",path_in+"0.95"]
+    path_in+"0.70",path_in+"0.75",path_in+"0.80",path_in+"0.85",path_in+"0.90"]
     outputs = [done, path_out+"optimal_final_results/"]
     options = {'cores': 4, 'memory': "5g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
