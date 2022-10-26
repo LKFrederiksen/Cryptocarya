@@ -499,7 +499,6 @@ def gt_trimming(path_in, path_out, done, gene):
 
     #Go to alignments folder
     cd {path_in}
-    cp *.fasta {path_out}
 
     #Running gaptrimming.sh
     cd {path_out}
