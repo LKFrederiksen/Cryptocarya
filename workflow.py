@@ -542,43 +542,43 @@ def gt_trimming(path_in, path_out, done, gene):
 
 # #Hereafter you need to do some manual work and remove the headlines statistics.
     
-# ########################################################################################################################
-# #############################################---- Optrimal ----#########################################################
-# ########################################################################################################################
+########################################################################################################################
+#############################################---- Optrimal ----#########################################################
+########################################################################################################################
 
-# #Getting the best alignment for each gene 
-# def optrim(path_in, path_out, done = done):
-#     """Select the best alignments according to the gt value"""
-#     inputs = [done, path_in+"summary_0.txt",path_in+"summary_0.1.txt",path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
-#     path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
-#     path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt",path_in+"summary_0.95.txt"]
-#     outputs = ["/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/9.Best_alignments/optrimal_final_results/", done]
-#     options = {'cores': 10, 'memory': "20g", 'walltime': "08:00:00", 'account':"cryptocarya"}
+#Getting the best alignment for each gene 
+def optrim(path_in, path_out, done = done):
+    """Select the best alignments according to the gt value"""
+    inputs = [done, path_in+"0.1/",path_in+"0.15/",path_in+"0.2/",path_in+"0.25/",path_in+"0.3/",
+    path_in+"0.35/",path_in+"0.4/",path_in+"0.45/",path_in+"0.5/",path_in+"0.55/",path_in+"0.6/",path_in+"0.65/",
+    path_in+"0.7/",path_in+"0.75/",path_in+"0.8/",path_in+"0.85/",path_in+"0.9/",path_in+"0.95/"]
+    outputs = [done, path_out+"optimal_final_results/"]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "02:00:00", 'account':"cryptocarya"}
 
-#     spec="""
+    spec="""
 
-#     #Going to folder with trimmed files
-#     cd {path_in}
+    #Going to folder with trimmed files
+    cd {path_in}
 
-#     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+    Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
-#     mv dldp_* {path_out}+"optrim_output/"
+    mv dldp_* {path_out}+"optrim_output/"
     
-#     mv optimal_final_results {path_out}+"optimal_final_results/"
+    mv optimal_final_results {path_out}+"optimal_final_results/"
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done)
 
-#     return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
 
-# #Here we should include remove empty files?
+#Here we should include remove empty files?
 
-# #HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
-# # Download all the summary and cutoff files.
-# # Run the R code in your computer
-# # Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
-# # Copy the genes that you delete from raw_alignments to the trimal_output
+#HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
+# Download all the summary and cutoff files.
+# Run the R code in your computer
+# Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
+# Copy the genes that you delete from raw_alignments to the trimal_output
 
 
 # ##########################################################################################################################
@@ -863,10 +863,10 @@ for i in range(len(gene)):
 # #gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/8.Trimal/"))
 
 
-# #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-#                                                          done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
-#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
+#### Optrimal
+gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                         done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
+                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
 
                                                
 # # Running CIAlign on the trimmed_fasta - Including Paralogs
