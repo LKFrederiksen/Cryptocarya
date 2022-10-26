@@ -478,37 +478,37 @@ def mafft(genes, path_in, path_out, done, gene):
 #It is a good idea to rename the fasta files here.
 
 
-# ########################################################################################################################
-# ###############################################---- TRIMAL ----#########################################################
-# ########################################################################################################################
+########################################################################################################################
+###############################################---- TRIMAL ----#########################################################
+########################################################################################################################
 
-# #Cleaning according trimal
-# #Get raw alignments and trim them according to a gap threshold.
+#Cleaning according trimal
+#Get raw alignments and trim them according to a gap threshold.
 
-# def gt_trimming(path_in, path_out, done, genes):
-#     """ Use trimal for trimming all alignments for each of the GT values specified"""
-#     inputs = [path_in+genes+"_aligned.fasta"]
-#     outputs = [done]
-#     options = {'cores': 1, 'memory': "20g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+def gt_trimming(path_in, path_out, done, gene):
+    """ Use trimal for trimming all alignments for each of the GT values specified"""
+    inputs = [path_in+gene+"_aligned.fasta"]
+    outputs = [done]
+    options = {'cores': 1, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-#     spec="""
-#     
-#     #Activating Trimal
-#     source activate Trimal
+    spec="""
+    
+    #Activating Trimal
+    source activate Trimal
 
-#     #Go to alignments folder
-#     cd {path_in}
+    #Go to alignments folder
+    cd {path_in}
 
-#     #Running gaptrimming.sh
-#     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {genes}_aligned.fasta.old
+    #Running gaptrimming.sh
+    bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
 
-#     mv {genes}_aligned.fasta.old {path_out}
+    mv {gene}_aligned.fasta.old {path_out}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done, genes = genes)
+    """.format(path_in = path_in, path_out = path_out, done = done, gene = gene)
 
-#     return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
     
     
 # ########################################################################################################################
@@ -852,12 +852,12 @@ for i in range(len(genes)):
                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/done/"+genes[i]))
 
 
-# #### Trimal according to a pre-defined gt values
-# for i in range(len(genes)):
-#    gwf.target_from_template('gt_trimming_'+genes[i], gt_trimming(genes = genes[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+genes[i]))
+#### Trimal according to a pre-defined gt values
+for i in range(len(gene)):
+   gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Test/09_Mafft/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+gene[i]))
 
 # #### Generating AMAS statistics for raw_alignments
 # #gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/8.Trimal/"))
