@@ -494,7 +494,8 @@ def gt_trimming(path_in, path_out, done, gene):
     spec="""
     
     #Activating Trimal
-    source activate Trimal
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Trimal
 
     #Go to alignments folder
     cd {path_in}
