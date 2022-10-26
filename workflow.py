@@ -547,7 +547,7 @@ def gt_trimming(path_in, path_out, done, gene):
 ########################################################################################################################
 
 #Getting the best alignment for each gene 
-def optrim(path_in, path_out, done = done):
+def optrim(path_in, path_out, done):
     """Select the best alignments according to the gt value"""
     inputs = [done, path_in+"0.1/",path_in+"0.15/",path_in+"0.2/",path_in+"0.25/",path_in+"0.3/",
     path_in+"0.35/",path_in+"0.4/",path_in+"0.45/",path_in+"0.5/",path_in+"0.55/",path_in+"0.6/",path_in+"0.65/",
