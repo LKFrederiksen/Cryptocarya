@@ -902,7 +902,7 @@ gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocar
 cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60", "0.65", "0.70", "0.75", "0.80", "0.85", "0.90"]
 
 #### Generating AMAS statistics for gt_alignments
-gwf.target_from_template('amas_gt', amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+gwf.target_from_template('amas_gt'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
                                             cut_off = cut_off[i],
                                             done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+gene[i]))
 
