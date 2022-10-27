@@ -527,8 +527,10 @@ def amas_raw(path_in, done):
 
     spec="""
 
-    #Activating trimal_env
-    source activate Amas
+
+    #Activating AMAS
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Amas
     
     cd {path_in}
 
