@@ -569,6 +569,8 @@ def amas_gt(path_in, cut_off, done):
     #Calculating amas summary
     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
    
+    mv summary.txt summary_{cut_off}.txt 
+
     touch {done}
     
     """.format(path_in = path_in, cut_off = cut_off, done = done)
