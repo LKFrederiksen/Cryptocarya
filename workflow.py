@@ -567,7 +567,7 @@ def amas_gt(path_in, cut_off, done):
     cd {path_in}{cut_off} # dette kan laves som en streng ligesom genes osv. længere nede. 
 
     #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
+    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
    
     summary.txt ../summary_${cut_off}.txt 
 
