@@ -538,6 +538,8 @@ def amas_raw(path_in, done):
     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
 
     mv summary.txt summary_0.txt
+
+    touch {done}
     
     """.format(path_in = path_in, done = done)
 
@@ -549,31 +551,31 @@ def amas_raw(path_in, done):
 
 ######## Calculating amas summary (on cut_offs (gt))
 
-# #For cutoff (gt) alignments
-# def amas_gt(path_in, cut_off):
-#     """Creating summary files for all the trimmed alignments for each raw alignment"""
-#     inputs = [path_in]
-#     outputs = [path_in+"summary_0.txt", path_in+"summary_0.95.txt"]
-#     options = {'cores': 1, 'memory': "10g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+#For cutoff (gt) alignments
+def amas_gt(path_in, cut_off, done):
+    """Creating summary files for all the trimmed alignments for each raw alignment"""
+    inputs = [path_in, path_in+cut_off]
+    outputs = [path_in+"summary_0.1.txt", path_in+"summary_0.90.txt", done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-#     spec="""
+    spec="""
 
-#     #Activating trimal_env
-#     source activate Amas
+    #Activating AMAS
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Amas
     
-#     cd {path_in}{cut_off} # dette kan laves som en streng ligesom genes osv. længere nede. 
+    cd {path_in}{cut_off} # dette kan laves som en streng ligesom genes osv. længere nede. 
 
-#     #Calculating amas summary
-#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
+    #Calculating amas summary
+    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
 
-#     mv summary.txt summary?
+    mv summary.txt summary_{cut_off}.txt
    
-#     bash /home/paola/faststorage/0.scripts/5.Ceroxyloideae/amas_raw.sh
-#     bash /home/paola/faststorage/0.scripts/5.Ceroxyloideae/amas_gt.sh
+    touch {done}
     
-#     """.format(path_in = path_in, cut_off = cut_off)
+    """.format(path_in = path_in, cut_off = cut_off, done = done)
 
-#     return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -897,9 +899,12 @@ for i in range(len(gene)):
 gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_raw"+gene[i]))
 
-# #### Generating AMAS statistics for gt_alignments
-# #gwf.target_from_template('amas_gt', amas_gt(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/8.Trimal/",
-#                                             done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+gene[i]))
+cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60", "0.65", "0.70", "0.75", "0.80", "0.85", "0.90"]
+
+#### Generating AMAS statistics for gt_alignments
+gwf.target_from_template('amas_gt', amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                            cut_off = cut_off[i],
+                                            done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+gene[i]))
 
 
 # #### Optrimal
