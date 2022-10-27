@@ -549,72 +549,72 @@ def amas_raw(path_in, done):
 # Hereafter you need to do some manual work and remove the headlines statistics.
 
 
-######## Calculating amas summary (on cut_offs (gt))
+# ######## Calculating amas summary (on cut_offs (gt))
 
-#For cutoff (gt) alignments
-def amas_gt(path_in, cut_off, done):
-    """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [path_in, path_in+cut_off]
-    outputs = [path_in+"summary_0.1.txt", path_in+"summary_0.90.txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "1:00:00", 'account':"cryptocarya"}
-
-    spec="""
-
-    #Activating AMAS
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Amas
-    
-    cd {path_in}{cut_off} # dette kan laves som en streng ligesom genes osv. længere nede. 
-
-    #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
-   
-    summary.txt ../summary_${cut_off}.txt 
-
-    touch {done}
-    
-    """.format(path_in = path_in, cut_off = cut_off, done = done)
-
-    return(inputs, outputs, options, spec)
-
-
-# ########################################################################################################################
-# #############################################---- Optrimal ----#########################################################
-# ########################################################################################################################
-
-# #Getting the best alignment for each gene 
-# def optrim(path_in, path_out, done):
-#     """Select the best alignments according to the gt value"""
-#     inputs = [path_in+"0.1",path_in+"0.15",path_in+"0.20",path_in+"0.25",path_in+"0.30",
-#     path_in+"0.35",path_in+"0.40",path_in+"0.45",path_in+"0.50",path_in+"0.55",path_in+"0.60",path_in+"0.65",
-#     path_in+"0.70",path_in+"0.75",path_in+"0.80",path_in+"0.85",path_in+"0.90"]
-#     outputs = [done, path_out+"optimal_final_results/"]
-#     options = {'cores': 4, 'memory': "5g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# #For cutoff (gt) alignments
+# def amas_gt(path_in, cut_off, done):
+#     """Creating summary files for all the trimmed alignments for each raw alignment"""
+#     inputs = [path_in, path_in+cut_off]
+#     outputs = [path_in+"summary_0.1.txt", path_in+"summary_0.90.txt", done]
+#     options = {'cores': 1, 'memory': "2g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
 #     spec="""
 
-#     #Going to folder with trimmed files
-#     cd {path_in}
-
-#     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
-
-#     mv dldp_* {path_out}+"optrim_output/"
+#     #Activating AMAS
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Amas
     
-#     mv optimal_final_results {path_out}+"optimal_final_results/"
+#     cd {path_in}{cut_off} # dette kan laves som en streng ligesom genes osv. længere nede. 
+
+#     #Calculating amas summary
+#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+   
+#     summary.txt ../summary_${cut_off}.txt 
 
 #     touch {done}
-
-#     """.format(path_in = path_in, path_out = path_out, done = done)
+    
+#     """.format(path_in = path_in, cut_off = cut_off, done = done)
 
 #     return(inputs, outputs, options, spec)
 
-# #Here we should include remove empty files?
 
-# #HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
-# # Download all the summary and cutoff files.
-# # Run the R code in your computer
-# # Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
-# # Copy the genes that you delete from raw_alignments to the trimal_output
+########################################################################################################################
+#############################################---- Optrimal ----#########################################################
+########################################################################################################################
+
+#Getting the best alignment for each gene 
+def optrim(path_in, path_out, done):
+    """Select the best alignments according to the gt value"""
+    inputs = [path_in+"0.1",path_in+"0.15",path_in+"0.20",path_in+"0.25",path_in+"0.30",
+    path_in+"0.35",path_in+"0.40",path_in+"0.45",path_in+"0.50",path_in+"0.55",path_in+"0.60",path_in+"0.65",
+    path_in+"0.70",path_in+"0.75",path_in+"0.80",path_in+"0.85",path_in+"0.90"]
+    outputs = [done, path_out+"optimal_final_results/"]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+    spec="""
+
+    #Going to folder with trimmed files
+    cd {path_in}
+
+    Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+
+    mv dldp_* {path_out}+"optrim_output/"
+    
+    mv optimal_final_results {path_out}+"optimal_final_results/"
+
+    touch {done}
+
+    """.format(path_in = path_in, path_out = path_out, done = done)
+
+    return(inputs, outputs, options, spec)
+
+#Here we should include remove empty files?
+
+#HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
+# Download all the summary and cutoff files.
+# Run the R code in your computer
+# Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
+# Copy the genes that you delete from raw_alignments to the trimal_output
 
 
 # ##########################################################################################################################
@@ -901,17 +901,17 @@ gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocar
 
 cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60", "0.65", "0.70", "0.75", "0.80", "0.85", "0.90"]
 
-#### Generating AMAS statistics for gt_alignments
-for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-                                                cut_off = cut_off[i],
-                                                done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+gene[i]))
+# #### Generating AMAS statistics for gt_alignments
+# for i in range(len(cut_off)):
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+#                                                 cut_off = cut_off[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+gene[i]))
 
 
-# #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-#                                                          done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
-#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
+#### Optrimal
+gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                         done = "optimal_final_results /home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/"+genes[i], 
+                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
 
                                                
 # # Running CIAlign on the trimmed_fasta - Including Paralogs
