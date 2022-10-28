@@ -572,6 +572,12 @@ def amas_gt(path_in, cut_off, done):
     mv summary.txt ../summary_{cut_off}.txt 
 
     touch {done}
+
+    echo {done}
+
+    echo {cut_off}
+
+    echo {path_in}
     
     """.format(path_in = path_in, cut_off = cut_off, done = done)
 
