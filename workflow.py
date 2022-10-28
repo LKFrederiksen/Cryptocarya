@@ -620,8 +620,8 @@ def optrim(path_in, path_out, done):
 
  #Going to folder with trimmed files
     cd {path_in}
-    
-    Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+
+    R --interactive /home/laurakf/cryptocarya/Scripts/optrimal.R
 
     mv dldp_* {path_out}"optrim_output/"
     
