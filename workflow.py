@@ -599,7 +599,9 @@ def optrim(path_in, path_out, done):
 
     spec="""
 
-            
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate base
+
  #Going to folder with trimmed files
     cd {path_in}
 
