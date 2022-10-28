@@ -608,8 +608,13 @@ def optrim(path_in, path_out, done):
                         else
                                 mkdir optimal_final_results
                         fi
-                        
-    mkdir {path_out}"optrim_output/"
+
+    if [[ -d {path_out}"optrim_output/" ]]
+                        then
+                        echo "optrim_output folder exists."
+                        else
+                                {path_out}"optrim_output/"
+                        fi               
 
     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
