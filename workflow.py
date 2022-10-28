@@ -457,7 +457,7 @@ def mafft(genes, path_in, path_out, done, gene):
     """Aligning all the sequences for each gene."""
     path_ins = [path_in+genes]
     outputs = [done, path_out+gene+"_aligned.fasta"] 
-    options = {'cores': 4, 'memory': "4g", 'walltime': "4:00:00", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "4g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
 
@@ -489,7 +489,7 @@ def gt_trimming(path_in, path_out, done, gene):
     """ Use trimal for trimming all alignments for each of the GT values specified"""
     inputs = [path_in+gene+"_aligned.fasta"]
     outputs = [done]
-    options = {'cores': 1, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+    options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
 
     spec="""
     
@@ -602,7 +602,13 @@ def optrim(path_in, path_out, done):
     #Going to folder with trimmed files
     cd {path_in}
 
-    mkdir optimal_final_results
+    if [[ -d "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/optimal_final_results/" ]]
+                        then
+                        echo "optimak_final_results folder exists."
+                        else
+                                mkdir optimal_final_results
+                        fi
+                        
     mkdir {path_out}"optrim_output/"
 
     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
