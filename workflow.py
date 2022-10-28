@@ -606,7 +606,7 @@ def optrim(path_in, path_out, done):
  #Going to folder with trimmed files
     cd {path_in}
 
-    R --interactive /home/laurakf/cryptocarya/Scripts/optrimal.R
+    R --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
     touch {done}
 
