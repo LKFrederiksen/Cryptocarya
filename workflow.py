@@ -535,7 +535,7 @@ def amas_raw(path_in, done):
     cd {path_in}
 
     #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta
+    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
 
     mv summary.txt summary_0.txt
 
