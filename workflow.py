@@ -603,9 +603,6 @@ def optrim(path_in, path_out, done):
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     conda activate R
 
-    #Going to folder with trimmed files
-    cd {path_in}
-
     if [[ -d "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/optimal_final_results/" ]]
                         then
                         echo "optimak_final_results folder exists."
@@ -620,6 +617,10 @@ def optrim(path_in, path_out, done):
                                 {path_out}"optrim_output/"
                         fi               
 
+
+ #Going to folder with trimmed files
+    cd {path_in}
+    
     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
     mv dldp_* {path_out}"optrim_output/"
