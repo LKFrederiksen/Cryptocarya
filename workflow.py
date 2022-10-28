@@ -552,9 +552,9 @@ def amas_raw(path_in, done):
 ######## Calculating amas summary (gt)
 
 #For cutoff (gt) alignments
-def amas_gt(path_in, cut_off, done):
+def amas_gt(path_in, cut_off, done, in_done):
     """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [path_in, path_in+cut_off]
+    inputs = [path_in+cut_off, in_done]
     outputs = [path_in+"summary_"+cut_off+".txt", done]
     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
@@ -579,7 +579,7 @@ def amas_gt(path_in, cut_off, done):
 
     echo {path_in}
     
-    """.format(path_in = path_in, cut_off = cut_off, done = done)
+    """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
 
     return(inputs, outputs, options, spec)
 
@@ -911,6 +911,7 @@ cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50"
 for i in range(len(cut_off)):
     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
                                                 cut_off = cut_off[i],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+gene[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
