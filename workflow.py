@@ -599,14 +599,10 @@ def optrim(path_in, path_out, done):
 
     spec="""
 
-    #Activating rpy2
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate R
-
     #Going to folder with trimmed files
     cd {path_in}
 
-    xvfb-run Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+    Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
     # mv dldp_* {path_out}"optrim_output/"
     
