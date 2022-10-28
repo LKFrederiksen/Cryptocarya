@@ -523,7 +523,7 @@ def amas_raw(path_in, done):
     """Creating summary files for all the trimmed alignments for each raw alignment"""
     inputs = [path_in]
     outputs = [path_in+"summary_0.txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
     spec="""
 
