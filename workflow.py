@@ -904,7 +904,7 @@ cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50"
 #### Generating AMAS statistics for gt_alignments
 for i in range(len(cut_off)):
     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/"+cut_off[i],
-                                                cut_off = cut_off[i],
+                                                cut_off = cut_off,
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt"+cut_off[i]))
 
 
