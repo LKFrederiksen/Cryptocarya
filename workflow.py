@@ -599,6 +599,10 @@ def optrim(path_in, path_out, done):
 
     spec="""
 
+    #Activating rpy2
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate R
+
     #Going to folder with trimmed files
     cd {path_in}
 
