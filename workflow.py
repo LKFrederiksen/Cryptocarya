@@ -602,30 +602,11 @@ def optrim(path_in, path_out, done):
   #Activating R
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     conda activate R
-
-    if [[ -d "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/optimal_final_results/" ]]
-                        then
-                        echo "optimak_final_results folder exists."
-                        else
-                                mkdir optimal_final_results
-                        fi
-
-    if [[ -d {path_out}"optrim_output/" ]]
-                        then
-                        echo "optrim_output folder exists."
-                        else
-                                {path_out}"optrim_output/"
-                        fi               
-
-
+            
  #Going to folder with trimmed files
     cd {path_in}
 
     R --interactive /home/laurakf/cryptocarya/Scripts/optrimal.R
-
-    mv dldp_* {path_out}"optrim_output/"
-    
-    mv optimal_final_results {path_out}
 
     touch {done}
 
