@@ -604,9 +604,9 @@ def optrim(path_in, path_out, done):
 
     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
 
-    mv dldp_* {path_out}"optrim_output/"
+    # mv dldp_* {path_out}"optrim_output/"
     
-    mv optimal_final_results {path_out}"optimal_final_results"
+    # mv optimal_final_results {path_out}"optimal_final_results"
 
     touch {done}
 
