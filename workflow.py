@@ -591,9 +591,9 @@ def amas_gt(path_in, cut_off, done, in_done):
 #Getting the best alignment for each gene 
 def optrim(path_in, path_out, done):
     """Select the best alignments according to the gt value"""
-    inputs = [path_in+"0.1",path_in+"0.15",path_in+"0.20",path_in+"0.25",path_in+"0.30",
-    path_in+"0.35",path_in+"0.40",path_in+"0.45",path_in+"0.50",path_in+"0.55",path_in+"0.60",path_in+"0.65",
-    path_in+"0.70",path_in+"0.75",path_in+"0.80",path_in+"0.85",path_in+"0.90"]
+    inputs = [path_in+"summary_0.txt", path_in+"summary_0.1.txt", path_in+"summary_0.15.txt",path_in+"summary_0.20.txt",path_in+"summary_0.25.txt",path_in+"summary_0.30.txt",
+    path_in+"summary_0.35.txt",path_in+"summary_0.40.txt",path_in+"summary_0.45.txt",path_in+"summary_0.50.txt",path_in+"summary_0.55.txt",path_in+"summary_0.60.txt",path_in+"summary_0.65.txt",
+    path_in+"summary_0.70.txt",path_in+"summary_0.75.txt",path_in+"summary_0.80.txt",path_in+"summary_0.85.txt",path_in+"summary_0.90.txt"]
     outputs = [done, path_out+"optimal_final_results"]
     options = {'cores': 2, 'memory': "5g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
