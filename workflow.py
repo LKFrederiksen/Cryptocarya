@@ -664,30 +664,32 @@ def move(path_in, path_out, in_done, done):
 
     return(inputs, outputs, options, spec)
 
-# ##########################################################################################################################
-# ##############################################---- CIALIGN ----###########################################################
-# ##########################################################################################################################
+##########################################################################################################################
+##############################################---- CIALIGN ----###########################################################
+##########################################################################################################################
 
-# def cialign1(genes, path_in, path_out, done):
-#     """Cleaning alignments using cialign default."""
-#     inputs = [path_in + genes + "_aligned.fasta.old"]
-#     outputs = [path_out+genes+"_cialign.fasta_cleaned.fasta", done]
-#     options = {'cores': 8, 'memory': "100g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+def cialign1(gene, path_in, path_out, done):
+    """Cleaning alignments using cialign default."""
+    inputs = [path_in+gene+"_aligned.fasta.old"]
+    outputs = [path_out+gene+"_cialign_cleaned.fasta", done]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-#     spec = """
-#     source activate CIAlign
-
-#     cd {path_in}
-
-#     CIAlign --infile {genes}_aligned.fasta.old --all --outfile_stem {path_out}{genes}_cialign.fasta
-
-#     touch {done}
-
-#     """.format(genes = genes, done = done, path_in = path_in, path_out = path_out)
-
-#     return (inputs, outputs, options, spec)
+    spec = """
     
-# #Here we lost the gene 2683. This gene is too divergent
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate CIAlign
+
+    cd {path_in}
+
+    CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned.fasta
+
+    touch {done}
+
+    """.format(gene = gene, done = done, path_in = path_in, path_out = path_out)
+
+    return (inputs, outputs, options, spec)
+    
+#Here we lost the gene 2683. This gene is too divergent
 
 # ########################################################################################################################
 # ###############################################---- TAPER ----##########################################################
@@ -969,12 +971,12 @@ gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workf
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/move/move", 
                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
                                                
-# # Running CIAlign on the trimmed_fasta - Including Paralogs
-# for i in range(0, len(genes)):
-#     gwf.target_from_template('Cialign1'+str(i), cialign1(genes = genes[i],
-#                                               path_in = ""/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optimal_final_results/",
-#                                               path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
-#                                               done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+genes[i]))
+# Running CIAlign on the trimmed_fasta - Including Paralogs
+for i in range(0, len(gene)):
+    gwf.target_from_template('Cialign1'+gene[i], cialign1(gene = gene[i],
+                                              path_in = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optimal_final_results/",
+                                              path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
+                                              done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+gene[i]))
 
 # ## Running TAPER after CIALIGN
 # for i in range(0, len(genes)):
