@@ -689,34 +689,34 @@ def cialign1(gene, path_in, path_out, done):
 
     return (inputs, outputs, options, spec)
     
-#Here we lost the gene 6978. This gene is too divergent
+#Here we lost several genes. These genes are too divergent
 
-# ########################################################################################################################
-# ###############################################---- TAPER ----##########################################################
-# ########################################################################################################################
+########################################################################################################################
+###############################################---- TAPER ----##########################################################
+########################################################################################################################
 
-# def taper(path_in, genes, path_out, done):
-#     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
-#     inputs = [path_in+genes+"_cialign.fasta_cleaned.fasta", done]
-#     outputs = ["/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"+genes+"_output_tapper.fasta", done]
-#     options = {'cores': 1, 'memory': "40g", 'walltime': "02:00:00", 'account':"cryptocarya"}
+def taper(path_in, gene, path_out, done):
+    """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
+    inputs = [path_in+gene+"_cialign_cleaned.fasta", done]
+    outputs = [path_out+gene+"_output_taper.fasta", done]
+    options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
         
-#     #Activate the enviroment
-#     source activate Taper
+    #Activate the enviroment
+    source activate Taper
         
-#     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {genes}_cialign.fasta_cleaned.fasta > {genes}_output_tapper.fasta 
+    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned.fasta > {gene}_output_taper.fasta 
     
-#     mv *_output_tapper.fasta {path_out}
+    mv *_output_taper.fasta {path_out}
 
-#     touch {done}
+    touch {done}
         
-#     """.format(path_in = path_in, genes = genes, path_out = path_out, done = done)
+    """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
     
 
 # ########################################################################################################################
@@ -981,12 +981,12 @@ for i in range(0, len(gene)):
                                               path_out = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
                                               done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+gene[i]))
 
-# ## Running TAPER after CIALIGN
-# for i in range(0, len(genes)):
-#     gwf.target_from_template('Taper_'+str(i), taper(genes = genes[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done"+genes[i]))
+## Running TAPER after CIALIGN
+for i in range(0, len(gene)):
+    gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done"+gene[i]))
                                                     
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(genes)):
