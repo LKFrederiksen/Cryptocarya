@@ -638,7 +638,7 @@ def amas_gt(path_in, cut_off, done, in_done):
 def move(path_in, path_out, in_done, done):
     """Moving files from trimal folder to optrimal folder."""
     inputs = [in_done]
-    outputs = [path_out+"optrim_output", path_out+"optimal_final_results", path_out+"overlost.txt", done]
+    outputs = [path_out+"optrim_output/", path_out+"optimal_final_results/", path_out+"overlost.txt", done]
     options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
 
     spec = """
