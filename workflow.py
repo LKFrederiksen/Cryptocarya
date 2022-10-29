@@ -672,7 +672,7 @@ def cialign1(gene, path_in, path_out, done):
     """Cleaning alignments using cialign default."""
     inputs = [path_in+gene+"_aligned.fasta.old"]
     outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
-    options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "5g", 'walltime': "00:15:00", 'account':"cryptocarya"}
 
     spec = """
     
