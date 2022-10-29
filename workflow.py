@@ -593,6 +593,7 @@ def amas_gt(path_in, cut_off, done, in_done):
 # and that the summary files are named summary_0.txt, summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
 # Make folder called optimal_final_results.
 # The interactive mode is called by activating the conda environment R: conda activate R. When write R --interactive. Hereafter insert all the lines from the optrimal.R script.
+# Make done file in folder optrimal.
 
 
 # #Getting the best alignment for each gene 
@@ -634,9 +635,9 @@ def amas_gt(path_in, cut_off, done, in_done):
 ##############################################---- Move optrimal files to new folder ----###########################################################
 ####################################################################################################################################################
 
-def move(path_in, path_out, gene, done):
+def move(path_in, path_out, in_done):
     """Moving files from trimal folder to optrimal folder."""
-    inputs = [path_in+"dldp_"+gene+"_aligned.fasta.old.png", path_in+"dldp_"+gene+"_aligned.fasta.old.csv", path_in+"optimal_final_results/"+gene+"_aligned.fasta.old"]
+    inputs = [in_done]
     outputs = [path_out+"optrim_output", path_out+"optimal_final_results", path_out+"overlost.txt", done]
     options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
 
@@ -652,7 +653,7 @@ def move(path_in, path_out, gene, done):
 
     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done, gene = gene)
+    """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
 
     return(inputs, outputs, options, spec)
 
@@ -955,11 +956,10 @@ for i in range(len(cut_off)):
 
 
 #### Move files from trimal to optrimal folder
-for i in range(len(gene)):
-    gwf.target_from_template('move'+gene[i], move(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-                                                         gene = gene[i],
-                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/move/move", 
-                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
+gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/optrimal/optrimal",
+                                                done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/move/move", 
+                                                path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
                                                
 # # Running CIAlign on the trimmed_fasta - Including Paralogs
 # for i in range(0, len(genes)):
