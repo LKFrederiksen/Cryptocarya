@@ -704,9 +704,10 @@ def taper(path_in, gene, path_out, done):
     spec = """
      
     cd {path_in}
-        
-    #Activate the enviroment
-    source activate Taper
+    
+    # Activate Taper    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Taper
         
     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
     
