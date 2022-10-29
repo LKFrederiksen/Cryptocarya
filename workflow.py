@@ -708,7 +708,7 @@ def taper(path_in, gene, path_out, done):
     #Activate the enviroment
     source activate Taper
         
-    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned.fasta > {gene}_output_taper.fasta 
+    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
     
     mv *_output_taper.fasta {path_out}
 
