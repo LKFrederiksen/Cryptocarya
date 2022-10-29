@@ -671,7 +671,7 @@ def move(path_in, path_out, in_done, done):
 def cialign1(gene, path_in, path_out, done):
     """Cleaning alignments using cialign default."""
     inputs = [path_in+gene+"_aligned.fasta.old"]
-    outputs = [path_out+gene+"_cialign_cleaned.fasta", done]
+    outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
     options = {'cores': 4, 'memory': "5g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
@@ -681,7 +681,7 @@ def cialign1(gene, path_in, path_out, done):
 
     cd {path_in}
 
-    CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned.fasta
+    CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned
 
     touch {done}
 
