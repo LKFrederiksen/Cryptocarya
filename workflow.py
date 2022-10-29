@@ -591,9 +591,9 @@ def amas_gt(path_in, cut_off, done, in_done):
 #Getting the best alignment for each gene 
 def optrim(path_in, path_out, done):
     """Select the best alignments according to the gt value"""
-    inputs = [path_in+"summary_0.txt", path_in+"summary_0.1.txt", path_in+"summary_0.15.txt",path_in+"summary_0.20.txt",path_in+"summary_0.25.txt",path_in+"summary_0.30.txt",
-    path_in+"summary_0.35.txt",path_in+"summary_0.40.txt",path_in+"summary_0.45.txt",path_in+"summary_0.50.txt",path_in+"summary_0.55.txt",path_in+"summary_0.60.txt",path_in+"summary_0.65.txt",
-    path_in+"summary_0.70.txt",path_in+"summary_0.75.txt",path_in+"summary_0.80.txt",path_in+"summary_0.85.txt",path_in+"summary_0.90.txt"]
+    inputs = [path_in+"summary_0.txt", path_in+"summary_0.1.txt", path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
+    path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
+    path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt"]
     outputs = [done, path_out+"optimal_final_results"]
     options = {'cores': 2, 'memory': "5g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
@@ -905,7 +905,7 @@ for i in range(len(gene)):
 gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_raw/raw"))
 
-cut_off = ["0.1", "0.15", "0.20", "0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60", "0.65", "0.70", "0.75", "0.80", "0.85", "0.90"]
+cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
 #### Generating AMAS statistics for gt_alignments
 for i in range(len(cut_off)):
