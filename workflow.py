@@ -646,7 +646,7 @@ def move(path_in, path_out, done):
 
     mv dldp_* {path_out}optrim_output/
     
-    mv optimal_final_results {path_out}optimal_final_results
+    mv optimal_final_results {path_out}
 
     mv overlost.txt {path_out}
 
