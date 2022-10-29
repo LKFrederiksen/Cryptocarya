@@ -643,6 +643,8 @@ def move(path_in, path_out, in_done, done):
 
     spec = """
 
+    mkdir {path_out}optrim_output
+
     cd {path_in}
 
     mv dldp_* {path_out}optrim_output/
