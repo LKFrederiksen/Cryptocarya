@@ -955,7 +955,9 @@ for i in range(len(cut_off)):
 
 
 #### Move files from trimal to optrimal folder
+for i in range(len(gene)):
 gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                         gene = gene[i],
                                                          done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/move/move", 
                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
                                                
