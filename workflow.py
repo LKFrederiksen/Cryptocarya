@@ -584,44 +584,77 @@ def amas_gt(path_in, cut_off, done, in_done):
     return(inputs, outputs, options, spec)
 
 
-########################################################################################################################
-#############################################---- Optrimal ----#########################################################
-########################################################################################################################
+# ########################################################################################################################
+# #############################################---- Optrimal ----#########################################################
+# ########################################################################################################################
 
-#Getting the best alignment for each gene 
-def optrim(path_in, path_out, done):
-    """Select the best alignments according to the gt value"""
-    inputs = [path_in+"summary_0.txt", path_in+"summary_0.1.txt", path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
-    path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
-    path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt"]
-    outputs = [done, path_out+"optimal_final_results"]
-    options = {'cores': 2, 'memory': "5g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+# Run the script optrimal.R in interactive mode from the folder 10_trimal where the summary files generated in the 2 amas scripts are.
+# It is important that the cutoff.txt file has the labels 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9
+# and that the summary files are named summary_0.txt, summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
+# Make folder called optimal_final_results.
+# The interactive mode is called by activating the conda environment R: conda activate R. When write R --interactive. Hereafter insert all the lines from the optrimal.R script.
 
-    spec="""
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate base
+# #Getting the best alignment for each gene 
+# def optrim(path_in, path_out, done):
+#     """Select the best alignments according to the gt value"""
+#     inputs = [path_in+"summary_0.txt", path_in+"summary_0.1.txt", path_in+"summary_0.15.txt",path_in+"summary_0.2.txt",path_in+"summary_0.25.txt",path_in+"summary_0.3.txt",
+#     path_in+"summary_0.35.txt",path_in+"summary_0.4.txt",path_in+"summary_0.45.txt",path_in+"summary_0.5.txt",path_in+"summary_0.55.txt",path_in+"summary_0.6.txt",path_in+"summary_0.65.txt",
+#     path_in+"summary_0.7.txt",path_in+"summary_0.75.txt",path_in+"summary_0.8.txt",path_in+"summary_0.85.txt",path_in+"summary_0.9.txt"]
+#     outputs = [done, path_out+"optimal_final_results"]
+#     options = {'cores': 2, 'memory': "5g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
- #Going to folder with trimmed files
+#     spec="""
+
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate base
+
+#  #Going to folder with trimmed files
+#     cd {path_in}
+
+#     Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+
+
+#     touch {done}
+
+#     """.format(path_in = path_in, path_out = path_out, done = done)
+
+#     return(inputs, outputs, options, spec)
+
+# #Here we should include remove empty files?
+
+# #HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
+# # Download all the summary and cutoff files.
+# # Run the R code in your computer
+# # Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
+# # Copy the genes that you delete from raw_alignments to the trimal_output
+
+
+####################################################################################################################################################
+##############################################---- Move optrimal files to new folder ----###########################################################
+####################################################################################################################################################
+
+def move(path_in, path_out, done):
+    """Moving files from trimal folder to optrimal folder."""
+    inputs = [path_in+"dldp_"+gene+"_aligned.fasta.old.png", path_in+"dldp_"+gene+"_aligned.fasta.old.csv", path_in+"optimal_final_results/"+gene+"_aligned.fasta.old"]
+    outputs = [path_out+"optrim_output", path_out+"optimal_final_results", path_out+"overlost.txt", done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
+
+    spec = """
+
     cd {path_in}
 
-    Rscript --vanilla /home/laurakf/cryptocarya/Scripts/optrimal.R
+    mv dldp_* {path_out}optrim_output/
+    
+    mv optimal_final_results {path_out}optimal_final_results
 
+    mv overlost.txt {path_out}
 
     touch {done}
 
     """.format(path_in = path_in, path_out = path_out, done = done)
 
     return(inputs, outputs, options, spec)
-
-#Here we should include remove empty files?
-
-#HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
-# Download all the summary and cutoff files.
-# Run the R code in your computer
-# Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
-# Copy the genes that you delete from raw_alignments to the trimal_output
-
 
 # ##########################################################################################################################
 # ##############################################---- CIALIGN ----###########################################################
@@ -915,11 +948,16 @@ for i in range(len(cut_off)):
                                                 done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
-#### Optrimal
-gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
-                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/optrimal", 
-                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
+# #### Optrimal
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+#                                                          done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/optrimal/optrimal", 
+#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
 
+
+#### Move files from trimal to optrimal folder
+gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                                         done = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/done/move/move", 
+                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/"))
                                                
 # # Running CIAlign on the trimmed_fasta - Including Paralogs
 # for i in range(0, len(genes)):
