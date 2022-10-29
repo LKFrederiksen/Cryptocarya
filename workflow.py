@@ -711,7 +711,7 @@ def taper(path_in, gene, path_out, done):
         
     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
     
-    mv *_output_taper.fasta {path_out}
+    mv {gene}_output_taper.fasta {path_out}
 
     touch {done}
         
