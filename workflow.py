@@ -982,7 +982,6 @@ for i in range(0, len(gene)):
                                               done = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/done/"+gene[i]))
 
 ## Running TAPER after CIALIGN
-for i in range(0, len(gene)):
     gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
