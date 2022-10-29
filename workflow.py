@@ -634,7 +634,7 @@ def amas_gt(path_in, cut_off, done, in_done):
 ##############################################---- Move optrimal files to new folder ----###########################################################
 ####################################################################################################################################################
 
-def move(path_in, path_out, done):
+def move(path_in, path_out, gene, done):
     """Moving files from trimal folder to optrimal folder."""
     inputs = [path_in+"dldp_"+gene+"_aligned.fasta.old.png", path_in+"dldp_"+gene+"_aligned.fasta.old.csv", path_in+"optimal_final_results/"+gene+"_aligned.fasta.old"]
     outputs = [path_out+"optrim_output", path_out+"optimal_final_results", path_out+"overlost.txt", done]
@@ -652,7 +652,7 @@ def move(path_in, path_out, done):
 
     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done, gene = gene)
 
     return(inputs, outputs, options, spec)
 
