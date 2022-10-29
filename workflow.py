@@ -986,7 +986,7 @@ for i in range(0, len(gene)):
     gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/12_CIAlign/",
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done"+gene[i]))
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done/"+gene[i]))
                                                     
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(genes)):
