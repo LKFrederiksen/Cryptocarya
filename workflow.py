@@ -519,14 +519,13 @@ def gt_trimming(path_in, path_out, done, gene):
 ######## Calculating amas summary (raw)
 
 #For raw alignments
-def amas_raw(path_in, done):
+def amas_raw(path_in, done, in_done):
     """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [path_in]
+    inputs = [in_done]
     outputs = [path_in+"summary_0.txt", done]
     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
     spec="""
-
 
     #Activating AMAS
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
@@ -541,7 +540,7 @@ def amas_raw(path_in, done):
 
     touch {done}
     
-    """.format(path_in = path_in, done = done)
+    """.format(path_in = path_in, done = done, in_done = in_done)
 
     return(inputs, outputs, options, spec)
 
@@ -643,7 +642,13 @@ def move(path_in, path_out, in_done, done):
 
     spec = """
 
-    mkdir {path_out}optrim_output
+    # Checking if a directory exists for the cutoff_trim
+    if [[ -d "/home/laurakf/cryptocarya/Workflow/Test/11_Optrimal/optrim_output/ ]]
+                then
+                echo "optrim_output folder exists."
+                else
+                        mkdir optrim_output
+                fi
 
     cd {path_in}
 
@@ -939,6 +944,7 @@ for i in range(len(gene)):
 
 #### Generating AMAS statistics for raw_alignments
 gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/",
+                                        in_done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/"+gene[i],
                                         done = "/home/laurakf/cryptocarya/Workflow/Test/10_Trimal/done/AMAS_raw/raw"))
 
 cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
