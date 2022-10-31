@@ -749,7 +749,6 @@ def iqtree(path_in, path_out, gene):
     mv {gene}_output_taper.fasta.log {path_out}
     mv {gene}_output_taper.fasta.mldist {path_out}
     mv {gene}_output_taper.fasta.splits.nex {path_out}
-    mv {gene}_output_taper.fasta.uniqueseq.phy {path_out}
     
     """.format(path_in = path_in, path_out = path_out, gene = gene)
 
@@ -788,7 +787,7 @@ def iqtree(path_in, path_out, gene):
 
 
 # def astral_tapper(path_in, gene_tree_file, output, done):
-#     """Using Astral to construct a species tree based on the genetrees"""
+#     """Using Astral to construct a species tree based on the gene trees"""
 #     inputs = [path_in+"gene_trees.nex", done]
 #     outputs = [path_in + output, done]
 #     options = {'cores': 20, 'memory': "40g", 'walltime': "1:00:00", 'account':"cryptocarya"}
