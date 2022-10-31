@@ -728,7 +728,7 @@ def iqtree(path_in, path_out, gene, done):
     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
     inputs = [path_in+gene+"_output_taper.fasta"]
     outputs = [path_out+gene+"_output_taper.fasta.treefile", done]
-    options = {'cores': 8, 'memory': "4g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+    options = {'cores': 8, 'memory': "4g", 'walltime': "4:00:00", 'account':"cryptocarya"}
 
     spec = """
      
