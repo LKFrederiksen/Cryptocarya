@@ -740,16 +740,16 @@ def iqtree(path_in, path_out, gene, done):
         
     iqtree2 -s {gene}_output_taper.fasta -T AUTO -m MFP -B 1000 
     
-    mv *treefile {path_out}
-    mv *_output_taper.fasta.model.gz {path_out}
-    mv *output_taper.fasta.contree {path_out}
-    mv *output_taper.fasta.bionj {path_out}
-    mv *output_taper.fasta.ckp.gz {path_out}
-    mv *_output_taper.fasta.iqtree {path_out}
-    mv *_output_taper.fasta.log {path_out}
-    mv *taper.fasta.mldist {path_out}
-    mv *taper.fasta.splits.nex {path_out}
-    mv *output_taper.fasta.uniqueseq.phy {path_out}
+    mv {gene}_output_taper.fasta.treefile {path_out}
+    mv {gene}_output_taper.fasta.model.gz {path_out}
+    mv {gene}_output_taper.fasta.contree {path_out}
+    mv {gene}_output_taper.fasta.bionj {path_out}
+    mv {gene}_output_taper.fasta.ckp.gz {path_out}
+    mv {gene}_output_taper.fasta.iqtree {path_out}
+    mv {gene}_output_taper.fasta.log {path_out}
+    mv {gene}_taper.fasta.mldist {path_out}
+    mv {gene}_taper.fasta.splits.nex {path_out}
+    mv {gene}_output_taper.fasta.uniqueseq.phy {path_out}
 
     touch {done}
     
@@ -793,7 +793,7 @@ def iqtree(path_in, path_out, gene, done):
 #     """Using Astral to construct a species tree based on the genetrees"""
 #     inputs = [path_in+"gene_trees.nex", done]
 #     outputs = [path_in + output, done]
-#     options = {'cores': 20, 'memory': "40g", 'walltime': "48:00:00", 'account':"cryptocarya"}
+#     options = {'cores': 20, 'memory': "40g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
 #     spec = """
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
