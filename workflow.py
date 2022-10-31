@@ -724,10 +724,10 @@ def taper(path_in, gene, path_out, done):
 ##############################################---- IQTREE ----##########################################################
 ########################################################################################################################
 
-def iqtree(path_in, path_out, gene, done):
+def iqtree(path_in, path_out, gene):
     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
     inputs = [path_in+gene+"_output_taper.fasta"]
-    outputs = [path_out+gene+"_output_taper.fasta.treefile", done]
+    outputs = [path_out+gene+"_output_taper.fasta.treefile"]
     options = {'cores': 8, 'memory': "4g", 'walltime': "6:00:00", 'account':"cryptocarya"}
 
     spec = """
@@ -750,10 +750,8 @@ def iqtree(path_in, path_out, gene, done):
     mv {gene}_output_taper.fasta.mldist {path_out}
     mv {gene}_output_taper.fasta.splits.nex {path_out}
     mv {gene}_output_taper.fasta.uniqueseq.phy {path_out}
-
-    touch {done}
     
-    """.format(path_in = path_in, path_out = path_out, gene = gene, done = done)
+    """.format(path_in = path_in, path_out = path_out, gene = gene)
 
     return (inputs, outputs, options, spec) 
  
@@ -993,7 +991,6 @@ for i in range(0, len(gene)):
 for i in range(0, len(gene)):
    gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/14_IQtree/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/14_IQtree/done/"+gene[i],
                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"))  
                                                     
 # # Running ASTRAL 
