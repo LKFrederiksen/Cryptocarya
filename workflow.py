@@ -720,41 +720,42 @@ def taper(path_in, gene, path_out, done):
     return (inputs, outputs, options, spec)
     
 
-# ########################################################################################################################
-# ##############################################---- IQTREE ----##########################################################
-# ########################################################################################################################
+########################################################################################################################
+##############################################---- IQTREE ----##########################################################
+########################################################################################################################
 
-# def iqtree(path_in, genes, done):
-#     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
-#     inputs = [path_in+genes+"_output_tapper.fasta", done]
-#     outputs = [path_out+genes+"_output_tapper.fasta.treefile", done]
-#     options = {'cores': 2, 'memory': "40g", 'walltime': "12:00:00", 'account':"cryptocarya"}
+def iqtree(path_in, path_out, gene, done):
+    """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
+    inputs = [path_in+gene+"_output_taper.fasta"]
+    outputs = [path_out+gene+"_output_taper.fasta.treefile", done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "2:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
         
-#     #Activate the enviroment
-#     source activate IQtree
+    # Activate IQtree    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate IQtree
         
-#     iqtree2 -s {genes}_output_tapper.fasta -T AUTO -m MFP -B 1000 
+    iqtree2 -s {gene}_output_taper.fasta -T AUTO -m MFP -B 1000 
     
-#     mv *treefile {path_out}
-#     mv *_output_tapper.fasta.model.gz {path_out}
-#     mv *output_tapper.fasta.contree {path_out}
-#     mv *output_tapper.fasta.bionj {path_out}
-#     mv *output_tapper.fasta.ckp.gz {path_out}
-#     mv *_output_tapper.fasta.iqtree {path_out}
-#     mv *_output_tapper.fasta.log {path_out}
-#     mv *tapper.fasta.mldist {path_out}
-#     mv *tapper.fasta.splits.nex {path_out}
-#     mv *output_tapper.fasta.uniqueseq.phy {path_out}
+    mv *treefile {path_out}
+    mv *_output_taper.fasta.model.gz {path_out}
+    mv *output_taper.fasta.contree {path_out}
+    mv *output_taper.fasta.bionj {path_out}
+    mv *output_taper.fasta.ckp.gz {path_out}
+    mv *_output_taper.fasta.iqtree {path_out}
+    mv *_output_taper.fasta.log {path_out}
+    mv *taper.fasta.mldist {path_out}
+    mv *taper.fasta.splits.nex {path_out}
+    mv *output_taper.fasta.uniqueseq.phy {path_out}
 
-#     touch {done}
+    touch {done}
     
-#     """.format(path_in = path_in, genes = genes, done = done)
+    """.format(path_in = path_in, path_out = path_out, gene = gene, done = done)
 
-#     return (inputs, outputs, options, spec) 
+    return (inputs, outputs, options, spec) 
  
 # # We also lost the gene: because it has less 4 species only, and it does not make sense to perform a bootstrap (Iqtree)
 # #Iqtree_32
@@ -988,10 +989,12 @@ for i in range(0, len(gene)):
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/done/"+gene[i]))
                                                     
-# #Running IQTREE for files trimmed with trimal and CIAlign                                             
-# for i in range(0, len(genes)):
-#    gwf.target_from_template('Iqtree_'+str(i), iqtree(genes = genes[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"))  
+#Running IQTREE for files trimmed with trimal and CIAlign                                             
+for i in range(0, len(gene)):
+   gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Test/14_IQtree/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Test/14_IQtree/done/"+gene[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/Test/13_Taper/"))  
                                                     
 # # Running ASTRAL 
 # gwf.target_from_template('astral_tapper', astral_tapper(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/13.Astral/",
