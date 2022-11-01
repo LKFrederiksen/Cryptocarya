@@ -996,6 +996,3 @@ for i in range(0, len(gene)):
 # gwf.target_from_template('astral_tapper', astral_tapper(path_in = "/home/paola/faststorage/17.Final_organization/5.Ceroxyloids/13.Astral/",
 #                                                     gene_tree_file="gene_trees.nex",
 #                                                     output="astral_tree_only_posterior_probability.tre"))
-
-
-
