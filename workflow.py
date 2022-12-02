@@ -100,7 +100,7 @@ def trimmomatic(name, path_in, path_out, done):
     to enable post-trimming secapr quality_check for comparability before and after trimming """
     path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
-    options = {'cores': 8, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+    options = {'cores': 8, 'memory': "5g", 'walltime': "00:2:00", 'account':"cryptocarya"}
 
     spec = """
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
