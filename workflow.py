@@ -106,7 +106,7 @@ def trimmomatic(name, path_in, path_out, done):
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     conda activate trimmomatic
 
-    trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_1PU.fastq -baseout {output}.fastq\
+    trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
     LEADING:30\
     SLIDINGWINDOW:4:30\
