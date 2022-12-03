@@ -300,40 +300,40 @@ gwf = Workflow()
 
 
 
-# ########################################################################################################################
-# ################################################---- Hybpiper ----######################################################
-# ########################################################################################################################
-# def hybpiper(name, p1, p2, un, path_out, path_in, done):
-#     """Hybpiper."""
-#     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
-#     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-#     options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
+########################################################################################################################
+################################################---- Hybpiper ----######################################################
+########################################################################################################################
+def hybpiper(name, p1, p2, un, path_out, path_in, done):
+    """Hybpiper."""
+    path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
+    outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
+    options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
 
-#     spec = """
+    spec = """
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     conda activate HybPiper
+    conda activate HybPiper
 
-#     TMPDIR=/scratch/$SLURM_JOBID
-#     export TMPDIR
-#     mkdir -p $TMPDIR
-#     cd $TMPDIR
+    TMPDIR=/scratch/$SLURM_JOBID
+    export TMPDIR
+    mkdir -p $TMPDIR
+    cd $TMPDIR
     
-#     # Here I have used the Rohwer target file!
-#     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
+    # Here I have used the Rohwer target file!
+    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
 
-#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/
+    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
     
 
-#     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
+    """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
 
 
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 ########################################################################################################################
 ###################################################---- Stats ----######################################################
@@ -1086,21 +1086,21 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
-# for i in range(len(sp)):
+for i in range(len(sp)):
     
-#     #### Running Hybpiper
-#     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
-#                                                         p1 = "_1P.fastq",
-#                                                         p2 = "_2P.fastq",
-#                                                         un = "_UN.fastq",
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+    #### Running Hybpiper
+    gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
+                                                        p1 = "_1P.fastq",
+                                                        p2 = "_2P.fastq",
+                                                        un = "_UN.fastq",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
 #### Getting stats and heatmap
 gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[id],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
                                                 name = sp[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
 
@@ -1113,7 +1113,7 @@ gwf.target_from_template('Paralogs', paralogs(name = sp[i],
                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
 sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
-# Taken ... out. They do not seem to work. 
+# Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
 for i in range(len(sp)):
 
