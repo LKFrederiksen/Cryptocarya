@@ -36,107 +36,107 @@ import glob
 
 gwf = Workflow()
 
-########################################################################################################################
-###############################################---- Fastqc quality check raw ----#######################################
-########################################################################################################################
-def fastqc_raw(name,path_in ,path_out, done,):
-    """Quality checking using fastqc as this should work on individual species"""
-    path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
-    outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
-    options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# ########################################################################################################################
+# ###############################################---- Fastqc quality check raw ----#######################################
+# ########################################################################################################################
+# def fastqc_raw(name,path_in ,path_out, done,):
+#     """Quality checking using fastqc as this should work on individual species"""
+#     path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
+#     outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
+#     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    echo {name}
+#     echo {name}
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate fastqc
+#     conda activate fastqc
 
-    fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
+#     fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
     
-    echo touching {done}
+#     echo touching {done}
     
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, name = name, path_out = path_out, done = done)
+#     """.format(path_in = path_in, name = name, path_out = path_out, done = done)
 
-    return (path_ins, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
-#######################################################################################################################
-#############################################---- Multiqc quality check raw ----#######################################
-#######################################################################################################################
-def multiqc_raw(path_in ,path_out, done,):
-    """Quality checking using multiqc"""
-    inputs = [path_in+"Alse-petio-PAFTOL_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL_R1_fastqc.html", path_in+"Caly-flori-PAFTOL_R1_fastqc.html", path_in+"Cass-filif-PAFTOL_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL_R1_fastqc.html", path_in+"Deha-haina-PAFTOL_R1_fastqc.html", path_in+"Endi-macro-PAFTOL_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL_R1_fastqc.html", path_in+"Idio-austr-PAFTOL_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL_R1_fastqc.html", path_in+"Mach-salic-PAFTOL_R1_fastqc.html", path_in+"Magn-grand-PAFTOL_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL_R1_fastqc.html", path_in+"Synd-chine-PAFTOL_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R1_fastqc.html", path_in+"Alse-petio-PAFTOL_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL_R2_fastqc.html", path_in+"Caly-flori-PAFTOL_R2_fastqc.html", path_in+"Cass-filif-PAFTOL_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL_R2_fastqc.html", path_in+"Deha-haina-PAFTOL_R2_fastqc.html", path_in+"Endi-macro-PAFTOL_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL_R2_fastqc.html", path_in+"Idio-austr-PAFTOL_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL_R2_fastqc.html", path_in+"Mach-salic-PAFTOL_R2_fastqc.html", path_in+"Magn-grand-PAFTOL_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL_R2_fastqc.html", path_in+"Synd-chine-PAFTOL_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R2_fastqc.html"]
-    outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
-    options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# #######################################################################################################################
+# #############################################---- Multiqc quality check raw ----#######################################
+# #######################################################################################################################
+# def multiqc_raw(path_in ,path_out, done,):
+#     """Quality checking using multiqc"""
+#     inputs = [path_in+"Alse-petio-PAFTOL_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL_R1_fastqc.html", path_in+"Caly-flori-PAFTOL_R1_fastqc.html", path_in+"Cass-filif-PAFTOL_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL_R1_fastqc.html", path_in+"Deha-haina-PAFTOL_R1_fastqc.html", path_in+"Endi-macro-PAFTOL_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL_R1_fastqc.html", path_in+"Idio-austr-PAFTOL_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL_R1_fastqc.html", path_in+"Mach-salic-PAFTOL_R1_fastqc.html", path_in+"Magn-grand-PAFTOL_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL_R1_fastqc.html", path_in+"Synd-chine-PAFTOL_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R1_fastqc.html", path_in+"Alse-petio-PAFTOL_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL_R2_fastqc.html", path_in+"Caly-flori-PAFTOL_R2_fastqc.html", path_in+"Cass-filif-PAFTOL_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL_R2_fastqc.html", path_in+"Deha-haina-PAFTOL_R2_fastqc.html", path_in+"Endi-macro-PAFTOL_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL_R2_fastqc.html", path_in+"Idio-austr-PAFTOL_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL_R2_fastqc.html", path_in+"Mach-salic-PAFTOL_R2_fastqc.html", path_in+"Magn-grand-PAFTOL_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL_R2_fastqc.html", path_in+"Synd-chine-PAFTOL_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R2_fastqc.html"]
+#     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
+#     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate multiqc
+#     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}
+#     multiqc -o {path_out} {path_in}
     
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
-
-
-#######################################################################################################################################
-################################################---- Trimmomatic - slidingwindow----###################################################
-#######################################################################################################################################
-def trimmomatic(name, path_in, path_out, done):
-    """Trimming raw data using trimmomatic with custom adapter.
-    Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
-    to enable post-trimming secapr quality_check for comparability before and after trimming """
-    path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
-    outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
-    options = {'cores': 8, 'memory': "8g", 'walltime': "12:00:00", 'account':"cryptocarya"}
-
-    spec = """
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate trimmomatic
-
-    trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
-    ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
-    LEADING:30\
-    SLIDINGWINDOW:4:30\
-    MINLEN:40\
-    2>> stderr_trim_loop_output.txt
-
-    echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
-    cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
-
-    echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
-    cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
-
-    echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
-    cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
-    cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
+#     return (inputs, outputs, options, spec)
 
 
-    echo Removing {path_out}{name}_1U.fastq
-    rm {path_out}{name}_1U.fastq
+# #######################################################################################################################################
+# ################################################---- Trimmomatic - slidingwindow----###################################################
+# #######################################################################################################################################
+# def trimmomatic(name, path_in, path_out, done):
+#     """Trimming raw data using trimmomatic with custom adapter.
+#     Afterwards combines paired and unpaired reads for forward and reverse reads respectively for each species 
+#     to enable post-trimming secapr quality_check for comparability before and after trimming """
+#     path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
+#     outputs = [path_out+name+"_UN.fastq",path_out+"secapr_postrim/"+name+"_UN.fastq", done, path_out+name+"_1P.fastq", path_out+name+"_2P.fastq"]
+#     options = {'cores': 8, 'memory': "8g", 'walltime': "12:00:00", 'account':"cryptocarya"}
 
-    echo Removing {path_out}{name}_2U.fastq
-    rm {path_out}{name}_2U.fastq
+#     spec = """
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate trimmomatic
 
-    echo touching {done}
+#     trimmomatic PE -threads 16 -phred33 {path_in}_R1.fastq {path_in}_R2.fastq -baseout {output}.fastq\
+#     ILLUMINACLIP:/home/laurakf/miniconda3/pkgs/trimmomatic-0.39-hdfd78af_2/share/trimmomatic-0.39-2/adapters/TruSeq3-PE-2.fa:1:30:7:1:true\
+#     LEADING:30\
+#     SLIDINGWINDOW:4:30\
+#     MINLEN:40\
+#     2>> stderr_trim_loop_output.txt
+
+#     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
+#     cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
+
+#     echo combining {path_out}{name}_2P.fastq and {path_out}{name}_2U.fastq into {path_out}secapr_postrim/{name}_2PU.fastq 
+#     cat {path_out}{name}_2P.fastq {path_out}{name}_2U.fastq > {path_out}secapr_postrim/{name}_2PU.fastq
+
+#     echo combining {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cat {path_out}{name}_1U.fastq {path_out}{name}_2U.fastq > {path_out}{name}_UN.fastq
+#     cp {path_out}{name}_UN.fastq {path_out}secapr_postrim/
+
+
+#     echo Removing {path_out}{name}_1U.fastq
+#     rm {path_out}{name}_1U.fastq
+
+#     echo Removing {path_out}{name}_2U.fastq
+#     rm {path_out}{name}_2U.fastq
+
+#     echo touching {done}
     
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
+#     """.format(path_in = path_in+name, output = path_out+name, done = done, name = name, path_out = path_out)
 
-    return (path_ins, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 
 # # #######################################################################################################################################
@@ -188,33 +188,33 @@ def trimmomatic(name, path_in, path_out, done):
 # #     return (path_ins, outputs, options, spec)
 
 
-########################################################################################################################################
-###########################################---- Fastqc quality check trimmed (slidingwindow) ----#######################################
-########################################################################################################################################
-def fastqc_trimmed(name,path_in ,path_out, done,):
-     """Quality checking using fastqc as this should work on individual species"""
-     path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
-     outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
-     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# ########################################################################################################################################
+# ###########################################---- Fastqc quality check trimmed (slidingwindow) ----#######################################
+# ########################################################################################################################################
+# def fastqc_trimmed(name,path_in ,path_out, done,):
+#      """Quality checking using fastqc as this should work on individual species"""
+#      path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
+#      outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
+#      options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 
-     spec = """
+#      spec = """
 
-     echo {name}
+#      echo {name}
      
-     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#      source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-     conda activate fastqc
+#      conda activate fastqc
 
-     fastqc -o {output} {path_in}{name}_1PU.fastq {path_in}{name}_2PU.fastq {path_in}{name}_UN.fastq
+#      fastqc -o {output} {path_in}{name}_1PU.fastq {path_in}{name}_2PU.fastq {path_in}{name}_UN.fastq
     
-     echo touching {done}
+#      echo touching {done}
 
-     touch {done}
+#      touch {done}
 
-     """.format(path_in = path_in, name = name, output = path_out, done = done)
+#      """.format(path_in = path_in, name = name, output = path_out, done = done)
 
-     return (path_ins, outputs, options, spec)
+#      return (path_ins, outputs, options, spec)
 
 
 # ##################################################################################################################################
@@ -245,31 +245,31 @@ def fastqc_trimmed(name,path_in ,path_out, done,):
 
 # #      return (path_ins, outputs, options, spec)
 
-#######################################################################################################################################
-#########################################---- Multiqc quality check trimmed (slidingwindow) ----#######################################
-#######################################################################################################################################
-def multiqc_trimmed(path_in ,path_out, done):
-    """Quality checking using multiqc"""
-    inputs = [path_in+"Alse-petio-PAFTOL_UN_fastqc.html", path_in+"Athe-mosch-PAFTOL_UN_fastqc.html", path_in+"Beil-pendu-PAFTOL_UN_fastqc.html", path_in+"Beil-tsang-PAFTOL_UN_fastqc.html", path_in+"Cary-tonki-PAFTOL_UN_fastqc.html", path_in+"Caly-flori-PAFTOL_UN_fastqc.html", path_in+"Cass-filif-PAFTOL_UN_fastqc.html", path_in+"Cinn-camph-PAFTOL_UN_fastqc.html", path_in+"Cryp-alba-PAFTOL_UN_fastqc.html", path_in+"Deha-haina-PAFTOL_UN_fastqc.html", path_in+"Endi-macro-PAFTOL_UN_fastqc.html", path_in+"Gomo-keule-PAFTOL_UN_fastqc.html", path_in+"Hern-nymph-PAFTOL_UN_fastqc.html", path_in+"Idio-austr-PAFTOL_UN_fastqc.html", path_in+"Laur-nobil-PAFTOL_UN_fastqc.html", path_in+"Mach-salic-PAFTOL_UN_fastqc.html", path_in+"Magn-grand-PAFTOL_UN_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_UN_fastqc.html", path_in+"Moll-gilgi-PAFTOL_UN_fastqc.html", path_in+"Moni-rotun-PAFTOL_UN_fastqc.html", path_in+"Myri-fragr-PAFTOL_UN_fastqc.html", path_in+"Neoc-cauda-PAFTOL_UN_fastqc.html", path_in+"Noth-umbel-PAFTOL_UN_fastqc.html", path_in+"Pers-borbo-PAFTOL_UN_fastqc.html", path_in+"Peum-boldu-PAFTOL_UN_fastqc.html", path_in+"Phoe-lance-PAFTOL_UN_fastqc.html", path_in+"Sipa-guian-PAFTOL_UN_fastqc.html", path_in+"Spar-botoc-PAFTOL_UN_fastqc.html", path_in+"Synd-chine-PAFTOL_UN_fastqc.html", path_in+"Tamb-ficus-PAFTOL_UN_fastqc.html", path_in+"Alse-petio-PAFTOL_1PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_1PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_1PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_1PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_1PU_fastqc.html", path_in+"Caly-flori-PAFTOL_1PU_fastqc.html", path_in+"Cass-filif-PAFTOL_1PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_1PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_1PU_fastqc.html", path_in+"Deha-haina-PAFTOL_1PU_fastqc.html", path_in+"Endi-macro-PAFTOL_1PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_1PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_1PU_fastqc.html", path_in+"Idio-austr-PAFTOL_1PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_1PU_fastqc.html", path_in+"Mach-salic-PAFTOL_1PU_fastqc.html", path_in+"Magn-grand-PAFTOL_1PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_1PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_1PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_1PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_1PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_1PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_1PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_1PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_1PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_1PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_1PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_1PU_fastqc.html", path_in+"Synd-chine-PAFTOL_1PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_1PU_fastqc.html", path_in+"Alse-petio-PAFTOL_2PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_2PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_2PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_2PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_2PU_fastqc.html", path_in+"Caly-flori-PAFTOL_2PU_fastqc.html", path_in+"Cass-filif-PAFTOL_2PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_2PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_2PU_fastqc.html", path_in+"Deha-haina-PAFTOL_2PU_fastqc.html", path_in+"Endi-macro-PAFTOL_2PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_2PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_2PU_fastqc.html", path_in+"Idio-austr-PAFTOL_2PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_2PU_fastqc.html", path_in+"Mach-salic-PAFTOL_2PU_fastqc.html", path_in+"Magn-grand-PAFTOL_2PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_2PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_2PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_2PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_2PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_2PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_2PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_2PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_2PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_2PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_2PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_2PU_fastqc.html", path_in+"Synd-chine-PAFTOL_2PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_2PU_fastqc.html"]
-    outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
-    options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# #######################################################################################################################################
+# #########################################---- Multiqc quality check trimmed (slidingwindow) ----#######################################
+# #######################################################################################################################################
+# def multiqc_trimmed(path_in ,path_out, done):
+#     """Quality checking using multiqc"""
+#     inputs = [path_in+"Alse-petio-PAFTOL_UN_fastqc.html", path_in+"Athe-mosch-PAFTOL_UN_fastqc.html", path_in+"Beil-pendu-PAFTOL_UN_fastqc.html", path_in+"Beil-tsang-PAFTOL_UN_fastqc.html", path_in+"Cary-tonki-PAFTOL_UN_fastqc.html", path_in+"Caly-flori-PAFTOL_UN_fastqc.html", path_in+"Cass-filif-PAFTOL_UN_fastqc.html", path_in+"Cinn-camph-PAFTOL_UN_fastqc.html", path_in+"Cryp-alba-PAFTOL_UN_fastqc.html", path_in+"Deha-haina-PAFTOL_UN_fastqc.html", path_in+"Endi-macro-PAFTOL_UN_fastqc.html", path_in+"Gomo-keule-PAFTOL_UN_fastqc.html", path_in+"Hern-nymph-PAFTOL_UN_fastqc.html", path_in+"Idio-austr-PAFTOL_UN_fastqc.html", path_in+"Laur-nobil-PAFTOL_UN_fastqc.html", path_in+"Mach-salic-PAFTOL_UN_fastqc.html", path_in+"Magn-grand-PAFTOL_UN_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_UN_fastqc.html", path_in+"Moll-gilgi-PAFTOL_UN_fastqc.html", path_in+"Moni-rotun-PAFTOL_UN_fastqc.html", path_in+"Myri-fragr-PAFTOL_UN_fastqc.html", path_in+"Neoc-cauda-PAFTOL_UN_fastqc.html", path_in+"Noth-umbel-PAFTOL_UN_fastqc.html", path_in+"Pers-borbo-PAFTOL_UN_fastqc.html", path_in+"Peum-boldu-PAFTOL_UN_fastqc.html", path_in+"Phoe-lance-PAFTOL_UN_fastqc.html", path_in+"Sipa-guian-PAFTOL_UN_fastqc.html", path_in+"Spar-botoc-PAFTOL_UN_fastqc.html", path_in+"Synd-chine-PAFTOL_UN_fastqc.html", path_in+"Tamb-ficus-PAFTOL_UN_fastqc.html", path_in+"Alse-petio-PAFTOL_1PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_1PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_1PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_1PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_1PU_fastqc.html", path_in+"Caly-flori-PAFTOL_1PU_fastqc.html", path_in+"Cass-filif-PAFTOL_1PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_1PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_1PU_fastqc.html", path_in+"Deha-haina-PAFTOL_1PU_fastqc.html", path_in+"Endi-macro-PAFTOL_1PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_1PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_1PU_fastqc.html", path_in+"Idio-austr-PAFTOL_1PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_1PU_fastqc.html", path_in+"Mach-salic-PAFTOL_1PU_fastqc.html", path_in+"Magn-grand-PAFTOL_1PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_1PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_1PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_1PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_1PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_1PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_1PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_1PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_1PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_1PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_1PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_1PU_fastqc.html", path_in+"Synd-chine-PAFTOL_1PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_1PU_fastqc.html", path_in+"Alse-petio-PAFTOL_2PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_2PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_2PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_2PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_2PU_fastqc.html", path_in+"Caly-flori-PAFTOL_2PU_fastqc.html", path_in+"Cass-filif-PAFTOL_2PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_2PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_2PU_fastqc.html", path_in+"Deha-haina-PAFTOL_2PU_fastqc.html", path_in+"Endi-macro-PAFTOL_2PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_2PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_2PU_fastqc.html", path_in+"Idio-austr-PAFTOL_2PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_2PU_fastqc.html", path_in+"Mach-salic-PAFTOL_2PU_fastqc.html", path_in+"Magn-grand-PAFTOL_2PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_2PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_2PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_2PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_2PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_2PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_2PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_2PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_2PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_2PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_2PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_2PU_fastqc.html", path_in+"Synd-chine-PAFTOL_2PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_2PU_fastqc.html"]
+#     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
+#     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 
-    spec = """
+#     spec = """
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-    conda activate multiqc
+#     conda activate multiqc
 
-    multiqc -o {path_out} {path_in}
+#     multiqc -o {path_out} {path_in}
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_in = path_in, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 # # ########################################################################################################################################
@@ -303,114 +303,113 @@ def multiqc_trimmed(path_in ,path_out, done):
 ########################################################################################################################
 ################################################---- Hybpiper ----######################################################
 ########################################################################################################################
-# def hybpiper(name, p1, p2, un, path_out, path_in, done):
-#     """Hybpiper."""
-#     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
-#     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-#     options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
+def hybpiper(name, p1, p2, un, path_out, path_in, done):
+    """Hybpiper."""
+    path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
+    outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
+    options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
 
-#     spec = """
+    spec = """
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#     conda activate HybPiper
+    conda activate HybPiper
 
-#     TMPDIR=/scratch/$SLURM_JOBID
-#     export TMPDIR
-#     mkdir -p $TMPDIR
-#     cd $TMPDIR
+    TMPDIR=/scratch/$SLURM_JOBID
+    export TMPDIR
+    mkdir -p $TMPDIR
+    cd $TMPDIR
     
-#     # Here I have used the Rohwer target file!
-#     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
+    # Here I have used the Rohwer target file!
+    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
 
-#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/
+    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
     
 
-#     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
+    """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
 
 
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
-# ########################################################################################################################
-# ###################################################---- Stats ----######################################################
-# ########################################################################################################################
+########################################################################################################################
+###################################################---- Stats ----######################################################
+########################################################################################################################
 
-# # In this step you should run the statistics on the folder where we have the Hybpiper_results
-# # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+# In this step you should run the statistics on the folder where we have the Hybpiper_results
+# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-# def stats(path_in, done, path_out, in_done, name):
-#    """Gather statistics about the HybPiper run(s).""" 
-#    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
-#    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-#    options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
+def stats(path_in, done, path_out, in_done, name):
+   """Gather statistics about the HybPiper run(s).""" 
+   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
 
-#    spec = """
+   spec = """
    
-#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#    conda activate HybPiper
+   conda activate HybPiper
     
-#    cd {path_in}
+   cd {path_in}
     
-#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'supercontig' {path_in}namelist.txt # Get stats
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'supercontig' {path_in}namelist.txt # Get stats
 
-#    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
-#    mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
     
-#    mv hybpiper_stats.tsv {path_out}
+   mv hybpiper_stats.tsv {path_out}
 
-#    mv recovery_heatmap.png {path_out} 
+   mv recovery_heatmap.png {path_out} 
 
-#    echo touching {done}
+   echo touching {done}
 
-#    touch {done}
+   touch {done}
       
-#    """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
 
-#    return (path_ins, outputs, options, spec) 
+   return (path_ins, outputs, options, spec) 
 
-# Stats have been collected. :-) 
 
-# ########################################################################################################################
-# #############################################---- Paralogs ----#########################################################
-# ########################################################################################################################
+########################################################################################################################
+#############################################---- Paralogs ----#########################################################
+########################################################################################################################
 
-# ##### This is the approach to use. #####
+##### This is the approach to use. #####
 
-# def paralogs(name, path_in, done, in_done, path_out):
-#     """Run HybPiper v. 2.1 - paralog retriever """
-#     path_ins = [path_in+name, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+def paralogs(name, path_in, done, in_done, path_out):
+    """Run HybPiper v. 2.1 - paralog retriever """
+    path_ins = [path_in+name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
     
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     conda activate HybPiper
+    conda activate HybPiper
     
-#     cd {path_in}
+    cd {path_in}
 
-#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
+    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
     
-#     mv paralog_report.tsv {path_out}
-#     mv paralogs_above_threshold_report.txt {path_out}
-#     mv paralogs_all {path_out}
-#     mv paralogs_no_chimeras {path_out}
-#     mv paralog_heatmap.png {path_out}
+    mv paralog_report.tsv {path_out}
+    mv paralogs_above_threshold_report.txt {path_out}
+    mv paralogs_all {path_out}
+    mv paralogs_no_chimeras {path_out}
+    mv paralog_heatmap.png {path_out}
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
 
-#      """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
     
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 ### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
 
@@ -1029,30 +1028,30 @@ def multiqc_trimmed(path_in ,path_out, done):
 # ######################################################---- RUN ----#####################################################
 # ########################################################################################################################
 
-#Species 
-sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# #Species 
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
 
-for i in range(len(sp)):
-    #### Running fastqc on raw data
-    gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/done/"+sp[i]))
+# for i in range(len(sp)):
+#     #### Running fastqc on raw data
+#     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
+#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/done/"+sp[i]))
 
-#### Running multiqc on raw data
-gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/done/multiqc_raw"))
+# #### Running multiqc on raw data
+# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/done/multiqc_raw"))
 
-sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
-for i in range(len(sp)):
-    #### Running Trimmomatic (slidingwindow)
-    gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/", 
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/done/"+sp[i]))
+# for i in range(len(sp)):
+#     #### Running Trimmomatic (slidingwindow)
+#     gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
+#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/", 
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
 #     #     #### Running Trimmomatic (maxinfo)
 #     # gwf.target_from_template('trimmomatic_maxinfo_'+sp[i], trimmomatic_maxinfo(name = sp[i],
@@ -1060,11 +1059,11 @@ for i in range(len(sp)):
 #     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/maxinfo/",
 #     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/maxinfo/done/"+sp[i]))
 
-    #### Running fastqc on the trimmed data (slidingwindow)
-    gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/secapr_postrim/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/done/"+sp[i]))  
+    # #### Running fastqc on the trimmed data (slidingwindow)
+    # gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
+    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/secapr_postrim/",
+    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/done/"+sp[i]))  
 
 #     # #### Running fastqc on the trimmed data (maxinfo)
 #     # gwf.target_from_template('fastqc_trimmed_maxinfo_'+sp[i], fastqc_trimmed_maxinfo(name = sp[i],
@@ -1073,10 +1072,10 @@ for i in range(len(sp)):
 #     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/maxinfo/done/"+sp[i]))                                                  
 
 
-#### Running multiqc on trimmed data (slidingwindow)
-gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
+# #### Running multiqc on trimmed data (slidingwindow)
+# gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 # #### Running multiqc on trimmed data (maxinfo)
 # gwf.target_from_template('multiqc_trimmed_maxinfo', multiqc_trimmed_maxinfo(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/maxinfo/",
@@ -1084,34 +1083,34 @@ gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_i
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/maxinfo/done/multiqc_trimmed"))
 
 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # Taken ... out. They do not seem to work. 
 
-# for i in range(len(sp)):
+for i in range(len(sp)):
     
-#     #### Running Hybpiper
-#     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
-#                                                         p1 = "_1P.fastq",
-#                                                         p2 = "_2P.fastq",
-#                                                         un = "_UN.fastq",
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+    #### Running Hybpiper
+    gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
+                                                        p1 = "_1P.fastq",
+                                                        p2 = "_2P.fastq",
+                                                        un = "_UN.fastq",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
-# #### Getting stats and heatmap
-# gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
-#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
-#                                                 name = sp[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
+#### Getting stats and heatmap
+gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
+                                                path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
+                                                name = sp[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
 
                                                
-# #### Paralogs
-# gwf.target_from_template('Paralogs', paralogs(name = sp[i],
-#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/" ,
-#                                                       done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Paralogs/done",
-#                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+#### Paralogs
+gwf.target_from_template('Paralogs', paralogs(name = sp[i],
+                                                      path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                      path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/" ,
+                                                      done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Paralogs/done",
+                                                      in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
 # sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # # Taken ... out. They do not seem to work. 
