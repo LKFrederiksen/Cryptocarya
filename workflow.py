@@ -418,49 +418,49 @@ def paralogs(name, path_in, done, in_done, path_out):
 #############################################---- Coverage ----#########################################################
 ########################################################################################################################
 
-# #This script does the following:
-# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# # Map paired and unpaired reads to that fasta using BWA mem
-# # Deduplicate reads using Picard
-# # Calculate depth using samtools
-# # Mask/strip any bases with coverage <2
-# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+#This script does the following:
+# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# Map paired and unpaired reads to that fasta using BWA mem
+# Deduplicate reads using Picard
+# Calculate depth using samtools
+# Mask/strip any bases with coverage <2
+# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
 
-# def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-#     """Calculating coverage of sequences."""
-#     path_ins = [path_in+name]
-#     outputs = [path_out+name+all_bam,
-#      path_out+name+all_sorted_bam,
-#       path_out+name+all_sorted_bam_bai,
-#        path_out+name+bam,
-#     path_out+name+cov,
-#      path_out+name+fasta,
-#       path_out+name+fasta_amb,
-#        path_out+name+fasta_ann,
-#         path_out+name+fasta_bwt,
-#     path_out+name+fasta_pac,
-#      path_out+name+fasta_sa,
-#       path_out+name+trimmed_fasta,
-#        path_out+name+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+    """Calculating coverage of sequences."""
+    path_ins = [path_in+name]
+    outputs = [path_out+name+all_bam,
+     path_out+name+all_sorted_bam,
+      path_out+name+all_sorted_bam_bai,
+       path_out+name+bam,
+    path_out+name+cov,
+     path_out+name+fasta,
+      path_out+name+fasta_amb,
+       path_out+name+fasta_ann,
+        path_out+name+fasta_bwt,
+    path_out+name+fasta_pac,
+     path_out+name+fasta_sa,
+      path_out+name+trimmed_fasta,
+       path_out+name+up_bam,done] #ALL the output files
+    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
     
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-#     conda activate HybPiper
+    conda activate HybPiper
     
-#     cd {path_in}
+    cd {path_in}
 
-#     python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
+    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
     
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
 
-#     return (path_ins, outputs, options, spec)
+    return (path_ins, outputs, options, spec)
 
 
 # ########################################################################################################################
