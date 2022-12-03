@@ -1100,7 +1100,7 @@ sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang
 #### Getting stats and heatmap
 gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[id],
                                                 name = sp[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
 
