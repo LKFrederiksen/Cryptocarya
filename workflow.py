@@ -894,94 +894,94 @@ def amas_gt(path_in, cut_off, done, in_done):
 # rm file_names.txt
 # rm models.txt
 
-# ##############################################------ RAXML---------#########################################################
+##############################################------ RAXML---------#########################################################
 
-# ################################################################################################################################
-# ##############################################---- RAXML HKYGAMMA----###########################################################
-# ################################################################################################################################
+################################################################################################################################
+##############################################---- RAXML HKYGAMMA----###########################################################
+################################################################################################################################
 
-# def raxml_HKYGAMMA(path_in, path_out, HKYGAMMA, done):
-#     """Using RAXML to construct gene trees"""
-#     inputs = [path_in+HKYGAMMA+"_output_taper.fasta"]
-#     outputs = [done]
-#     options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+def raxml_HKYGAMMA(path_in, path_out, HKYGAMMA, done):
+    """Using RAXML to construct gene trees"""
+    inputs = [path_in+HKYGAMMA+"_output_taper.fasta"]
+    outputs = [done]
+    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
         
-#     # Activate Raxml    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Raxml
+    # Activate Raxml    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Raxml
 
-#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --HKY85 -s {HKYGAMMA}_output_taper.fasta -n {HKYGAMMA}_tree
+    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --HKY85 -s {HKYGAMMA}_output_taper.fasta -n {HKYGAMMA}_tree
 
-#     mv RAxML*{HKYGAMMA}_tree {path_out}
+    mv RAxML*{HKYGAMMA}_tree {path_out}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, HKYGAMMA = HKYGAMMA, done = done)
+    """.format(path_in = path_in, path_out = path_out, HKYGAMMA = HKYGAMMA, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 
 
-# ##################################################################################################################################
-# ##############################################---- RAXML GTRGAMMA----#############################################################
-# ##################################################################################################################################
+##################################################################################################################################
+##############################################---- RAXML GTRGAMMA----#############################################################
+##################################################################################################################################
 
-# def raxml_GTRGAMMA(path_in, path_out, GTRGAMMA, done):
-#     """Using RAXML to construct gene trees"""
-#     inputs = [path_in+GTRGAMMA+"_output_taper.fasta"]
-#     outputs = [done]
-#     options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+def raxml_GTRGAMMA(path_in, path_out, GTRGAMMA, done):
+    """Using RAXML to construct gene trees"""
+    inputs = [path_in+GTRGAMMA+"_output_taper.fasta"]
+    outputs = [done]
+    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
         
-#     # Activate Raxml    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Raxml
+    # Activate Raxml    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Raxml
 
-#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k -s {GTRGAMMA}_output_taper.fasta -n {GTRGAMMA}_tree
+    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k -s {GTRGAMMA}_output_taper.fasta -n {GTRGAMMA}_tree
 
-#     mv RAxML*{GTRGAMMA}_tree {path_out}
+    mv RAxML*{GTRGAMMA}_tree {path_out}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, GTRGAMMA = GTRGAMMA, done = done)
+    """.format(path_in = path_in, path_out = path_out, GTRGAMMA = GTRGAMMA, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 
-# ##################################################################################################################################
-# ##############################################---- RAXML K80GAMMA----#############################################################
-# ##################################################################################################################################
+##################################################################################################################################
+##############################################---- RAXML K80GAMMA----#############################################################
+##################################################################################################################################
 
-# def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
-#     """Using RAXML to construct gene trees"""
-#     inputs = [path_in+K80GAMMA+"_output_taper.fasta"]
-#     outputs = [done]
-#     options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
+    """Using RAXML to construct gene trees"""
+    inputs = [path_in+K80GAMMA+"_output_taper.fasta"]
+    outputs = [done]
+    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
         
-#     # Activate Raxml    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Raxml
+    # Activate Raxml    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Raxml
 
-#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --K80 -s {K80GAMMA}_output_taper.fasta -n {K80GAMMA}_tree
+    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --K80 -s {K80GAMMA}_output_taper.fasta -n {K80GAMMA}_tree
 
-#     mv RAxML*{K80GAMMA}_tree {path_out}
+    mv RAxML*{K80GAMMA}_tree {path_out}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, K80GAMMA = K80GAMMA, done = done)
+    """.format(path_in = path_in, path_out = path_out, K80GAMMA = K80GAMMA, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 
 
@@ -1231,30 +1231,28 @@ gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocary
 
 # ################### RAXML ########################
 
-# HKYGAMMA = ["4889", "5477", "5656", "5660", "5894", "6068", "6114", "6164", "6785", "7241", "4724", "4744", "5123", "5138", "5220", "5354", "5578", "5644", "5744", "5791", "5842", "5933", "5944", "5977", "5990", "6003", "6072", "6130", "6216", "6299", "6303", "6412", "6459", "6483", "6526", "6528", "6532", "6540", "6631", "6689", "6732", "6733", "6746", "6854", "6859", "6909", "6946", "6992", "7024", "7141", "7577", "5304", "5849", "6398", "4471", "4757", "4890", "5018", "5090", "5406", "5460", "5464", "5513", "5562", "5634", "5639", "5968", "5981", "6048", "6139", "6284", "6295", "6439", "6458", "6462", "6494", "6506", "6639", "6641", "6825", "6865", "7029", "7572", "4793", "5271", "5821", "6038", "6056", "6450", "6492", "6500", "6667", "6779", "7135", "4796", "5104", "5299", "5536", "5802", "5822", "5926", "6029", "6148", "6238", "6384", "6420", "6488", "6782", "7111", "7194", "7331", "7602", "5131", "5280", "5815", "5949", "6407", "6533", "6961", "6979", "7067"]
-# for i in range(0, len(HKYGAMMA)):
-#    gwf.target_from_template('HKY_'+HKYGAMMA[i], raxml_HKYGAMMA(HKYGAMMA = HKYGAMMA[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/HKYGAMMA"+HKYGAMMA[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+HKYGAMMA = ["5018", "5104", "5477", "5513", "5551", "5644", "5656", "5802", "5843", "5926", "5960", "5968", "5974", "6029", "6048", "6056", "6064", "6164", "6221", "6238", "6299", "6406", "6496", "6601", "6639", "6848", "7135", "7136", "7331", "7363", "4757", "4890", "5220", "5271", "5536", "5822", "5840", "5894", "5977", "6130", "6295", "6393", "6412", "6420", "6447", "6526", "6538", "6540", "6563", "6636", "6641", "6732", "6733", "6933", "7024", "7273", "7367", "7371", "4992", "5348", "5354", "5639", "5703", "6532", "7324", "5634", "6003", "6114", "6378", "5299", "5318", "5699", "7021"]
+for i in range(0, len(HKYGAMMA)):
+   gwf.target_from_template('HKY_'+HKYGAMMA[i], raxml_HKYGAMMA(HKYGAMMA = HKYGAMMA[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/HKYGAMMA"+HKYGAMMA[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
 
 
-# GTRGAMMA = ["5770", "5919", "6457", "7136", "4527", "4893", "5177", "5188", "5257", "5273", "5699", "5703", "5772", "5853", "5857", "5858", "5865", "5866", "5893", "5945", "5980", "6000", "6050", "6064", "6198", "6221", "6318", "6393", "6406", "6432", "6454", "6507", "6527", "6538", "6550", "6552", "6559", "6713", "6875", "6958", "6962", "6968", "6978", "7273", "7279", "7333", "7367", "7628", "4691", "4802", "4942", "5032", "5034", "5162", "5200", "5206", "5296", "5318", "5326", "5333", "5404", "5426", "5427", "5428", "5489", "5502", "5620", "5702", "5721", "5841", "5899", "5918", "5950", "5960", "5974", "6016", "6034", "6119", "6176", "6226", "6227", "6258", "6274", "6298", "6373", "6376", "6378", "6389", "6460", "6487", "6572", "6620", "6649", "6717", "6792", "6882", "6913", "6914", "6924", "6954", "7313", "7324", "7325", "7371", "4932", "4954", "5116", "5168", "5449", "5596", "5664", "5670", "5840", "5913", "6320", "6404", "6405", "6496", "6563", "6685", "6797", "6933", "7174", "7363", "6447", "4806", "5328", "5531", "5551", "6004", "6282", "6366", "6601", "6848", "7021", "7128", "4951", "5038", "5264", "5343", "5348", "5398", "5463", "5469", "5554", "5870", "6026", "6036", "6051", "6098", "6175", "6265", "6570", "6636", "6652", "6660", "6860", "6947", "4848", "6363", "4992"]
+GTRGAMMA = ["4471", "4724", "4744", "4802", "4848", "4889", "5034", "5123", "5304", "5339", "5449", "5460", "5502", "5531", "5614", "5664", "5670", "5772", "5791", "5893", "5899", "5919", "5942", "5981", "6034", "6036", "6119", "6148", "6175", "6226", "6258", "6274", "6303", "6318", "6363", "6454", "6457", "6458", "6483", "6494", "6507", "6533", "6572", "6631", "6652", "6667", "6685", "6713", "6779", "6792", "6797", "6854", "6947", "6961", "6968", "6978", "6979", "6992", "7111", "7141", "7194", "7583", "7602", "4793", "4796", "4806", "4893", "4932", "4942", "4951", "4954", "5090", "5116", "5188", "5200", "5206", "5273", "5280", "5296", "5328", "5404", "5463", "5464", "5489", "5554", "5562", "5578", "5594", "5716", "5744", "5842", "5857", "5913", "5918", "5933", "5943", "5950", "5990", "6000", "6004", "6038", "6050", "6068", "6128", "6139", "6198", "6227", "6282", "6366", "6407", "6432", "6439", "6459", "6492", "6500", "6528", "6544", "6550", "6559", "6570", "6620", "6649", "6660", "6689", "6738", "6746", "6782", "6860", "6875", "6913", "6914", "6924", "6954", "6962", "7128", "7279", "7333", "7336", "7577", "7628", "5138", "5257", "5406", "5454", "5620", "5770", "5816", "5821", "5849", "5853", "5865", "5910", "6072", "6176", "6216", "6298", "6320", "6373", "6376", "6405", "6487", "6488", "6527", "6825", "6859", "6865", "6909", "7067", "7241", "7572", "4691", "5038", "5168", "5326", "5335", "5398", "5428", "5858", "5870", "5945", "6016", "6051", "6389", "6717", "6946", "7029", "5032", "5343", "5944", "5949", "5980", "6384", "6398", "6460", "6506", "6785", "4527", "5131", "5162", "5163", "5264", "5333", "5366", "5421", "5426", "5427", "5469", "5528", "5596", "5702", "5721", "5841", "5866", "6026", "6098", "6265", "6284", "6383", "6404", "6450", "6462", "6552", "6882", "6883", "6958", "7174", "4527", "5131", "5162", "5163", "5264", "5333", "5366", "5421", "5426", "5427", "5469", "5528", "5596", "5702", "5721", "5841", "5866", "6026", "6098", "6265", "6284", "6383", "6404", "6450", "6462", "6552", "6882", "6883", "6958", "7174"]
+for i in range(0, len(GTRGAMMA)):
+   gwf.target_from_template('GTR_'+GTRGAMMA[i], raxml_GTRGAMMA(GTRGAMMA = GTRGAMMA[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/GTRGAMMA"+GTRGAMMA[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
 
-# for i in range(0, len(GTRGAMMA)):
-#    gwf.target_from_template('GTR_'+GTRGAMMA[i], raxml_GTRGAMMA(GTRGAMMA = GTRGAMMA[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/GTRGAMMA"+GTRGAMMA[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
 
-
-# K80GAMMA = ["5843", "5594", "5910", "6738", "7336", "5942", "7583"]
-
-# for i in range(0, len(K80GAMMA)):
-#    gwf.target_from_template('K80_'+K80GAMMA[i], raxml_K80GAMMA(K80GAMMA = K80GAMMA[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/K80GAMMA"+K80GAMMA[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+K80GAMMA = ["5177", "5660", "7325", "5815"]
+for i in range(0, len(K80GAMMA)):
+   gwf.target_from_template('K80_'+K80GAMMA[i], raxml_K80GAMMA(K80GAMMA = K80GAMMA[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/K80GAMMA"+K80GAMMA[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
 
 
 # # Running ASTRAL 
