@@ -1170,7 +1170,7 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 
 ### Generating AMAS statistics for raw_alignments
 gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal",
-                                        in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
+                                        in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/",
                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_raw/raw"))
 
 # cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
