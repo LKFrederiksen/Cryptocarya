@@ -616,40 +616,40 @@ def retrieve(path_in, done):
 #Hereafter you need to do some manual work and remove the headlines statistics.
 
 
-######## Calculating amas summary (gt)
-# Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
+# ######## Calculating amas summary (gt)
+# # Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
 
-#For cutoff (gt) alignments
-def amas_gt(path_in, cut_off, done, in_done):
-    """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [path_in+cut_off, in_done]
-    outputs = [path_in+"summary_"+cut_off+".txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+# #For cutoff (gt) alignments
+# def amas_gt(path_in, cut_off, done, in_done):
+#     """Creating summary files for all the trimmed alignments for each raw alignment"""
+#     inputs = [path_in+cut_off, in_done]
+#     outputs = [path_in+"summary_"+cut_off+".txt", done]
+#     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
-    spec="""
+#     spec="""
 
-    #Activating AMAS
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Amas
+#     #Activating AMAS
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Amas
     
-    cd {path_in}{cut_off} 
+#     cd {path_in}{cut_off} 
 
-    #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+#     #Calculating amas summary
+#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
    
-    mv summary.txt ../summary_{cut_off}.txt 
+#     mv summary.txt ../summary_{cut_off}.txt 
 
-    touch {done}
+#     touch {done}
 
-    echo {done}
+#     echo {done}
 
-    echo {cut_off}
+#     echo {cut_off}
 
-    echo {path_in}
+#     echo {path_in}
     
-    """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
+#     """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -700,33 +700,33 @@ def amas_gt(path_in, cut_off, done, in_done):
 # Copy the genes that you delete from raw_alignments to the trimal_output
 
 
-# ####################################################################################################################################################
-# ##############################################---- Move optrimal files to new folder ----###########################################################
-# ####################################################################################################################################################
+####################################################################################################################################################
+##############################################---- Move optrimal files to new folder ----###########################################################
+####################################################################################################################################################
 
-# def move(path_in, path_out, in_done, done):
-#     """Moving files from trimal folder to optrimal folder."""
-#     inputs = [in_done]
-#     outputs = [done]
-#     options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
+def move(path_in, path_out, in_done, done):
+    """Moving files from trimal folder to optrimal folder."""
+    inputs = [in_done]
+    outputs = [done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     cd {path_in}
+    cd {path_in}
 
-#     mv dldp_* {path_out}optrim_output/
+    mv dldp_* {path_out}optrim_output/
     
-#     mv optimal_final_results {path_out}
+    mv optimal_final_results {path_out}
 
-#     mv overlost.txt {path_out}
+    mv overlost.txt {path_out}
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
+    """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
 
-#     return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
 
 # ##########################################################################################################################
 # ##############################################---- CIALIGN ----###########################################################
@@ -1173,14 +1173,14 @@ genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA",
 #                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/",
 #                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_raw/raw"))
 
-cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
+# cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
-#### Generating AMAS statistics for gt_alignments
-for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-                                                cut_off = cut_off[i],
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
-                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+# #### Generating AMAS statistics for gt_alignments
+# for i in range(len(cut_off)):
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+#                                                 cut_off = cut_off[i],
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
@@ -1189,11 +1189,11 @@ for i in range(len(cut_off)):
 #                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
 
 
-# #### Move files from trimal to optrimal folder
-# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/optrimal/optrimal",
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/move/move", 
-#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
+#### Move files from trimal to optrimal folder
+gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/optrimal/optrimal",
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/move/move", 
+                                                path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
 
 # Removing genes that were not included in "optimal_final_results" - 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5943", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
