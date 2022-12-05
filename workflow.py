@@ -904,7 +904,7 @@ def raxml_HKYGAMMA(path_in, path_out, HKYGAMMA, done):
     """Using RAXML to construct gene trees"""
     inputs = [path_in+HKYGAMMA+"_output_taper.fasta"]
     outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
      
@@ -934,7 +934,7 @@ def raxml_GTRGAMMA(path_in, path_out, GTRGAMMA, done):
     """Using RAXML to construct gene trees"""
     inputs = [path_in+GTRGAMMA+"_output_taper.fasta"]
     outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
      
@@ -963,7 +963,7 @@ def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
     """Using RAXML to construct gene trees"""
     inputs = [path_in+K80GAMMA+"_output_taper.fasta"]
     outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
     spec = """
      
