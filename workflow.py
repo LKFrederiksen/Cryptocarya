@@ -535,81 +535,81 @@ def retrieve(path_in, done):
 # #It is a good idea to rename the fasta files here.
 
 
-########################################################################################################################
-###############################################---- TRIMAL ----#########################################################
-########################################################################################################################
+# ########################################################################################################################
+# ###############################################---- TRIMAL ----#########################################################
+# ########################################################################################################################
 
-#Cleaning according trimal
-#Get raw alignments and trim them according to a gap threshold.
+# #Cleaning according trimal
+# #Get raw alignments and trim them according to a gap threshold.
 
-# Make sure to adjust path in script 'gap_trimming.sh'
-# Seems like it is necessary to rename the *.fasta to *.fasta.old yourself. Otherwise perhaps my path was wrong?
-# find . -depth -name "*.fasta" -exec sh -c 'f="{}"; mv -- "$f" "${f%.fasta}.fasta.old"' \;
-# This way it did take the *.old files and move them to each directory 0.1 etc. and trim them. 
+# # Make sure to adjust path in script 'gap_trimming.sh'
+# # Seems like it is necessary to rename the *.fasta to *.fasta.old yourself. Otherwise perhaps my path was wrong?
+# # find . -depth -name "*.fasta" -exec sh -c 'f="{}"; mv -- "$f" "${f%.fasta}.fasta.old"' \;
+# # This way it did take the *.old files and move them to each directory 0.1 etc. and trim them. 
 
-def gt_trimming(path_in, path_out, done, gene):
-    """ Use trimal for trimming all alignments for each of the GT values specified"""
-    inputs = [path_in+gene+"_aligned.fasta"]
-    outputs = [done]
-    options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
-
-    spec="""
-    
-    #Activating Trimal
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Trimal
-
-    # Moved alignments to Trimal folder
-    #Go to alignments folder 
-    cd {path_in}
-
-    #Running gaptrimming.sh
-    cd {path_out}
-    bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
-
-    echo touching {done}
-
-    touch {done}
-
-    """.format(path_in = path_in, done = done, gene = gene, path_out = path_out)
-
-    return(inputs, outputs, options, spec)
-    
-    
-# #######################################################################################################################
-# ################################################---- AMAS ----#########################################################
-# #######################################################################################################################
-# #Make file summary_0.txt
-
-# ####### Calculating amas summary (raw)
-
-# #For raw alignments
-# def amas_raw(path_in, done, in_done):
-#     """Creating summary files for all the trimmed alignments for each raw alignment"""
-#     inputs = [in_done]
-#     outputs = [path_in+"summary_0.txt", done]
-#     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+# def gt_trimming(path_in, path_out, done, gene):
+#     """ Use trimal for trimming all alignments for each of the GT values specified"""
+#     inputs = [path_in+gene+"_aligned.fasta"]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
 
 #     spec="""
-
-#     #Activating AMAS
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Amas
     
+#     #Activating Trimal
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Trimal
+
+#     # Moved alignments to Trimal folder
+#     #Go to alignments folder 
 #     cd {path_in}
 
-#     #Calculating amas summary
-#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
-
-#     mv summary.txt summary_0.txt 
+#     #Running gaptrimming.sh
+#     cd {path_out}
+#     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
 
 #     echo touching {done}
 
 #     touch {done}
-    
-#     """.format(path_in = path_in, done = done, in_done = in_done)
+
+#     """.format(path_in = path_in, done = done, gene = gene, path_out = path_out)
 
 #     return(inputs, outputs, options, spec)
+    
+    
+#######################################################################################################################
+################################################---- AMAS ----#########################################################
+#######################################################################################################################
+#Make file summary_0.txt
+
+####### Calculating amas summary (raw)
+
+#For raw alignments
+def amas_raw(path_in, done, in_done):
+    """Creating summary files for all the trimmed alignments for each raw alignment"""
+    inputs = [in_done]
+    outputs = [path_in+"summary_0.txt", done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+
+    spec="""
+
+    #Activating AMAS
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Amas
+    
+    cd {path_in}
+
+    #Calculating amas summary
+    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+
+    mv summary.txt summary_0.txt 
+
+    echo touching {done}
+
+    touch {done}
+    
+    """.format(path_in = path_in, done = done, in_done = in_done)
+
+    return(inputs, outputs, options, spec)
 
 
 # Removed   5599_aligned.fasta.old,  5921_aligned.fasta.old, 5943_aligned.fasta.old, 6041_aligned.fasta.old, 
@@ -1161,17 +1161,17 @@ genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/done/"+genes[i]))
 
 
-#### Trimal according to a pre-defined gt values
-for i in range(len(gene)):
-   gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i]))
+# #### Trimal according to a pre-defined gt values
+# for i in range(len(gene)):
+#    gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i]))
 
-# ### Generating AMAS statistics for raw_alignments
-# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal",
-#                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/",
-#                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_raw/raw"))
+### Generating AMAS statistics for raw_alignments
+gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal",
+                                        in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/",
+                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_raw/raw"))
 
 # cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
