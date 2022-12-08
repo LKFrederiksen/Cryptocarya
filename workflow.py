@@ -1100,13 +1100,11 @@ sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang
 gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/",
-                                                name = sp[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Stats/"+sp[i]))
 
                                                
 #### Paralogs
-gwf.target_from_template('Paralogs', paralogs(name = sp[i],
-                                                      path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+gwf.target_from_template('Paralogs', paralogs(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/Paralogs/" ,
                                                       done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"))
