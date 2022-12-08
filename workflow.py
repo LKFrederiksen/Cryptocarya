@@ -1134,7 +1134,7 @@ for i in range(len(sp)):
                                                         up_bam = "_up.bam",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/done/Coverage/"+sp[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/",
                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/")) # folder with coverage
 
