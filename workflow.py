@@ -412,90 +412,90 @@ gwf = Workflow()
 #     return (path_ins, outputs, options, spec)
 
 
-########################################################################################################################
-#############################################---- Coverage ----#########################################################
-########################################################################################################################
-
-#This script does the following:
-# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# Map paired and unpaired reads to that fasta using BWA mem
-# Deduplicate reads using Picard
-# Calculate depth using samtools
-# Mask/strip any bases with coverage <2
-# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
-
-def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-    """Calculating coverage of sequences."""
-    path_ins = [path_in+name]
-    outputs = [path_out+name+all_bam,
-     path_out+name+all_sorted_bam,
-      path_out+name+all_sorted_bam_bai,
-       path_out+name+bam,
-    path_out+name+cov,
-     path_out+name+fasta,
-      path_out+name+fasta_amb,
-       path_out+name+fasta_ann,
-        path_out+name+fasta_bwt,
-    path_out+name+fasta_pac,
-     path_out+name+fasta_sa,
-      path_out+name+trimmed_fasta,
-       path_out+name+up_bam,done] #ALL the output files
-    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
-
-    spec = """
-    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-    conda activate HybPiper
-    
-    cd {path_in}
-
-    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
-    
-    echo touching {done}
-
-    touch {done}
-
-    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
-
-    return (path_ins, outputs, options, spec)
-
-
 # ########################################################################################################################
-# #############################################---- Retrieve ----#########################################################
+# #############################################---- Coverage ----#########################################################
 # ########################################################################################################################
 
-# #Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
-# # I will add Synd-chine, Peum-boldu and Chim-salic as gene files from PAFTOL-exons before retrieving. Look at Chim-salic to see an example.
+# #This script does the following:
+# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# # Map paired and unpaired reads to that fasta using BWA mem
+# # Deduplicate reads using Picard
+# # Calculate depth using samtools
+# # Mask/strip any bases with coverage <2
+# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
 
-# def retrieve(path_in, done):
-#     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-#     path_ins = [path_in+"Alse-petio-PAFTOL-exons_trimmed.fasta", path_in+"Athe-mosch-PAFTOL-exons_trimmed.fasta", path_in+"Beil-pendu-PAFTOL-exons_trimmed.fasta", path_in+"Beil-tsang-PAFTOL-exons_trimmed.fasta", path_in+"Cary-tonki-PAFTOL-exons_trimmed.fasta", path_in+"Caly-flori-PAFTOL-exons_trimmed.fasta", path_in+"Cass-filif-PAFTOL-exons_trimmed.fasta", path_in+"Chim-salic-PAFTOL-exons_trimmed.fasta", path_in+"Cinn-camph-PAFTOL-exons_trimmed.fasta", path_in+"Cryp-alba-PAFTOL-exons_trimmed.fasta", path_in+"Deha-haina-PAFTOL-exons_trimmed.fasta", path_in+"Endi-macro-PAFTOL-exons_trimmed.fasta", path_in+"Gomo-keule-PAFTOL-exons_trimmed.fasta", path_in+"Hern-nymph-PAFTOL-exons_trimmed.fasta", path_in+"Idio-austr-PAFTOL-exons_trimmed.fasta", path_in+"Laur-nobil-PAFTOL-exons_trimmed.fasta", path_in+"Mach-salic-PAFTOL-exons_trimmed.fasta", path_in+"Magn-grand-PAFTOL-exons_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL-exons_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL-exons_trimmed.fasta", path_in+"Moni-rotun-PAFTOL-exons_trimmed.fasta", path_in+"Myri-fragr-PAFTOL-exons_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL-exons_trimmed.fasta", path_in+"Noth-umbel-PAFTOL-exons_trimmed.fasta", path_in+"Pers-borbo-PAFTOL-exons_trimmed.fasta", path_in+"Peum-boldu-PAFTOL-exons_trimmed.fasta", path_in+"Phoe-lance-PAFTOL-exons_trimmed.fasta", path_in+"Sipa-guian-PAFTOL-exons_trimmed.fasta", path_in+"Spar-botoc-PAFTOL-exons_trimmed.fasta", path_in+"Synd-chine-PAFTOL-exons_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL-exons_trimmed.fasta"]
-#     outputs = [done]
-#     options = {'cores': 4, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+#     """Calculating coverage of sequences."""
+#     path_ins = [path_in+name]
+#     outputs = [path_out+name+all_bam,
+#      path_out+name+all_sorted_bam,
+#       path_out+name+all_sorted_bam_bai,
+#        path_out+name+bam,
+#     path_out+name+cov,
+#      path_out+name+fasta,
+#       path_out+name+fasta_amb,
+#        path_out+name+fasta_ann,
+#         path_out+name+fasta_bwt,
+#     path_out+name+fasta_pac,
+#      path_out+name+fasta_sa,
+#       path_out+name+trimmed_fasta,
+#        path_out+name+up_bam,done] #ALL the output files
+#     options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
 #     spec = """
     
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
+    
 #     conda activate HybPiper
-
+    
 #     cd {path_in}
 
-#     ls *trimmed.fasta > filelist.txt
-
-#     python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
-
+#     python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
+    
 #     echo touching {done}
 
 #     touch {done}
 
-#     """.format(path_in = path_in, done = done)
+#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
 
 #     return (path_ins, outputs, options, spec)
+
+
+########################################################################################################################
+#############################################---- Retrieve ----#########################################################
+########################################################################################################################
+
+#Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
+# I will add Synd-chine, Peum-boldu and Chim-salic as gene files from PAFTOL-exons before retrieving. Look at Chim-salic to see an example.
+
+def retrieve(path_in, done):
+    """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
+    path_ins = [path_in+"Alse-petio-PAFTOL_trimmed.fasta", path_in+"Athe-mosch-PAFTOL_trimmed.fasta", path_in+"Beil-pendu-PAFTOL_trimmed.fasta", path_in+"Beil-tsang-PAFTOL_trimmed.fasta", path_in+"Cary-tonki-PAFTOL_trimmed.fasta", path_in+"Caly-flori-PAFTOL_trimmed.fasta", path_in+"Cass-filif-PAFTOL_trimmed.fasta", path_in+"Chim-salic-PAFTOL_trimmed.fasta", path_in+"Cinn-camph-PAFTOL_trimmed.fasta", path_in+"Cryp-alba-PAFTOL_trimmed.fasta", path_in+"Deha-haina-PAFTOL_trimmed.fasta", path_in+"Endi-macro-PAFTOL_trimmed.fasta", path_in+"Gomo-keule-PAFTOL_trimmed.fasta", path_in+"Hern-nymph-PAFTOL_trimmed.fasta", path_in+"Idio-austr-PAFTOL_trimmed.fasta", path_in+"Laur-nobil-PAFTOL_trimmed.fasta", path_in+"Mach-salic-PAFTOL_trimmed.fasta", path_in+"Magn-grand-PAFTOL_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL_trimmed.fasta", path_in+"Moni-rotun-PAFTOL_trimmed.fasta", path_in+"Myri-fragr-PAFTOL_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL_trimmed.fasta", path_in+"Noth-umbel-PAFTOL_trimmed.fasta", path_in+"Pers-borbo-PAFTOL_trimmed.fasta", path_in+"Peum-boldu-PAFTOL_trimmed.fasta", path_in+"Phoe-lance-PAFTOL_trimmed.fasta", path_in+"Sipa-guian-PAFTOL_trimmed.fasta", path_in+"Spar-botoc-PAFTOL_trimmed.fasta", path_in+"Synd-chine-PAFTOL_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL_trimmed.fasta"]
+    outputs = [done]
+    options = {'cores': 4, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+
+    spec = """
     
-# # I have included Chim-salic, Synd-chine and Peum-boldu from PAFTOL-exons gene sequences. (No UN sequence which causes an error when running HybPiper).
-# ### Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+    conda activate HybPiper
+
+    cd {path_in}
+
+    ls *trimmed.fasta > filelist.txt
+
+    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+
+    echo touching {done}
+
+    touch {done}
+
+    """.format(path_in = path_in, done = done)
+
+    return (path_ins, outputs, options, spec)
+    
+# I have included Chim-salic, Synd-chine and Peum-boldu from PAFTOL-exons gene sequences. (No UN sequence which causes an error when running HybPiper).
+### Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
 
 
 # ##########################################################################################################################
@@ -1114,33 +1114,33 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
-for i in range(len(sp)):
+# for i in range(len(sp)):
 
-    #### Coverage
-    gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-                                                        all_bam = "_all.bam",
-                                                        all_sorted_bam ="_all_sorted.bam",
-                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
-                                                        bam =".bam",
-                                                        cov=".cov",
-                                                        fasta = ".fasta",
-                                                        fasta_amb = ".fasta.amb",
-                                                        fasta_ann = ".fasta.ann",
-                                                        fasta_bwt = ".fasta.bwt",
-                                                        fasta_pac = ".fasta.pac",
-                                                        fasta_sa = ".fasta.sa",
-                                                        trimmed_fasta = "_trimmed.fasta",
-                                                        up_bam = "_up.bam",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/done/Coverage/"+sp[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
-                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/")) # folder with coverage
+#     #### Coverage
+#     gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+#                                                         all_bam = "_all.bam",
+#                                                         all_sorted_bam ="_all_sorted.bam",
+#                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
+#                                                         bam =".bam",
+#                                                         cov=".cov",
+#                                                         fasta = ".fasta",
+#                                                         fasta_amb = ".fasta.amb",
+#                                                         fasta_ann = ".fasta.ann",
+#                                                         fasta_bwt = ".fasta.bwt",
+#                                                         fasta_pac = ".fasta.pac",
+#                                                         fasta_sa = ".fasta.sa",
+#                                                         trimmed_fasta = "_trimmed.fasta",
+#                                                         up_bam = "_up.bam",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/done/Coverage/"+sp[i],
+#                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+#                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
+#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/")) # folder with coverage
 
-# #### Retrieve sequences and sort into files with gene names
-# gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/", 
-#                                               done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/08_Retrieve/done/retrieve"))
+#### Retrieve sequences and sort into files with gene names
+gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/", 
+                                              done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/08_Retrieve/done/retrieve"))
 
 
 ### Kan jeg vente med at fjerne de gener der måske er paraloge indtil dette step, hvor jeg vælger hvilke gener der skal inkluderes? ### JA
