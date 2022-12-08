@@ -1082,7 +1082,7 @@ def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_ba
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/05_MultiQC/maxinfo/done/multiqc_trimmed"))
 
 
-sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
 # for i in range(len(sp)):
@@ -1100,7 +1100,7 @@ sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang
 gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/",
-                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Stats/"+sp[i]))
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Stats/stats"))
 
 
                                                
