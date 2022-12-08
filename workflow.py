@@ -20,7 +20,7 @@
 # 15: Generate ASTRAL tree from gene trees
 
 #
-# Workflow to reconstruct the outgroup of the PAFTOL tree. 
+# Workflow to reconstruct the outgroup of the PAFTOL-exons tree only using exons. 
 # ----------------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ gwf = Workflow()
 # #######################################################################################################################
 # def multiqc_raw(path_in ,path_out, done,):
 #     """Quality checking using multiqc"""
-#     inputs = [path_in+"Alse-petio-PAFTOL_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL_R1_fastqc.html", path_in+"Caly-flori-PAFTOL_R1_fastqc.html", path_in+"Cass-filif-PAFTOL_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL_R1_fastqc.html", path_in+"Deha-haina-PAFTOL_R1_fastqc.html", path_in+"Endi-macro-PAFTOL_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL_R1_fastqc.html", path_in+"Idio-austr-PAFTOL_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL_R1_fastqc.html", path_in+"Mach-salic-PAFTOL_R1_fastqc.html", path_in+"Magn-grand-PAFTOL_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL_R1_fastqc.html", path_in+"Synd-chine-PAFTOL_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R1_fastqc.html", path_in+"Alse-petio-PAFTOL_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL_R2_fastqc.html", path_in+"Caly-flori-PAFTOL_R2_fastqc.html", path_in+"Cass-filif-PAFTOL_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL_R2_fastqc.html", path_in+"Deha-haina-PAFTOL_R2_fastqc.html", path_in+"Endi-macro-PAFTOL_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL_R2_fastqc.html", path_in+"Idio-austr-PAFTOL_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL_R2_fastqc.html", path_in+"Mach-salic-PAFTOL_R2_fastqc.html", path_in+"Magn-grand-PAFTOL_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL_R2_fastqc.html", path_in+"Synd-chine-PAFTOL_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R2_fastqc.html"]
+#     inputs = [path_in+"Alse-petio-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Caly-flori-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Cass-filif-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Deha-haina-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Endi-macro-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Idio-austr-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Mach-salic-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Magn-grand-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Synd-chine-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL-exons-exons_R1_fastqc.html", path_in+"Alse-petio-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Caly-flori-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Cass-filif-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Deha-haina-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Endi-macro-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Idio-austr-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Mach-salic-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Magn-grand-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Synd-chine-PAFTOL-exons-exons_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL-exons-exons_R2_fastqc.html"]
 #     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
 #     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
@@ -250,7 +250,7 @@ gwf = Workflow()
 # #######################################################################################################################################
 # def multiqc_trimmed(path_in ,path_out, done):
 #     """Quality checking using multiqc"""
-#     inputs = [path_in+"Alse-petio-PAFTOL_trimmed.fasta", path_in+"Athe-mosch-PAFTOL_trimmed.fasta", path_in+"Beil-pendu-PAFTOL_trimmed.fasta", path_in+"Beil-tsang-PAFTOL_trimmed.fasta", path_in+"Cary-tonki-PAFTOL_trimmed.fasta", path_in+"Caly-flori-PAFTOL_trimmed.fasta", path_in+"Cass-filif-PAFTOL_trimmed.fasta", path_in+"Cinn-camph-PAFTOL_trimmed.fasta", path_in+"Cryp-alba-PAFTOL_trimmed.fasta", path_in+"Deha-haina-PAFTOL_trimmed.fasta", path_in+"Endi-macro-PAFTOL_trimmed.fasta", path_in+"Gomo-keule-PAFTOL_trimmed.fasta", path_in+"Hern-nymph-PAFTOL_trimmed.fasta", path_in+"Idio-austr-PAFTOL_trimmed.fasta", path_in+"Laur-nobil-PAFTOL_trimmed.fasta", path_in+"Mach-salic-PAFTOL_trimmed.fasta", path_in+"Magn-grand-PAFTOL_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL_trimmed.fasta", path_in+"Moni-rotun-PAFTOL_trimmed.fasta", path_in+"Myri-fragr-PAFTOL_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL_trimmed.fasta", path_in+"Noth-umbel-PAFTOL_trimmed.fasta", path_in+"Pers-borbo-PAFTOL_trimmed.fasta", path_in+"Peum-boldu-PAFTOL_trimmed.fasta", path_in+"Phoe-lance-PAFTOL_trimmed.fasta", path_in+"Sipa-guian-PAFTOL_trimmed.fasta", path_in+"Spar-botoc-PAFTOL_trimmed.fasta", path_in+"Synd-chine-PAFTOL_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL_trimmed.fasta", path_in+"Alse-petio-PAFTOL_1PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_1PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_1PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_1PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_1PU_fastqc.html", path_in+"Caly-flori-PAFTOL_1PU_fastqc.html", path_in+"Cass-filif-PAFTOL_1PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_1PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_1PU_fastqc.html", path_in+"Deha-haina-PAFTOL_1PU_fastqc.html", path_in+"Endi-macro-PAFTOL_1PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_1PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_1PU_fastqc.html", path_in+"Idio-austr-PAFTOL_1PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_1PU_fastqc.html", path_in+"Mach-salic-PAFTOL_1PU_fastqc.html", path_in+"Magn-grand-PAFTOL_1PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_1PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_1PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_1PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_1PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_1PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_1PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_1PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_1PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_1PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_1PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_1PU_fastqc.html", path_in+"Synd-chine-PAFTOL_1PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_1PU_fastqc.html", path_in+"Alse-petio-PAFTOL_2PU_fastqc.html", path_in+"Athe-mosch-PAFTOL_2PU_fastqc.html", path_in+"Beil-pendu-PAFTOL_2PU_fastqc.html", path_in+"Beil-tsang-PAFTOL_2PU_fastqc.html", path_in+"Cary-tonki-PAFTOL_2PU_fastqc.html", path_in+"Caly-flori-PAFTOL_2PU_fastqc.html", path_in+"Cass-filif-PAFTOL_2PU_fastqc.html", path_in+"Cinn-camph-PAFTOL_2PU_fastqc.html", path_in+"Cryp-alba-PAFTOL_2PU_fastqc.html", path_in+"Deha-haina-PAFTOL_2PU_fastqc.html", path_in+"Endi-macro-PAFTOL_2PU_fastqc.html", path_in+"Gomo-keule-PAFTOL_2PU_fastqc.html", path_in+"Hern-nymph-PAFTOL_2PU_fastqc.html", path_in+"Idio-austr-PAFTOL_2PU_fastqc.html", path_in+"Laur-nobil-PAFTOL_2PU_fastqc.html", path_in+"Mach-salic-PAFTOL_2PU_fastqc.html", path_in+"Magn-grand-PAFTOL_2PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_2PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL_2PU_fastqc.html", path_in+"Moni-rotun-PAFTOL_2PU_fastqc.html", path_in+"Myri-fragr-PAFTOL_2PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL_2PU_fastqc.html", path_in+"Noth-umbel-PAFTOL_2PU_fastqc.html", path_in+"Pers-borbo-PAFTOL_2PU_fastqc.html", path_in+"Peum-boldu-PAFTOL_2PU_fastqc.html", path_in+"Phoe-lance-PAFTOL_2PU_fastqc.html", path_in+"Sipa-guian-PAFTOL_2PU_fastqc.html", path_in+"Spar-botoc-PAFTOL_2PU_fastqc.html", path_in+"Synd-chine-PAFTOL_2PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL_2PU_fastqc.html"]
+#     inputs = [path_in+"Alse-petio-PAFTOL-exons-exons_trimmed.fasta", path_in+"Athe-mosch-PAFTOL-exons-exons_trimmed.fasta", path_in+"Beil-pendu-PAFTOL-exons-exons_trimmed.fasta", path_in+"Beil-tsang-PAFTOL-exons_trimmed.fasta", path_in+"Cary-tonki-PAFTOL-exons_trimmed.fasta", path_in+"Caly-flori-PAFTOL-exons_trimmed.fasta", path_in+"Cass-filif-PAFTOL-exons_trimmed.fasta", path_in+"Cinn-camph-PAFTOL-exons_trimmed.fasta", path_in+"Cryp-alba-PAFTOL-exons_trimmed.fasta", path_in+"Deha-haina-PAFTOL-exons_trimmed.fasta", path_in+"Endi-macro-PAFTOL-exons_trimmed.fasta", path_in+"Gomo-keule-PAFTOL-exons_trimmed.fasta", path_in+"Hern-nymph-PAFTOL-exons_trimmed.fasta", path_in+"Idio-austr-PAFTOL-exons_trimmed.fasta", path_in+"Laur-nobil-PAFTOL-exons_trimmed.fasta", path_in+"Mach-salic-PAFTOL-exons_trimmed.fasta", path_in+"Magn-grand-PAFTOL-exons_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL-exons_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL-exons_trimmed.fasta", path_in+"Moni-rotun-PAFTOL-exons_trimmed.fasta", path_in+"Myri-fragr-PAFTOL-exons_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL-exons_trimmed.fasta", path_in+"Noth-umbel-PAFTOL-exons_trimmed.fasta", path_in+"Pers-borbo-PAFTOL-exons_trimmed.fasta", path_in+"Peum-boldu-PAFTOL-exons_trimmed.fasta", path_in+"Phoe-lance-PAFTOL-exons_trimmed.fasta", path_in+"Sipa-guian-PAFTOL-exons_trimmed.fasta", path_in+"Spar-botoc-PAFTOL-exons_trimmed.fasta", path_in+"Synd-chine-PAFTOL-exons_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL-exons_trimmed.fasta", path_in+"Alse-petio-PAFTOL-exons_1PU_fastqc.html", path_in+"Athe-mosch-PAFTOL-exons_1PU_fastqc.html", path_in+"Beil-pendu-PAFTOL-exons_1PU_fastqc.html", path_in+"Beil-tsang-PAFTOL-exons_1PU_fastqc.html", path_in+"Cary-tonki-PAFTOL-exons_1PU_fastqc.html", path_in+"Caly-flori-PAFTOL-exons_1PU_fastqc.html", path_in+"Cass-filif-PAFTOL-exons_1PU_fastqc.html", path_in+"Cinn-camph-PAFTOL-exons_1PU_fastqc.html", path_in+"Cryp-alba-PAFTOL-exons_1PU_fastqc.html", path_in+"Deha-haina-PAFTOL-exons_1PU_fastqc.html", path_in+"Endi-macro-PAFTOL-exons_1PU_fastqc.html", path_in+"Gomo-keule-PAFTOL-exons_1PU_fastqc.html", path_in+"Hern-nymph-PAFTOL-exons_1PU_fastqc.html", path_in+"Idio-austr-PAFTOL-exons_1PU_fastqc.html", path_in+"Laur-nobil-PAFTOL-exons_1PU_fastqc.html", path_in+"Mach-salic-PAFTOL-exons_1PU_fastqc.html", path_in+"Magn-grand-PAFTOL-exons_1PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL-exons_1PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL-exons_1PU_fastqc.html", path_in+"Moni-rotun-PAFTOL-exons_1PU_fastqc.html", path_in+"Myri-fragr-PAFTOL-exons_1PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL-exons_1PU_fastqc.html", path_in+"Noth-umbel-PAFTOL-exons_1PU_fastqc.html", path_in+"Pers-borbo-PAFTOL-exons_1PU_fastqc.html", path_in+"Peum-boldu-PAFTOL-exons_1PU_fastqc.html", path_in+"Phoe-lance-PAFTOL-exons_1PU_fastqc.html", path_in+"Sipa-guian-PAFTOL-exons_1PU_fastqc.html", path_in+"Spar-botoc-PAFTOL-exons_1PU_fastqc.html", path_in+"Synd-chine-PAFTOL-exons_1PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL-exons_1PU_fastqc.html", path_in+"Alse-petio-PAFTOL-exons_2PU_fastqc.html", path_in+"Athe-mosch-PAFTOL-exons_2PU_fastqc.html", path_in+"Beil-pendu-PAFTOL-exons_2PU_fastqc.html", path_in+"Beil-tsang-PAFTOL-exons_2PU_fastqc.html", path_in+"Cary-tonki-PAFTOL-exons_2PU_fastqc.html", path_in+"Caly-flori-PAFTOL-exons_2PU_fastqc.html", path_in+"Cass-filif-PAFTOL-exons_2PU_fastqc.html", path_in+"Cinn-camph-PAFTOL-exons_2PU_fastqc.html", path_in+"Cryp-alba-PAFTOL-exons_2PU_fastqc.html", path_in+"Deha-haina-PAFTOL-exons_2PU_fastqc.html", path_in+"Endi-macro-PAFTOL-exons_2PU_fastqc.html", path_in+"Gomo-keule-PAFTOL-exons_2PU_fastqc.html", path_in+"Hern-nymph-PAFTOL-exons_2PU_fastqc.html", path_in+"Idio-austr-PAFTOL-exons_2PU_fastqc.html", path_in+"Laur-nobil-PAFTOL-exons_2PU_fastqc.html", path_in+"Mach-salic-PAFTOL-exons_2PU_fastqc.html", path_in+"Magn-grand-PAFTOL-exons_2PU_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL-exons_2PU_fastqc.html", path_in+"Moll-gilgi-PAFTOL-exons_2PU_fastqc.html", path_in+"Moni-rotun-PAFTOL-exons_2PU_fastqc.html", path_in+"Myri-fragr-PAFTOL-exons_2PU_fastqc.html", path_in+"Neoc-cauda-PAFTOL-exons_2PU_fastqc.html", path_in+"Noth-umbel-PAFTOL-exons_2PU_fastqc.html", path_in+"Pers-borbo-PAFTOL-exons_2PU_fastqc.html", path_in+"Peum-boldu-PAFTOL-exons_2PU_fastqc.html", path_in+"Phoe-lance-PAFTOL-exons_2PU_fastqc.html", path_in+"Sipa-guian-PAFTOL-exons_2PU_fastqc.html", path_in+"Spar-botoc-PAFTOL-exons_2PU_fastqc.html", path_in+"Synd-chine-PAFTOL-exons_2PU_fastqc.html", path_in+"Tamb-ficus-PAFTOL-exons_2PU_fastqc.html"]
 #     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
 #     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
@@ -323,7 +323,7 @@ gwf = Workflow()
 #     # Here I have used the Rohwer target file!
 #     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
 
-#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/
+#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/
 
 #     echo touching {done}
 
@@ -335,169 +335,167 @@ gwf = Workflow()
 
 #     return (path_ins, outputs, options, spec)
 
-# ########################################################################################################################
-# ###################################################---- Stats ----######################################################
-# ########################################################################################################################
+########################################################################################################################
+###################################################---- Stats ----######################################################
+########################################################################################################################
 
-# # In this step you should run the statistics on the folder where we have the Hybpiper_results
-# # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+# In this step you should run the statistics on the folder where we have the Hybpiper_results
+# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-# def stats(path_in, done, path_out, in_done, name):
-#    """Gather statistics about the HybPiper run(s).""" 
-#    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
-#    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-#    options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
+def stats(path_in, done, path_out, in_done, name):
+   """Gather statistics about the HybPiper run(s).""" 
+   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
 
-#    spec = """
+   spec = """
    
-#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-#    conda activate HybPiper
+   conda activate HybPiper
     
-#    cd {path_in}
+   cd {path_in}
     
-#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'supercontig' {path_in}namelist.txt # Get stats
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
 
-#    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
-#    mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
     
-#    mv hybpiper_stats.tsv {path_out}
+   mv hybpiper_stats.tsv {path_out}
 
-#    mv recovery_heatmap.png {path_out} 
+   mv recovery_heatmap.png {path_out} 
 
-#    echo touching {done}
+   echo touching {done}
 
-#    touch {done}
+   touch {done}
       
-#    """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
 
-#    return (path_ins, outputs, options, spec) 
-
-
-# ########################################################################################################################
-# #############################################---- Paralogs ----#########################################################
-# ########################################################################################################################
-
-# ##### This is the approach to use. #####
-
-# def paralogs(name, path_in, done, in_done, path_out):
-#     """Run HybPiper v. 2.1 - paralog retriever """
-#     path_ins = [path_in+name, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
-
-#     spec = """
-    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-#     conda activate HybPiper
-    
-#     cd {path_in}
-
-#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
-    
-#     mv paralog_report.tsv {path_out}
-#     mv paralogs_above_threshold_report.txt {path_out}
-#     mv paralogs_all {path_out}
-#     mv paralogs_no_chimeras {path_out}
-#     mv paralog_heatmap.png {path_out}
-
-#     echo touching {done}
-
-#     touch {done}
-
-#      """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
-    
-#     return (path_ins, outputs, options, spec)
-
-# ### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
-
-
-# ########################################################################################################################
-# #############################################---- Coverage ----#########################################################
-# ########################################################################################################################
-
-# #This script does the following:
-# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# # Map paired and unpaired reads to that fasta using BWA mem
-# # Deduplicate reads using Picard
-# # Calculate depth using samtools
-# # Mask/strip any bases with coverage <2
-# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
-
-# def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-#     """Calculating coverage of sequences."""
-#     path_ins = [path_in+name]
-#     outputs = [path_out+name+all_bam,
-#      path_out+name+all_sorted_bam,
-#       path_out+name+all_sorted_bam_bai,
-#        path_out+name+bam,
-#     path_out+name+cov,
-#      path_out+name+fasta,
-#       path_out+name+fasta_amb,
-#        path_out+name+fasta_ann,
-#         path_out+name+fasta_bwt,
-#     path_out+name+fasta_pac,
-#      path_out+name+fasta_sa,
-#       path_out+name+trimmed_fasta,
-#        path_out+name+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
-
-#     spec = """
-    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-#     conda activate HybPiper
-    
-#     cd {path_in}
-
-#     python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
-    
-#     echo touching {done}
-
-#     touch {done}
-
-#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
-
-#     return (path_ins, outputs, options, spec)
+   return (path_ins, outputs, options, spec) 
 
 
 ########################################################################################################################
-#############################################---- Retrieve ----#########################################################
+#############################################---- Paralogs ----#########################################################
 ########################################################################################################################
 
-#Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
-# I will add Synd-chine, Peum-boldu and Chim-salic as gene files from PAFTOL before retrieving. Look at Chim-salic to see an example.
+##### This is the approach to use. #####
 
-def retrieve(path_in, done):
-    """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
-    path_ins = [path_in+"Alse-petio-PAFTOL_trimmed.fasta", path_in+"Athe-mosch-PAFTOL_trimmed.fasta", path_in+"Beil-pendu-PAFTOL_trimmed.fasta", path_in+"Beil-tsang-PAFTOL_trimmed.fasta", path_in+"Cary-tonki-PAFTOL_trimmed.fasta", path_in+"Caly-flori-PAFTOL_trimmed.fasta", path_in+"Cass-filif-PAFTOL_trimmed.fasta", path_in+"Chim-salic-PAFTOL_trimmed.fasta", path_in+"Cinn-camph-PAFTOL_trimmed.fasta", path_in+"Cryp-alba-PAFTOL_trimmed.fasta", path_in+"Deha-haina-PAFTOL_trimmed.fasta", path_in+"Endi-macro-PAFTOL_trimmed.fasta", path_in+"Gomo-keule-PAFTOL_trimmed.fasta", path_in+"Hern-nymph-PAFTOL_trimmed.fasta", path_in+"Idio-austr-PAFTOL_trimmed.fasta", path_in+"Laur-nobil-PAFTOL_trimmed.fasta", path_in+"Mach-salic-PAFTOL_trimmed.fasta", path_in+"Magn-grand-PAFTOL_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL_trimmed.fasta", path_in+"Moni-rotun-PAFTOL_trimmed.fasta", path_in+"Myri-fragr-PAFTOL_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL_trimmed.fasta", path_in+"Noth-umbel-PAFTOL_trimmed.fasta", path_in+"Pers-borbo-PAFTOL_trimmed.fasta", path_in+"Peum-boldu-PAFTOL_trimmed.fasta", path_in+"Phoe-lance-PAFTOL_trimmed.fasta", path_in+"Sipa-guian-PAFTOL_trimmed.fasta", path_in+"Spar-botoc-PAFTOL_trimmed.fasta", path_in+"Synd-chine-PAFTOL_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL_trimmed.fasta"]
+def paralogs(name, path_in, done, in_done, path_out):
+    """Run HybPiper v. 2.1 - paralog retriever """
+    path_ins = [path_in+name, in_done]
     outputs = [done]
-    options = {'cores': 4, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+    options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
     spec = """
     
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
+    
     conda activate HybPiper
-
+    
     cd {path_in}
 
-    ls *trimmed.fasta > filelist.txt
-
-    python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
+    
+    mv paralog_report.tsv {path_out}
+    mv paralogs_above_threshold_report.txt {path_out}
+    mv paralogs_all {path_out}
+    mv paralogs_no_chimeras {path_out}
+    mv paralog_heatmap.png {path_out}
 
     echo touching {done}
 
     touch {done}
 
-    """.format(path_in = path_in, done = done)
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+    
+    return (path_ins, outputs, options, spec)
+
+
+########################################################################################################################
+#############################################---- Coverage ----#########################################################
+########################################################################################################################
+
+#This script does the following:
+# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# Map paired and unpaired reads to that fasta using BWA mem
+# Deduplicate reads using Picard
+# Calculate depth using samtools
+# Mask/strip any bases with coverage <2
+# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+
+def coverage(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+    """Calculating coverage of sequences."""
+    path_ins = [path_in+name]
+    outputs = [path_out+name+all_bam,
+     path_out+name+all_sorted_bam,
+      path_out+name+all_sorted_bam_bai,
+       path_out+name+bam,
+    path_out+name+cov,
+     path_out+name+fasta,
+      path_out+name+fasta_amb,
+       path_out+name+fasta_ann,
+        path_out+name+fasta_bwt,
+    path_out+name+fasta_pac,
+     path_out+name+fasta_sa,
+      path_out+name+trimmed_fasta,
+       path_out+name+up_bam,done] #ALL the output files
+    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+
+    spec = """
+    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
+    
+    cd {path_in}
+
+    python3 /home/laurakf/cryptocarya/Scripts/coverage.py {name} {dir_in} {dir_out} {dir_wrk}
+    
+    echo touching {done}
+
+    touch {done}
+
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
 
     return (path_ins, outputs, options, spec)
+
+
+# ########################################################################################################################
+# #############################################---- Retrieve ----#########################################################
+# ########################################################################################################################
+
+# #Think about doing blacklisting here? you could just remove species from the inputs here if you dont want them in the downstream analysis
+# # I will add Synd-chine, Peum-boldu and Chim-salic as gene files from PAFTOL-exons before retrieving. Look at Chim-salic to see an example.
+
+# def retrieve(path_in, done):
+#     """Retrieve gene sequences from all the species and create an unaligned multifasta for each gene."""
+#     path_ins = [path_in+"Alse-petio-PAFTOL-exons_trimmed.fasta", path_in+"Athe-mosch-PAFTOL-exons_trimmed.fasta", path_in+"Beil-pendu-PAFTOL-exons_trimmed.fasta", path_in+"Beil-tsang-PAFTOL-exons_trimmed.fasta", path_in+"Cary-tonki-PAFTOL-exons_trimmed.fasta", path_in+"Caly-flori-PAFTOL-exons_trimmed.fasta", path_in+"Cass-filif-PAFTOL-exons_trimmed.fasta", path_in+"Chim-salic-PAFTOL-exons_trimmed.fasta", path_in+"Cinn-camph-PAFTOL-exons_trimmed.fasta", path_in+"Cryp-alba-PAFTOL-exons_trimmed.fasta", path_in+"Deha-haina-PAFTOL-exons_trimmed.fasta", path_in+"Endi-macro-PAFTOL-exons_trimmed.fasta", path_in+"Gomo-keule-PAFTOL-exons_trimmed.fasta", path_in+"Hern-nymph-PAFTOL-exons_trimmed.fasta", path_in+"Idio-austr-PAFTOL-exons_trimmed.fasta", path_in+"Laur-nobil-PAFTOL-exons_trimmed.fasta", path_in+"Mach-salic-PAFTOL-exons_trimmed.fasta", path_in+"Magn-grand-PAFTOL-exons_trimmed.fasta", path_in+"Mezi-ita-uba-PAFTOL-exons_trimmed.fasta", path_in+"Moll-gilgi-PAFTOL-exons_trimmed.fasta", path_in+"Moni-rotun-PAFTOL-exons_trimmed.fasta", path_in+"Myri-fragr-PAFTOL-exons_trimmed.fasta", path_in+"Neoc-cauda-PAFTOL-exons_trimmed.fasta", path_in+"Noth-umbel-PAFTOL-exons_trimmed.fasta", path_in+"Pers-borbo-PAFTOL-exons_trimmed.fasta", path_in+"Peum-boldu-PAFTOL-exons_trimmed.fasta", path_in+"Phoe-lance-PAFTOL-exons_trimmed.fasta", path_in+"Sipa-guian-PAFTOL-exons_trimmed.fasta", path_in+"Spar-botoc-PAFTOL-exons_trimmed.fasta", path_in+"Synd-chine-PAFTOL-exons_trimmed.fasta", path_in+"Tamb-ficus-PAFTOL-exons_trimmed.fasta"]
+#     outputs = [done]
+#     options = {'cores': 4, 'memory': "8g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+
+#     spec = """
     
-# I have included Chim-salic, Synd-chine and Peum-boldu from PAFTOL gene sequences. (No UN sequence which causes an error when running HybPiper).
-### Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+#     conda activate HybPiper
+
+#     cd {path_in}
+
+#     ls *trimmed.fasta > filelist.txt
+
+#     python3 /home/laurakf/cryptocarya/Scripts/sample2genes.py > outstats.csv
+
+#     echo touching {done}
+
+#     touch {done}
+
+#     """.format(path_in = path_in, done = done)
+
+#     return (path_ins, outputs, options, spec)
+    
+# # I have included Chim-salic, Synd-chine and Peum-boldu from PAFTOL-exons gene sequences. (No UN sequence which causes an error when running HybPiper).
+# ### Here you should wait for the output. The output will comprise a file for each gene with the species sequence recovered.
 
 
 # ##########################################################################################################################
@@ -896,92 +894,92 @@ def retrieve(path_in, done):
 
 ##############################################------ RAXML---------#########################################################
 
-################################################################################################################################
-##############################################---- RAXML HKYGAMMA----###########################################################
-################################################################################################################################
+# ################################################################################################################################
+# ##############################################---- RAXML HKYGAMMA----###########################################################
+# ################################################################################################################################
 
-def raxml_HKYGAMMA(path_in, path_out, HKYGAMMA, done):
-    """Using RAXML to construct gene trees"""
-    inputs = [path_in+HKYGAMMA+"_output_taper.fasta"]
-    outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+# def raxml_HKYGAMMA(path_in, path_out, HKYGAMMA, done):
+#     """Using RAXML to construct gene trees"""
+#     inputs = [path_in+HKYGAMMA+"_output_taper.fasta"]
+#     outputs = [done]
+#     options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
+#     cd {path_in}
         
-    # Activate Raxml    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Raxml
+#     # Activate Raxml    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Raxml
 
-    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --HKY85 -s {HKYGAMMA}_output_taper.fasta -n {HKYGAMMA}_tree
+#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --HKY85 -s {HKYGAMMA}_output_taper.fasta -n {HKYGAMMA}_tree
 
-    mv RAxML*{HKYGAMMA}_tree {path_out}
+#     mv RAxML*{HKYGAMMA}_tree {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, HKYGAMMA = HKYGAMMA, done = done)
+#     """.format(path_in = path_in, path_out = path_out, HKYGAMMA = HKYGAMMA, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 
-##################################################################################################################################
-##############################################---- RAXML GTRGAMMA----#############################################################
-##################################################################################################################################
+# ##################################################################################################################################
+# ##############################################---- RAXML GTRGAMMA----#############################################################
+# ##################################################################################################################################
 
-def raxml_GTRGAMMA(path_in, path_out, GTRGAMMA, done):
-    """Using RAXML to construct gene trees"""
-    inputs = [path_in+GTRGAMMA+"_output_taper.fasta"]
-    outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+# def raxml_GTRGAMMA(path_in, path_out, GTRGAMMA, done):
+#     """Using RAXML to construct gene trees"""
+#     inputs = [path_in+GTRGAMMA+"_output_taper.fasta"]
+#     outputs = [done]
+#     options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
+#     cd {path_in}
         
-    # Activate Raxml    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Raxml
+#     # Activate Raxml    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Raxml
 
-    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k -s {GTRGAMMA}_output_taper.fasta -n {GTRGAMMA}_tree
+#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k -s {GTRGAMMA}_output_taper.fasta -n {GTRGAMMA}_tree
 
-    mv RAxML*{GTRGAMMA}_tree {path_out}
+#     mv RAxML*{GTRGAMMA}_tree {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, GTRGAMMA = GTRGAMMA, done = done)
+#     """.format(path_in = path_in, path_out = path_out, GTRGAMMA = GTRGAMMA, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
-##################################################################################################################################
-##############################################---- RAXML K80GAMMA----#############################################################
-##################################################################################################################################
+# ##################################################################################################################################
+# ##############################################---- RAXML K80GAMMA----#############################################################
+# ##################################################################################################################################
 
-def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
-    """Using RAXML to construct gene trees"""
-    inputs = [path_in+K80GAMMA+"_output_taper.fasta"]
-    outputs = [done]
-    options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
+# def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
+#     """Using RAXML to construct gene trees"""
+#     inputs = [path_in+K80GAMMA+"_output_taper.fasta"]
+#     outputs = [done]
+#     options = {'cores': 8, 'memory': "6g", 'walltime': "1:00:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
+#     cd {path_in}
         
-    # Activate Raxml    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Raxml
+#     # Activate Raxml    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Raxml
 
-    raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --K80 -s {K80GAMMA}_output_taper.fasta -n {K80GAMMA}_tree
+#     raxmlHPC-PTHREADS -T 8 -m GTRGAMMA -f a -p 2345 -x 2345 -# 1000 -k --K80 -s {K80GAMMA}_output_taper.fasta -n {K80GAMMA}_tree
 
-    mv RAxML*{K80GAMMA}_tree {path_out}
+#     mv RAxML*{K80GAMMA}_tree {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, K80GAMMA = K80GAMMA, done = done)
+#     """.format(path_in = path_in, path_out = path_out, K80GAMMA = K80GAMMA, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 
@@ -1014,9 +1012,9 @@ def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
 
 #     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i beilschmiedia_trees_BP10.tre -t 0 -o beilschmiedia_trees_BP10_SpeciesTree.tre
 
-#     /home/laurakf/cryptocarya/Programs/phyx/src/pxrr -t beilschmiedia_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL, Mag--gra-d-PAFTOL > beilschmiedia_trees_BP10_SpeciesTree_rooted.tre
+#     /home/laurakf/cryptocarya/Programs/phyx/src/pxrr -t beilschmiedia_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL-exons, Mag--gra-d-PAFTOL-exons > beilschmiedia_trees_BP10_SpeciesTree_rooted.tre
 
-#     /home/laurakf/cryptocarya/Programs/phyx/src/pxrr -t beilschmiedia_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Mag--gra-d-PAFTOL > beilschmiedia_trees_BP10_SpeciesTree_annotQ_rooted.tre
+#     /home/laurakf/cryptocarya/Programs/phyx/src/pxrr -t beilschmiedia_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL-exons, Mag--gra-d-PAFTOL-exons > beilschmiedia_trees_BP10_SpeciesTree_annotQ_rooted.tre
 
 
 #     touch {done}
@@ -1036,56 +1034,56 @@ def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
 # for i in range(len(sp)):
 #     #### Running fastqc on raw data
 #     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/done/"+sp[i]))
+#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL-exons/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/01_FastQC/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/01_FastQC/done/"+sp[i]))
 
 # #### Running multiqc on raw data
-# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/done/multiqc_raw"))
+# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/01_FastQC/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/02_MultiQC/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/02_MultiQC/done/multiqc_raw"))
 
 # sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
 # for i in range(len(sp)):
 #     #### Running Trimmomatic (slidingwindow)
 #     gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
-#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/", 
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/done/"+sp[i]))
+#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL-exons/", 
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
 #     #     #### Running Trimmomatic (maxinfo)
 #     # gwf.target_from_template('trimmomatic_maxinfo_'+sp[i], trimmomatic_maxinfo(name = sp[i],
-#     #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/data/", 
-#     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/maxinfo/",
-#     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/maxinfo/done/"+sp[i]))
+#     #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/01_FastQC/data/", 
+#     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/maxinfo/",
+#     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/maxinfo/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data (slidingwindow)
     # gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/secapr_postrim/",
-    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/done/"+sp[i]))  
+    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/slidingwindow/secapr_postrim/",
+    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/slidingwindow/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/slidingwindow/done/"+sp[i]))  
 
 #     # #### Running fastqc on the trimmed data (maxinfo)
 #     # gwf.target_from_template('fastqc_trimmed_maxinfo_'+sp[i], fastqc_trimmed_maxinfo(name = sp[i],
-#     #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/maxinfo/secapr_postrim/",
-#     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/maxinfo/",
-#     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/maxinfo/done/"+sp[i]))                                                  
+#     #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/maxinfo/secapr_postrim/",
+#     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/maxinfo/",
+#     #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/maxinfo/done/"+sp[i]))                                                  
 
 
 # #### Running multiqc on trimmed data (slidingwindow)
-# gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
+# gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/slidingwindow/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/05_MultiQC/slidingwindow/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 # #### Running multiqc on trimmed data (maxinfo)
-# gwf.target_from_template('multiqc_trimmed_maxinfo', multiqc_trimmed_maxinfo(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/maxinfo/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/maxinfo/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/maxinfo/done/multiqc_trimmed"))
+# gwf.target_from_template('multiqc_trimmed_maxinfo', multiqc_trimmed_maxinfo(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/04_FastQC/maxinfo/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/05_MultiQC/maxinfo/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/05_MultiQC/maxinfo/done/multiqc_trimmed"))
 
 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
-# # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
+sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
 # for i in range(len(sp)):
     
@@ -1094,127 +1092,127 @@ def raxml_K80GAMMA(path_in, path_out, K80GAMMA, done):
 #                                                         p1 = "_1P.fastq",
 #                                                         p2 = "_2P.fastq",
 #                                                         un = "_UN.fastq",
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/HybPiper/"+sp[i]))
 
-# #### Getting stats and heatmap
-# gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
-#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
-#                                                 name = sp[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
+#### Getting stats and heatmap
+gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/Stats_Heatmap/",
+                                                path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
+                                                name = sp[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Stats/"+sp[i]))
 
                                                
-# #### Paralogs
-# gwf.target_from_template('Paralogs', paralogs(name = sp[i],
-#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/" ,
-#                                                       done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Paralogs/done",
-#                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+#### Paralogs
+gwf.target_from_template('Paralogs', paralogs(name = sp[i],
+                                                      path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                      path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/Paralogs/" ,
+                                                      done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/done/Paralogs/done",
+                                                      in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
-# # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
+sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
-# for i in range(len(sp)):
+for i in range(len(sp)):
 
-#     #### Coverage
-#     gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         all_bam = "_all.bam",
-#                                                         all_sorted_bam ="_all_sorted.bam",
-#                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
-#                                                         bam =".bam",
-#                                                         cov=".cov",
-#                                                         fasta = ".fasta",
-#                                                         fasta_amb = ".fasta.amb",
-#                                                         fasta_ann = ".fasta.ann",
-#                                                         fasta_bwt = ".fasta.bwt",
-#                                                         fasta_pac = ".fasta.pac",
-#                                                         fasta_sa = ".fasta.sa",
-#                                                         trimmed_fasta = "_trimmed.fasta",
-#                                                         up_bam = "_up.bam",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/07_Coverage/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/07_Coverage/done/Coverage/"+sp[i],
-#                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
-#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL/07_Coverage/")) # folder with coverage
+    #### Coverage
+    gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        all_bam = "_all.bam",
+                                                        all_sorted_bam ="_all_sorted.bam",
+                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
+                                                        bam =".bam",
+                                                        cov=".cov",
+                                                        fasta = ".fasta",
+                                                        fasta_amb = ".fasta.amb",
+                                                        fasta_ann = ".fasta.ann",
+                                                        fasta_bwt = ".fasta.bwt",
+                                                        fasta_pac = ".fasta.pac",
+                                                        fasta_sa = ".fasta.sa",
+                                                        trimmed_fasta = "_trimmed.fasta",
+                                                        up_bam = "_up.bam",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/done/Coverage/"+sp[i],
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
+                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/")) # folder with coverage
 
-#### Retrieve sequences and sort into files with gene names
-gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/07_Coverage/", 
-                                              done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/08_Retrieve/done/retrieve"))
+# #### Retrieve sequences and sort into files with gene names
+# gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/07_Coverage/", 
+#                                               done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/08_Retrieve/done/retrieve"))
 
 
 ### Kan jeg vente med at fjerne de gener der måske er paraloge indtil dette step, hvor jeg vælger hvilke gener der skal inkluderes? ### JA
 ### Skal jeg fjerne ITS og kloroplast regionerne i den videre analyse? JA
 
-gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5599", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5921", "5926", "5933", "5942", "5943", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6041", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]
-genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA", "4793.FNA", "4796.FNA", "4802.FNA", "4806.FNA", "4848.FNA", "4889.FNA", "4890.FNA", "4893.FNA", "4932.FNA", "4942.FNA", "4951.FNA", "4954.FNA", "4992.FNA", "5018.FNA", "5032.FNA", "5034.FNA", "5038.FNA", "5090.FNA", "5104.FNA", "5116.FNA", "5123.FNA", "5131.FNA", "5138.FNA", "5162.FNA", "5163.FNA", "5168.FNA", "5177.FNA", "5188.FNA", "5200.FNA", "5206.FNA", "5220.FNA", "5257.FNA", "5264.FNA", "5271.FNA", "5273.FNA", "5280.FNA", "5296.FNA", "5299.FNA", "5304.FNA", "5318.FNA", "5326.FNA", "5328.FNA", "5333.FNA", "5335.FNA", "5339.FNA", "5343.FNA", "5348.FNA", "5354.FNA", "5366.FNA", "5398.FNA", "5404.FNA", "5406.FNA", "5421.FNA", "5426.FNA", "5427.FNA", "5428.FNA", "5449.FNA", "5454.FNA", "5460.FNA", "5463.FNA", "5464.FNA", "5469.FNA", "5477.FNA", "5489.FNA", "5502.FNA", "5513.FNA", "5528.FNA", "5531.FNA", "5536.FNA", "5551.FNA", "5554.FNA", "5562.FNA", "5578.FNA", "5594.FNA", "5596.FNA", "5599.FNA", "5614.FNA", "5620.FNA", "5634.FNA", "5639.FNA", "5644.FNA", "5656.FNA", "5660.FNA", "5664.FNA", "5670.FNA", "5699.FNA", "5702.FNA", "5703.FNA", "5716.FNA", "5721.FNA", "5744.FNA", "5770.FNA", "5772.FNA", "5791.FNA", "5802.FNA", "5815.FNA", "5816.FNA", "5821.FNA", "5822.FNA", "5840.FNA", "5841.FNA", "5842.FNA", "5843.FNA", "5849.FNA", "5853.FNA", "5857.FNA", "5858.FNA", "5865.FNA", "5866.FNA", "5870.FNA", "5893.FNA", "5894.FNA", "5899.FNA", "5910.FNA", "5913.FNA", "5918.FNA", "5919.FNA", "5921.FNA", "5926.FNA", "5933.FNA", "5942.FNA", "5943.FNA", "5944.FNA", "5945.FNA", "5949.FNA", "5950.FNA", "5960.FNA", "5968.FNA", "5974.FNA", "5977.FNA", "5980.FNA", "5981.FNA", "5990.FNA", "6000.FNA", "6003.FNA", "6004.FNA", "6016.FNA", "6026.FNA", "6029.FNA", "6034.FNA", "6036.FNA", "6038.FNA", "6041.FNA", "6048.FNA", "6050.FNA", "6051.FNA", "6056.FNA", "6064.FNA", "6068.FNA", "6072.FNA", "6098.FNA", "6114.FNA", "6119.FNA", "6128.FNA", "6130.FNA", "6139.FNA", "6148.FNA", "6164.FNA", "6175.FNA", "6176.FNA", "6198.FNA", "6216.FNA", "6221.FNA", "6226.FNA", "6227.FNA", "6238.FNA", "6258.FNA", "6265.FNA", "6274.FNA", "6282.FNA", "6284.FNA", "6295.FNA", "6298.FNA", "6299.FNA", "6303.FNA", "6318.FNA", "6320.FNA", "6363.FNA", "6366.FNA", "6373.FNA", "6376.FNA", "6378.FNA", "6383.FNA", "6384.FNA", "6389.FNA", "6393.FNA", "6398.FNA", "6404.FNA", "6405.FNA", "6406.FNA", "6407.FNA", "6412.FNA", "6420.FNA", "6432.FNA", "6439.FNA", "6447.FNA", "6450.FNA", "6454.FNA", "6457.FNA", "6458.FNA", "6459.FNA", "6460.FNA", "6462.FNA", "6483.FNA", "6487.FNA", "6488.FNA", "6492.FNA", "6494.FNA", "6496.FNA", "6500.FNA", "6506.FNA", "6507.FNA", "6526.FNA", "6527.FNA", "6528.FNA", "6532.FNA", "6533.FNA", "6538.FNA", "6540.FNA", "6544.FNA", "6550.FNA", "6552.FNA", "6559.FNA", "6563.FNA", "6570.FNA", "6572.FNA", "6601.FNA", "6620.FNA", "6631.FNA", "6636.FNA", "6639.FNA", "6641.FNA", "6649.FNA", "6652.FNA", "6660.FNA", "6667.FNA", "6685.FNA", "6689.FNA", "6713.FNA", "6717.FNA", "6732.FNA", "6733.FNA", "6738.FNA", "6746.FNA", "6779.FNA", "6782.FNA", "6785.FNA", "6792.FNA", "6797.FNA", "6825.FNA", "6848.FNA", "6854.FNA", "6859.FNA", "6860.FNA", "6865.FNA", "6875.FNA", "6882.FNA", "6883.FNA", "6909.FNA", "6913.FNA", "6914.FNA", "6924.FNA", "6933.FNA", "6946.FNA", "6947.FNA", "6954.FNA", "6958.FNA", "6961.FNA", "6962.FNA", "6968.FNA", "6978.FNA", "6979.FNA", "6992.FNA", "7021.FNA", "7024.FNA", "7029.FNA", "7067.FNA", "7111.FNA", "7128.FNA", "7135.FNA", "7136.FNA", "7141.FNA", "7174.FNA", "7194.FNA", "7241.FNA", "7273.FNA", "7279.FNA", "7313.FNA", "7324.FNA", "7325.FNA", "7331.FNA", "7333.FNA", "7336.FNA", "7363.FNA", "7367.FNA", "7371.FNA", "7572.FNA", "7577.FNA", "7583.FNA", "7602.FNA", "7628.FNA"]
+# gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5599", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5921", "5926", "5933", "5942", "5943", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6041", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]
+# genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA", "4793.FNA", "4796.FNA", "4802.FNA", "4806.FNA", "4848.FNA", "4889.FNA", "4890.FNA", "4893.FNA", "4932.FNA", "4942.FNA", "4951.FNA", "4954.FNA", "4992.FNA", "5018.FNA", "5032.FNA", "5034.FNA", "5038.FNA", "5090.FNA", "5104.FNA", "5116.FNA", "5123.FNA", "5131.FNA", "5138.FNA", "5162.FNA", "5163.FNA", "5168.FNA", "5177.FNA", "5188.FNA", "5200.FNA", "5206.FNA", "5220.FNA", "5257.FNA", "5264.FNA", "5271.FNA", "5273.FNA", "5280.FNA", "5296.FNA", "5299.FNA", "5304.FNA", "5318.FNA", "5326.FNA", "5328.FNA", "5333.FNA", "5335.FNA", "5339.FNA", "5343.FNA", "5348.FNA", "5354.FNA", "5366.FNA", "5398.FNA", "5404.FNA", "5406.FNA", "5421.FNA", "5426.FNA", "5427.FNA", "5428.FNA", "5449.FNA", "5454.FNA", "5460.FNA", "5463.FNA", "5464.FNA", "5469.FNA", "5477.FNA", "5489.FNA", "5502.FNA", "5513.FNA", "5528.FNA", "5531.FNA", "5536.FNA", "5551.FNA", "5554.FNA", "5562.FNA", "5578.FNA", "5594.FNA", "5596.FNA", "5599.FNA", "5614.FNA", "5620.FNA", "5634.FNA", "5639.FNA", "5644.FNA", "5656.FNA", "5660.FNA", "5664.FNA", "5670.FNA", "5699.FNA", "5702.FNA", "5703.FNA", "5716.FNA", "5721.FNA", "5744.FNA", "5770.FNA", "5772.FNA", "5791.FNA", "5802.FNA", "5815.FNA", "5816.FNA", "5821.FNA", "5822.FNA", "5840.FNA", "5841.FNA", "5842.FNA", "5843.FNA", "5849.FNA", "5853.FNA", "5857.FNA", "5858.FNA", "5865.FNA", "5866.FNA", "5870.FNA", "5893.FNA", "5894.FNA", "5899.FNA", "5910.FNA", "5913.FNA", "5918.FNA", "5919.FNA", "5921.FNA", "5926.FNA", "5933.FNA", "5942.FNA", "5943.FNA", "5944.FNA", "5945.FNA", "5949.FNA", "5950.FNA", "5960.FNA", "5968.FNA", "5974.FNA", "5977.FNA", "5980.FNA", "5981.FNA", "5990.FNA", "6000.FNA", "6003.FNA", "6004.FNA", "6016.FNA", "6026.FNA", "6029.FNA", "6034.FNA", "6036.FNA", "6038.FNA", "6041.FNA", "6048.FNA", "6050.FNA", "6051.FNA", "6056.FNA", "6064.FNA", "6068.FNA", "6072.FNA", "6098.FNA", "6114.FNA", "6119.FNA", "6128.FNA", "6130.FNA", "6139.FNA", "6148.FNA", "6164.FNA", "6175.FNA", "6176.FNA", "6198.FNA", "6216.FNA", "6221.FNA", "6226.FNA", "6227.FNA", "6238.FNA", "6258.FNA", "6265.FNA", "6274.FNA", "6282.FNA", "6284.FNA", "6295.FNA", "6298.FNA", "6299.FNA", "6303.FNA", "6318.FNA", "6320.FNA", "6363.FNA", "6366.FNA", "6373.FNA", "6376.FNA", "6378.FNA", "6383.FNA", "6384.FNA", "6389.FNA", "6393.FNA", "6398.FNA", "6404.FNA", "6405.FNA", "6406.FNA", "6407.FNA", "6412.FNA", "6420.FNA", "6432.FNA", "6439.FNA", "6447.FNA", "6450.FNA", "6454.FNA", "6457.FNA", "6458.FNA", "6459.FNA", "6460.FNA", "6462.FNA", "6483.FNA", "6487.FNA", "6488.FNA", "6492.FNA", "6494.FNA", "6496.FNA", "6500.FNA", "6506.FNA", "6507.FNA", "6526.FNA", "6527.FNA", "6528.FNA", "6532.FNA", "6533.FNA", "6538.FNA", "6540.FNA", "6544.FNA", "6550.FNA", "6552.FNA", "6559.FNA", "6563.FNA", "6570.FNA", "6572.FNA", "6601.FNA", "6620.FNA", "6631.FNA", "6636.FNA", "6639.FNA", "6641.FNA", "6649.FNA", "6652.FNA", "6660.FNA", "6667.FNA", "6685.FNA", "6689.FNA", "6713.FNA", "6717.FNA", "6732.FNA", "6733.FNA", "6738.FNA", "6746.FNA", "6779.FNA", "6782.FNA", "6785.FNA", "6792.FNA", "6797.FNA", "6825.FNA", "6848.FNA", "6854.FNA", "6859.FNA", "6860.FNA", "6865.FNA", "6875.FNA", "6882.FNA", "6883.FNA", "6909.FNA", "6913.FNA", "6914.FNA", "6924.FNA", "6933.FNA", "6946.FNA", "6947.FNA", "6954.FNA", "6958.FNA", "6961.FNA", "6962.FNA", "6968.FNA", "6978.FNA", "6979.FNA", "6992.FNA", "7021.FNA", "7024.FNA", "7029.FNA", "7067.FNA", "7111.FNA", "7128.FNA", "7135.FNA", "7136.FNA", "7141.FNA", "7174.FNA", "7194.FNA", "7241.FNA", "7273.FNA", "7279.FNA", "7313.FNA", "7324.FNA", "7325.FNA", "7331.FNA", "7333.FNA", "7336.FNA", "7363.FNA", "7367.FNA", "7371.FNA", "7572.FNA", "7577.FNA", "7583.FNA", "7602.FNA", "7628.FNA"]
 
 
 # #### MAFFT
 # for i in range(len(genes)):
 #     gwf.target_from_template('Mafft_'+genes[i], mafft(genes = genes[i],
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/08_Retrieve/",
+#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/09_Mafft/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/08_Retrieve/",
 #                                                         gene = gene[i],
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/done/"+genes[i]))
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/09_Mafft/done/"+genes[i]))
 
 
 # #### Trimal according to a pre-defined gt values
 # for i in range(len(gene)):
 #    gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/09_Mafft/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i]))
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/09_Mafft/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/done/"+gene[i]))
 
 # ### Generating AMAS statistics for raw_alignments
-# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal",
-#                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/",
-#                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_raw/raw"))
+# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal",
+#                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/done/",
+#                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/done/AMAS_raw/raw"))
 
 # cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
 # #### Generating AMAS statistics for gt_alignments
 # for i in range(len(cut_off)):
-#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/",
 #                                                 cut_off = cut_off[i],
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/done/"+gene[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                          done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/optrimal/optrimal", 
-#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/",
+#                                                          done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/done/optrimal/optrimal", 
+#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/"))
 
 
 # #### Move files from trimal to optrimal folder
-# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/optrimal/optrimal",
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/move/move", 
-#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
+# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/10_Trimal/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/done/optrimal/optrimal",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/done/move/move", 
+#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/"))
 
 # Removing genes that were not included in "optimal_final_results" - 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
 # Running CIAlign on the trimmed_fasta - excluded some genes earlier with paralog warnings.
 # for i in range(0, len(gene)):
 #     # gwf.target_from_template('Cialign'+gene[i], cialign1(gene = gene[i],
-    #                                           path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/optimal_final_results/",
-    #                                           path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/12_CIAlign/",
-    #                                           done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/12_CIAlign/done/"+gene[i]))
+    #                                           path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/11_Optrimal/optimal_final_results/",
+    #                                           path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/12_CIAlign/",
+    #                                           done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/12_CIAlign/done/"+gene[i]))
 
 # ## Running TAPER after CIALIGN
 #     gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/12_CIAlign/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/done/"+gene[i]))
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/12_CIAlign/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/done/"+gene[i]))
                                                     
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(gene)):
 #    gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/14_IQtree/",
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/14_IQtree/",
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
 # Removing genes that were not included in the output of Taper (_output_taper.fast) - 6128, 5614.
@@ -1224,39 +1222,39 @@ genes = ["4471.FNA", "4527.FNA", "4691.FNA", "4724.FNA", "4744.FNA", "4757.FNA",
 # #Running IQTREE MODELFINDER for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(gene)):
 #    gwf.target_from_template('Iqtree_'+gene[i], iqtree_model(gene = gene[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/14_IQtree/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/14_IQtree/done/"+gene[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/14_IQtree/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/14_IQtree/done/"+gene[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
 # ################### RAXML ########################
 
-HKYGAMMA = ["5018","5104","5477","5513","5644","5656","5802","5843","5960","5974","5981","6029","6056","6064","6164","6221","6299","6406","6601","6848","7135","7136","7331","7363","4757","4890","5220","5271","5536","5840","5894","5968","5977","6130","6295","6393","6412","6420","6447","6526","6540","6563","6639","6641","6732","6733","7024","7273","7324","7367","7371","5348","5354","5551","5639","5703","6216","6532","6933","6979","5634","6003","6538","6552","5822","6114","6238","6378","6785","5299","5318"]
-for i in range(0, len(HKYGAMMA)):
-   gwf.target_from_template('HKY_'+HKYGAMMA[i], raxml_HKYGAMMA(HKYGAMMA = HKYGAMMA[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/HKYGAMMA"+HKYGAMMA[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+# HKYGAMMA = ["5018","5104","5477","5513","5644","5656","5802","5843","5960","5974","5981","6029","6056","6064","6164","6221","6299","6406","6601","6848","7135","7136","7331","7363","4757","4890","5220","5271","5536","5840","5894","5968","5977","6130","6295","6393","6412","6420","6447","6526","6540","6563","6639","6641","6732","6733","7024","7273","7324","7367","7371","5348","5354","5551","5639","5703","6216","6532","6933","6979","5634","6003","6538","6552","5822","6114","6238","6378","6785","5299","5318"]
+# for i in range(0, len(HKYGAMMA)):
+#    gwf.target_from_template('HKY_'+HKYGAMMA[i], raxml_HKYGAMMA(HKYGAMMA = HKYGAMMA[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/done/HKYGAMMA"+HKYGAMMA[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
-GTRGAMMA = ["4471","4744","4889","5138","5273","5304","5366","5398","5449","5460","5502","5664","5670","5699","5772","5791","5893","5899","5919","5926","5944","6034","6036","6038","6048","6148","6175","6198","6226","6258","6274","6303","6318","6363","6366","6407","6454","6457","6458","6483","6494","6496","6507","6533","6572","6631","6652","6667","6779","6792","6797","6854","6947","6961","6992","7128","7141","7194","7279","7583","7602","4691","4724","4793","4796","4806","4893","4932","4942","4954","5090","5116","5123","5131","5188","5200","5206","5257","5328","5404","5463","5464","5489","5531","5554","5562","5578","5594","5716","5744","5857","5913","5918","5933","5942","5950","5990","6000","6004","6016","6050","6068","6128","6139","6227","6282","6373","6383","6432","6439","6459","6492","6500","6528","6544","6550","6559","6570","6620","6636","6649","6660","6689","6746","6782","6860","6875","6914","6954","6962","7174","7333","7336","7577","7628","4802","4951","5296","5406","5454","5620","5770","5816","5821","5842","5849","5853","5910","5949","6072","6119","6176","6298","6320","6376","6405","6487","6527","6825","6859","6865","6909","6968","7067","7241","7572","5032","5038","5168","5326","5858","5870","5945","6051","6389","6685","6717","6946","7029","5339","5343","5980","6384","6398","6506","6713","7111","4527","4992","5034","5162","5163","5264","5280","5333","5335","5421","5426","5427","5428","5469","5528","5596","5614","5702","5721","5841","5865","5866","6026","6098","6265","6284","6404","6450","6460","6462","6488","6738","6882","6883","6913","6958","6978","7021","7313","4848","6924"]
-for i in range(0, len(GTRGAMMA)):
-   gwf.target_from_template('GTR_'+GTRGAMMA[i], raxml_GTRGAMMA(GTRGAMMA = GTRGAMMA[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/GTRGAMMA"+GTRGAMMA[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+# GTRGAMMA = ["4471","4744","4889","5138","5273","5304","5366","5398","5449","5460","5502","5664","5670","5699","5772","5791","5893","5899","5919","5926","5944","6034","6036","6038","6048","6148","6175","6198","6226","6258","6274","6303","6318","6363","6366","6407","6454","6457","6458","6483","6494","6496","6507","6533","6572","6631","6652","6667","6779","6792","6797","6854","6947","6961","6992","7128","7141","7194","7279","7583","7602","4691","4724","4793","4796","4806","4893","4932","4942","4954","5090","5116","5123","5131","5188","5200","5206","5257","5328","5404","5463","5464","5489","5531","5554","5562","5578","5594","5716","5744","5857","5913","5918","5933","5942","5950","5990","6000","6004","6016","6050","6068","6128","6139","6227","6282","6373","6383","6432","6439","6459","6492","6500","6528","6544","6550","6559","6570","6620","6636","6649","6660","6689","6746","6782","6860","6875","6914","6954","6962","7174","7333","7336","7577","7628","4802","4951","5296","5406","5454","5620","5770","5816","5821","5842","5849","5853","5910","5949","6072","6119","6176","6298","6320","6376","6405","6487","6527","6825","6859","6865","6909","6968","7067","7241","7572","5032","5038","5168","5326","5858","5870","5945","6051","6389","6685","6717","6946","7029","5339","5343","5980","6384","6398","6506","6713","7111","4527","4992","5034","5162","5163","5264","5280","5333","5335","5421","5426","5427","5428","5469","5528","5596","5614","5702","5721","5841","5865","5866","6026","6098","6265","6284","6404","6450","6460","6462","6488","6738","6882","6883","6913","6958","6978","7021","7313","4848","6924"]
+# for i in range(0, len(GTRGAMMA)):
+#    gwf.target_from_template('GTR_'+GTRGAMMA[i], raxml_GTRGAMMA(GTRGAMMA = GTRGAMMA[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/done/GTRGAMMA"+GTRGAMMA[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
-K80GAMMA = ["5177", "5660", "7325", "5815"]
-for i in range(0, len(K80GAMMA)):
-   gwf.target_from_template('K80_'+K80GAMMA[i], raxml_K80GAMMA(K80GAMMA = K80GAMMA[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/done/K80GAMMA"+K80GAMMA[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/"))  
+# K80GAMMA = ["5177", "5660", "7325", "5815"]
+# for i in range(0, len(K80GAMMA)):
+#    gwf.target_from_template('K80_'+K80GAMMA[i], raxml_K80GAMMA(K80GAMMA = K80GAMMA[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/done/K80GAMMA"+K80GAMMA[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
 # # Running ASTRAL 
-# gwf.target_from_template('astral_tapper', astral(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/16_Astral/done/Astral"))
+# gwf.target_from_template('astral_tapper', astral(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/15_Raxml/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/16_Astral/done/Astral"))
 
 
