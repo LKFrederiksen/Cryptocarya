@@ -1118,7 +1118,7 @@ for i in range(len(sp)):
 
     #### Coverage
     gwf.target_from_template('Coverage_'+str(i), coverage(name = sp[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/06_HybPiper/",
                                                         all_bam = "_all.bam",
                                                         all_sorted_bam ="_all_sorted.bam",
                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
