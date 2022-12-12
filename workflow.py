@@ -802,7 +802,7 @@ def exon_map(path_in,path_out,done,gene):
 
     #Activating conda base environment
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate base
+    conda activate HybPiper
 
     #Going to folder with data
     cd {path_in}
