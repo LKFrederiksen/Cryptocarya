@@ -547,6 +547,7 @@ def exon_mapper(path_in, path_out, done, gene):
     spec = """
 
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate HybPiper
 
     cd {path_in}
 
