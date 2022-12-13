@@ -1306,7 +1306,7 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 
 #Running IQTREE for files trimmed with trimal and CIAlign                                             
 for i in range(0, len(gene)):
-   gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
+   gwf.target_from_template('Iqtree_'+gene[i], iq_tree(gene = gene[i],
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/done/"+gene[i],
                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
