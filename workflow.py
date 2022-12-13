@@ -802,7 +802,7 @@ def exon_map(path_in,path_out,done,gene):
 
     #Activating conda HybPiper environment (to get numpy etc.)
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate HybPiper
+    conda activate Mafft
 
     #Going to folder with data (Taper)
     cd {path_in}
