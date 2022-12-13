@@ -856,7 +856,7 @@ gwf = Workflow()
 #############################################---- IQ-tree ----#############################################################
 ###########################################################################################################################
 
-def iq_tree(path_in, gene,path_out ):
+def iq_tree(path_in, gene,path_out, done):
     """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
     inputs = [path_in+gene+"_part.txt", path_in+gene+"_clean.fasta"]
     outputs = [path_out+gene+".txt.tre"]
@@ -886,9 +886,9 @@ def iq_tree(path_in, gene,path_out ):
     mv {gene}*.mldist {path_out}
     mv {gene}*.splits.nex {path_out}
         
+    touch {done}
 
-
-    """.format(path_in = path_in, gene = gene, path_out=path_out)
+    """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
 
     return (inputs, outputs, options, spec)
 
