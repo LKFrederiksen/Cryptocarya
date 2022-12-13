@@ -1344,6 +1344,8 @@ def iqtree_model_np(path_in, path_out, gene, done):
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
 
 
+# Genes that did not have an intron sequence
+gene = ["6406", "6487"]
 #Running IQTREE MODELFINDER (no partition file) for files trimmed with trimal and CIAlign                                             
 for i in range(0, len(gene)):
    gwf.target_from_template('Iqtree_'+gene[i], iqtree_model_np(gene = gene[i],
