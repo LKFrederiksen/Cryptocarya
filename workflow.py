@@ -1239,7 +1239,7 @@ for i in range(0, len(gene)):
 
     #### Running Exon_mapper
     gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/done/"+gene[i]))
                                                     
