@@ -939,7 +939,7 @@ def iqtree_model(path_in, path_out, gene, done):
 
     iqtree2 -redo -s {gene}_clean.fasta -p {gene}_part.txt -m MF -AICc -mset JC69,HKY85,GTR,K80 -nt AUTO -ntmax 4
 
-    mv {gene}_clean.fasta.* {path_out}
+    mv {gene}_part.txt.* {path_out}
 
     touch {done}
 
