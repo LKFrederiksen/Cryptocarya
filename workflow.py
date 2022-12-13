@@ -853,69 +853,44 @@ gwf = Workflow()
 #     return (inputs, outputs, options, spec)
 
 
-# # ########################################################################################################################
-# # ##############################################---- IQTREE ----##########################################################
-# # ########################################################################################################################
+#############################################---- IQ-tree ----#############################################################
+###########################################################################################################################
 
-# # # Either IQTREE or IQTREE Model Selection and RAXML should be run.
+def iq_tree(path_in, gene,path_out ):
+    """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
+    inputs = [path_in+gene+"_part.txt", path_in+gene+"_clean.fasta"]
+    outputs = [path_out+gene+".txt.tre"]
+    options = {'cores': 20, 'memory': "20g", 'walltime': "2:00:00", 'account':"cryptocarya"}
 
-# # def iqtree(path_in, path_out, gene):
-# #     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
-# #     inputs = [path_in+gene+"_output_taper.fasta"]
-# #     outputs = [path_out+gene+"_output_taper.fasta.treefile"]
-# #     options = {'cores': 8, 'memory': "4g", 'walltime': "6:00:00", 'account':"cryptocarya"}
+    spec = """
 
-# #     spec = """
-     
-# #     cd {path_in}
+
+    # Activate IQtree    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate IQtree
+
+    cd {path_in}
+
+    #Actual IQtree tree search. 
+    iqtree2 -s {gene}_clean.fasta -p {gene}_part.txt -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
+
+
+
+    mv {gene}*.treefile {path_out}
+    mv {gene}*.model.gz {path_out}
+    mv {gene}*.contree {path_out}
+    mv {gene}*.bionj {path_out}
+    mv {gene}*.ckp.gz {path_out}
+    mv {gene}*.iqtree {path_out}
+    mv {gene}*.log {path_out}
+    mv {gene}*.mldist {path_out}
+    mv {gene}*.splits.nex {path_out}
         
-# #     # Activate IQtree    
-# #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-# #     conda activate IQtree
-        
-# #     iqtree2 -s {gene}_output_taper.fasta -T AUTO -m MFP -B 1000 
-    
-# #     mv {gene}_output_taper.fasta.treefile {path_out}
-# #     mv {gene}_output_taper.fasta.model.gz {path_out}
-# #     mv {gene}_output_taper.fasta.contree {path_out}
-# #     mv {gene}_output_taper.fasta.bionj {path_out}
-# #     mv {gene}_output_taper.fasta.ckp.gz {path_out}
-# #     mv {gene}_output_taper.fasta.iqtree {path_out}
-# #     mv {gene}_output_taper.fasta.log {path_out}
-# #     mv {gene}_output_taper.fasta.mldist {path_out}
-# #     mv {gene}_output_taper.fasta.splits.nex {path_out}
-    
-# #     """.format(path_in = path_in, path_out = path_out, gene = gene)
 
-# #     return (inputs, outputs, options, spec) 
- 
-# # # We also lost the gene: because it has less 4 species only, and it does not make sense to perform a bootstrap (Iqtree)
-# # #Iqtree_32
-# # #Iqtree_320
-# # #Iqtree_509
-# # #Iqtree_536
-# # #Iqtree_709
-# # #Iqtree_774
-# # #Iqtree_870
-# # #Iqtree_873
-# # #Iqtree_874
-# # #Iqtree_881
-# # #Iqtree_1111
-# # #Iqtree_1204
-# # #Iqtree_1421
-# # #Iqtree_1576
-# # #Iqtree_1654
-# # #Iqtree_1687
-# # #Iqtree_2480
-# # #Iqtree_2584
-# # #Iqtree_2661
-# # #Iqtree_2680
-# # #Iqtree_2973
 
-# # # Therefore we have removed all the genes cited + 2683 (too divergent and excluded by CIalign) 
+    """.format(path_in = path_in, gene = gene, path_out=path_out)
 
-# # #Here you should stop and go to folder /home/paola/faststorage/17.Final_organization/5.Ceroxyloids/12.IQtree and do cat *treefile > gene_trees.nex
-
+    return (inputs, outputs, options, spec)
 
 # ########################################################################################################################################################
 # ##############################################---- IQTREE Model Selection (partition file)----##########################################################
@@ -951,45 +926,45 @@ gwf = Workflow()
 # # Modelfinder has to be rerun for these trees without the partition file.
 
 
-############################################################################################################################################################
-##############################################---- IQTREE Model Selection (no partition file) ----##########################################################
-############################################################################################################################################################
+# ############################################################################################################################################################
+# ##############################################---- IQTREE Model Selection (no partition file) ----##########################################################
+# ############################################################################################################################################################
 
-def iqtree_model_np(path_in, path_out, gene, done):
-    """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
-    inputs = [path_in+gene+"_clean.fasta"]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "2g", 'walltime': "00:20:00", 'account':"cryptocarya"}
+# def iqtree_model_np(path_in, path_out, gene, done):
+#     """Using IQTREE to construct a phylogenetic hypotheses for each gene"""
+#     inputs = [path_in+gene+"_clean.fasta"]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "2g", 'walltime': "00:20:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
+#     cd {path_in}
         
-    # Activate IQtree    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate IQtree
+#     # Activate IQtree    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate IQtree
 
-    echo $name
+#     echo $name
 
-    iqtree2 -redo -s {gene}_clean.fasta -m MF -AICc -mset JC69,HKY85,GTR,K80 -nt AUTO -ntmax 4
+#     iqtree2 -redo -s {gene}_clean.fasta -m MF -AICc -mset JC69,HKY85,GTR,K80 -nt AUTO -ntmax 4
 
-    mv {gene}_clean.fasta.* {path_out}
+#     mv {gene}_clean.fasta.* {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, gene = gene, done = done)
+#     """.format(path_in = path_in, path_out = path_out, gene = gene, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
-# Problem with gene 6487 and 6406 - ERROR: Please specify alignment positions for partitionintron
-# Modelfinder has to be rerun for these trees without the partition file.
+# # Problem with gene 6487 and 6406 - ERROR: Please specify alignment positions for partitionintron
+# # Modelfinder has to be rerun for these trees without the partition file.
 
 
 # ##########################################----- Code to concatenate Best-fit models --------#################################
 # # Do this step manually.
 
 
-# Run the following from the folder with the iqtree output:
+# # Run the following from the folder with the iqtree output:
 # ls *.log > file_names.txt
 # while read f; do grep "Best-fit model" $f; done < file_names.txt >> models.txt
 # paste -d "\t" file_names.txt models.txt > All_models.txt
@@ -1325,11 +1300,18 @@ def iqtree_model_np(path_in, path_out, gene, done):
    #                                                      done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/done/"+gene[i]))
 
 
-# #Running IQTREE for files trimmed with trimal and CIAlign                                             
-# for i in range(0, len(gene)):
-#    gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/",
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/"))  
+
+gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
+
+
+#Running IQTREE for files trimmed with trimal and CIAlign                                             
+for i in range(0, len(gene)):
+   gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/done/"+gene[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
+
+
 
 
 # # Removing genes that were not included in the output of Taper (_output_taper.fast) - 6128, 5614.
@@ -1344,14 +1326,15 @@ def iqtree_model_np(path_in, path_out, gene, done):
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
 
 
-# Genes that did not have an intron sequence
-gene = ["6406", "6487"]
-#Running IQTREE MODELFINDER (no partition file) for files trimmed with trimal and CIAlign                                             
-for i in range(0, len(gene)):
-   gwf.target_from_template('Iqtree_'+gene[i], iqtree_model_np(gene = gene[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/done/"+gene[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
+# # Genes that did not have an intron sequence
+# gene = ["6406", "6487"]
+
+# #Running IQTREE MODELFINDER (no partition file) for files trimmed with trimal and CIAlign                                             
+# for i in range(0, len(gene)):
+#    gwf.target_from_template('Iqtree_'+gene[i], iqtree_model_np(gene = gene[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/14_IQtree/done/"+gene[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/"))  
 
 
 # ################### RAXML ########################
