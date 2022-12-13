@@ -800,14 +800,14 @@ def exon_map(path_in,path_out,done,gene):
 
     spec="""
 
-    #Activating conda base environment
+    #Activating conda HybPiper environment (to get numpy etc.)
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     conda activate HybPiper
 
-    #Going to folder with data
+    #Going to folder with data (Taper)
     cd {path_in}
 
-    # Running Wolfs Exon_mapper
+    # Running Exon_mapper
     python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
 
     touch {done}
