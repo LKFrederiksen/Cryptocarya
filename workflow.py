@@ -860,7 +860,7 @@ def iq_tree(path_in, gene,path_out, done):
     """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
     inputs = [path_in+gene+"_part.txt", path_in+gene+"_clean.fasta"]
     outputs = [path_out+gene+".txt.tre"]
-    options = {'cores': 10, 'memory': "20g", 'walltime': "2:00:00", 'account':"cryptocarya"}
+    options = {'cores': 10, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
     spec = """
 
@@ -873,8 +873,6 @@ def iq_tree(path_in, gene,path_out, done):
 
     #Actual IQtree tree search. 
     iqtree2 -s {gene}_clean.fasta -p {gene}_part.txt -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
-
-
 
     mv {gene}*.treefile {path_out}
     mv {gene}*.model.gz {path_out}
