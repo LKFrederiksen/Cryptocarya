@@ -788,32 +788,70 @@ gwf = Workflow()
 #     return (inputs, outputs, options, spec)
     
 
-########################################################################################################################
-#############################################---- Exon Mapper ----######################################################
-########################################################################################################################
+# ########################################################################################################################
+# #############################################---- Exon Mapper ----######################################################
+# ########################################################################################################################
 
-def exon_map(path_in,path_out,done,gene):
-    # """This creates new alignments in `07_mapping` that contain the original alignments plus the exon sequences of the two species that had the highest recovery success at each locus.."""
-    inputs = ["/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/done/"+gene]
-    outputs = [done,path_out+gene+"_output_taper_mapped.fasta"] 
-    options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# def exon_map(path_in,path_out,done,gene):
+#     # """This creates new alignments in `07_mapping` that contain the original alignments plus the exon sequences of the two species that had the highest recovery success at each locus.."""
+#     inputs = ["/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/done/"+gene]
+#     outputs = [done,path_out+gene+"_output_taper_mapped.fasta"] 
+#     options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
-    spec="""
+#     spec="""
 
-    #Activating conda HybPiper environment (to get numpy etc.)
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate HybPiper
+#     #Activating conda HybPiper environment (to get numpy etc.)
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate HybPiper
 
-    #Going to folder with data (Taper)
-    cd {path_in}
+#     #Going to folder with data (Taper)
+#     cd {path_in}
 
-    # Running Exon_mapper
-    python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
+#     # Running Exon_mapper
+#     python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
 
-    touch {done}
-    """.format(path_in=path_in, done=done, gene=gene, path_out=path_out)
+#     touch {done}
+#     """.format(path_in=path_in, done=done, gene=gene, path_out=path_out)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
+
+
+##########################################################################################################################
+# ########################---- Copying alignments and creating partitions ----############################################
+# ########################################################################################################################
+
+def partitioner(path_in, path_out, gene, done):
+    """Copying alignments from the manual alignment folder to the treebuilding folder and creating partition files"""
+    inputs = [path_in+gene+"_output_taper.fasta"]
+    outputs = [path_out+gene+"_part.txt",path_out+gene+"_clean.fasta", done]
+    options = {'cores': 1, 'memory': "5g", 'walltime': "00:20:00", 'account':"cryptocarya"}
+
+    spec = """
+
+        source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+        conda activate HybPiper
+
+
+        #Going to folder with data
+        cd {path_in}
+    
+        #The partitioner should produce 2 files for each gene
+        #one file called gene_aligned_part.txt which is the partitioning file
+        #another called gene_aligned_clean.fasta which are just the sequences without the exons
+
+        python3 /home/laurakf/cryptocarya/Scripts/partitioner.py --smoother 10 --gene {gene} --file_ending _output_taper.fasta
+        
+        #Moving files to the correct folders
+        mv {gene}_clean.fasta {path_out}
+        mv {gene}_part.txt {path_out} 
+
+        touch {done}
+
+
+    """.format(path_in = path_in, gene = gene, done = done, path_out = path_out)
+
+    return (inputs, outputs, options, spec)
+
 
 # # ########################################################################################################################
 # # ##############################################---- IQTREE ----##########################################################
@@ -1237,12 +1275,19 @@ for i in range(0, len(gene)):
 #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/",
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/done/"+gene[i]))
 
-    #### Running Exon_mapper
-    gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/done/"+gene[i]))
-                                                    
+    # #### Running Exon_mapper
+    # gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
+    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/",
+    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/done/"+gene[i]))
+
+   ### Creating the partition files for each gene
+    gwf.target_from_template('Partition_'+gene[i], partitioner(gene = gene[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/",
+                                                        path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/18_partitions/done/"+gene[i]))
+
+
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(gene)):
 #    gwf.target_from_template('Iqtree_'+gene[i], iqtree(gene = gene[i],
