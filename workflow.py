@@ -1221,7 +1221,7 @@ def sorta_date(path_in, path_out, astral_tree, done):
 
 
 # Running SortaDate on the Astral tree using the gene trees
-gwf.target_from_template('Sorta_date_partition_', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/rooted_geneTrees/",
+gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/rooted_geneTrees/",
                                                         path_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/",
                                                         astral_tree="/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/16_Astral/PAFTOL_trees_BP10_SpeciesTree.tre",
                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/done/sorted"))
