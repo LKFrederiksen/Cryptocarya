@@ -936,7 +936,7 @@ def iq_tree(path_in, gene,path_out, done):
 ########################################################################################################################
 #####################################---- Rooting gene trees----########################################################
 ########################################################################################################################
-def rename_reroot(path_in, gene):
+def root_genetrees(path_in, gene):
     """Using rerooter.py to root each individual gene tree based on the available outgroup"""
     inputs = [path_in+gene+"_part.txt.treefile"] # changed _part.txt.tre to .txt.tre
     outputs = [path_in+gene+"_rooted.tre"]
