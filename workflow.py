@@ -1208,7 +1208,7 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 for i in range(0, len(gene)):
     #Running Root gene trees
     gwf.target_from_template('Root_'+gene[i], root_genetrees(gene = gene[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/rooted_geneTrees"))
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/rooted_geneTrees/"))
 
 
 # # Running SortaDate on the Astral tree using the gene trees
