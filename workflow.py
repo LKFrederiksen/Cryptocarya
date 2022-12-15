@@ -1312,7 +1312,7 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 for i in range(0, len(gene)):
    gwf.target_from_template('Iqtree_'+gene[i], iq_tree_exon(gene = gene[i],
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_IQtree_geneTrees/done/"+gene[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/"))  
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/done/"+gene[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
 
