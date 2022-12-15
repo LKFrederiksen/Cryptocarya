@@ -978,7 +978,7 @@ def sorta_date(path_in, path_out, astral_tree, done):
     conda activate Phyx # SortaDate scripts are dependent on python and 3 phyx programs. 
 
     #Get the root-to-tip variance with
-    python {SortaDate}get_var_length.py {path_in} --flend _rooted.tre --outf {path_out}var --outg Myri-fragr-PAFTOL, Magn-grand-PAFTOL
+    python {SortaDate}get_var_length.py {path_in} --flend _rooted.tre --outf {path_out}var --outg Magn-grand-PAFTOL,Myri-fragr-PAFTOL
 
     #Get the bipartition support with
     python {SortaDate}get_bp_genetrees.py {path_in} {astral_tree} --flend _rooted.tre --outf {path_out}bp
