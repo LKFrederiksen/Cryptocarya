@@ -1374,7 +1374,7 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 
 
 
-gwf.target_from_template('astral_, astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
+gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
                                             done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/astral/astral",
                                             path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/"))  
 
