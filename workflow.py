@@ -939,9 +939,34 @@ gwf = Workflow()
 ########################################################################################################################
 #####################################---- Rooting gene trees----########################################################
 ########################################################################################################################
-def root_genetrees(path_in, gene):
+# def root_genetrees(path_in, gene):
+#     """Using rerooter.py to root each individual gene tree based on the available outgroup"""
+#     inputs = [path_in+gene+"_part.txt.treefile"] # changed _part.txt.tre to .txt.tre
+#     outputs = [path_in+gene+"_rooted.tre"]
+#     options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+
+#     spec = """
+
+#     # Activating Conda environment
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Phyx
+
+
+#     cd {path_in}
+
+#     echo Rerooting each genetree based on the outgroup  
+#     python3 /home/laurakf/cryptocarya/Scripts/rooter.py --gene {gene} --treefile {gene}_part.txt.treefile 
+
+#     mv {gene}_rooted.tre {path_out}
+
+
+#     """.format(path_in = path_in, gene = gene)
+
+#     return (inputs, outputs, options, spec)
+
+def root_genetrees(path_in, gene, path_out):
     """Using rerooter.py to root each individual gene tree based on the available outgroup"""
-    inputs = [path_in+gene+"_part.txt.treefile"] # changed _part.txt.tre to .txt.tre
+    inputs = [path_in+gene+"_output_taper.fasta.treefile"] # changed _part.txt.tre to .txt.tre
     outputs = [path_in+gene+"_rooted.tre"]
     options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
@@ -951,16 +976,15 @@ def root_genetrees(path_in, gene):
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     conda activate Phyx
 
-
     cd {path_in}
 
     echo Rerooting each genetree based on the outgroup  
-    python3 /home/laurakf/cryptocarya/Scripts/rooter.py --gene {gene} --treefile {gene}_part.txt.treefile 
+    python3 /home/laurakf/cryptocarya/Scripts/rooter.py --gene {gene} --treefile {gene}_output_taper.fasta.treefile 
 
     mv {gene}_rooted.tre {path_out}
 
 
-    """.format(path_in = path_in, gene = gene)
+    """.format(path_in = path_in, gene = gene, path_out = path_out)
 
     return (inputs, outputs, options, spec)
 
