@@ -1069,6 +1069,7 @@ def move(path_exons, gene_select, path_out, done):
 
     cd {path_exons}
     cp {gene_select}_output_taper.fasta.treefile {path_out}
+    mv {gene_select}_output_taper.fasta.treefile {gene_select}_part.txt.treefile
    
     touch {done}
 
