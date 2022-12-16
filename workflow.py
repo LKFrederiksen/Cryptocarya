@@ -1348,7 +1348,7 @@ def move(path_exons, gene_select, path_out, done):
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/done/"+gene[i],
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
-# gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
+gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
 
 for i in range(0, len(gene_select)):
    gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
