@@ -1075,7 +1075,7 @@ def move(path_exons, path_partition, gene_select, path_out, done):
    
     touch {done}
 
-    """.format(gene = gene, path_out = path_out, path_partition = path_partition, path_exons = path_exons, done = done)
+    """.format(gene_select = gene_select, path_out = path_out, path_partition = path_partition, path_exons = path_exons, done = done)
 
     return (inputs, outputs, options, spec)
 
