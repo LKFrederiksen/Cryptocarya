@@ -1113,12 +1113,8 @@ def astral2(path_in, path_out, done):
 
     pxrr -t PAFTOL_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre
 
-    # sed 's/\;\n/\;\r\n/' PAFTOL_trees_BP10_SpeciesTree_rooted.tre > PAFTOL_trees_BP10_SpeciesTree_rooted2.tre
-
-    # sed 's/\;\n/\;\r\n/' PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted2.tre
-     
     mv *.tre {path_out}
-    
+
     touch {done}
 
     """.format(path_out = path_out, path_in = path_in, done = done)
