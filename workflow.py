@@ -1067,6 +1067,8 @@ def gene1(path_exons, path_partition, gene, path_out):
     cd {path_partition}
     cp {gene}_part.txt.treefile {path_out}
 
+    touch {done}
+
     """.format(gene = gene, path_out = path_out, path_partition = path_partition, done = done)
 
     return (inputs, outputs, options, spec)
