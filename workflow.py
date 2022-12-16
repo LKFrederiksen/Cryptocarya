@@ -1072,25 +1072,25 @@ def gene(path_exons, path_partition, gene, path_out):
     return (inputs, outputs, options, spec)
 
 
-def gene_select(path_exons, gene_select, path_out, done, in_done):
-    """ move """
-    inputs = [in_done]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
+# def gene_select(path_exons, gene_select, path_out, done, in_done):
+#     """ move """
+#     inputs = [in_done]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
-    cd {path_out}
-    rm {gene_select}_part.txt.treefile
+#     cd {path_out}
+#     rm {gene_select}_part.txt.treefile
 
-    cd {path_exons}
-    cp {gene_select}_output_taper.fasta.treefile {path_out}
+#     cd {path_exons}
+#     cp {gene_select}_output_taper.fasta.treefile {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_exons = path_exons, path_out = path_out, gene_select = gene_select, done = done, in_done = in_done)
+#     """.format(path_exons = path_exons, path_out = path_out, gene_select = gene_select, done = done, in_done = in_done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -1368,13 +1368,13 @@ for i in range(0, len(gene)):
                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene/"+gene[i], 
                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
-gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
+# gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
 
-for i in range(0, len(gene_select)):
-   gwf.target_from_template('gene_select_'+gene_select[i], gene_select(gene_select = gene_select[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
-                                                    in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene/"+gene[i],
-                                                    path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
+# for i in range(0, len(gene_select)):
+#    gwf.target_from_template('gene_select_'+gene_select[i], gene_select(gene_select = gene_select[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
+#                                                     in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene/"+gene[i],
+#                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
 
