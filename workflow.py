@@ -1371,7 +1371,7 @@ for i in range(0, len(gene)):
 gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
 
 for i in range(0, len(gene_select)):
-   gwf.target_from_template('gene_select_'+gene[i], gene_select(gene_select = gene_select[i],
+   gwf.target_from_template('gene_select_'+gene_select[i], gene_select(gene_select = gene_select[i],
                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
                                                     in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene/"+gene[i],
