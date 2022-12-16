@@ -1085,7 +1085,7 @@ gwf = Workflow()
 # #####################################---- Astral Tree Search ----#######################################################
 # ########################################################################################################################
 
-def astral2(gene, path_in, path_out, done):
+def astral2(path_in, path_out, done):
     """ ASTRAL """
     inputs = [path_out]
     outputs = [done]
@@ -1099,7 +1099,9 @@ def astral2(gene, path_in, path_out, done):
 
     cd {path_in}
 
-    cat {gene}_part.txt.treefile >> PAFTOL_trees.tre
+    while read name
+    do cat "$name"_part.txt.treefile >> PAFTOL_trees.tre && echo "" >> PAFTOL_trees.tre
+    done
 
     /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed PAFTOL_trees.tre 'i & b<=10' o > PAFTOL_trees_BP10.tre
 
@@ -1119,6 +1121,9 @@ def astral2(gene, path_in, path_out, done):
 
     touch {done}
 
+    """.format(path_out = path_out, path_in = path_in, done = done)
+
+    return (inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -1368,10 +1373,9 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 #                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
 
-for i in range(0, len(gene)):
-   gwf.target_from_template('astral_'+gene[i], astral2(gene = gene[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/astral/"+gene[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/"))  
+
+gwf.target_from_template('astral_, astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
+                                            done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/astral/astral",
+                                            path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/"))  
 
 
