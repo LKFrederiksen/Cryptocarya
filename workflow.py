@@ -1005,43 +1005,43 @@ gwf = Workflow()
 
 # Need to run gene trees for exons in IQtree format to make the format of supercontig partitioner and exon gene trees match.
 
-# #################################################################################################################################
-# #############################################---- IQ-tree (exon)----#############################################################
-# #################################################################################################################################
+#################################################################################################################################
+#############################################---- IQ-tree (exon)----#############################################################
+#################################################################################################################################
 
-# def iq_tree_exon(path_in, gene,path_out, done):
-#     """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
-#     inputs = [path_in+gene+"_output_taper.fasta"]
-#     outputs = [path_out+gene+"_output_taper.fasta.treefile"]
-#     options = {'cores': 8, 'memory': "4g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+def iq_tree_exon(path_in, gene,path_out, done):
+    """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
+    inputs = [path_in+gene+"_output_taper.fasta"]
+    outputs = [path_out+gene+"_output_taper.fasta.treefile"]
+    options = {'cores': 8, 'memory': "4g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
 
-#     # Activate IQtree    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate IQtree
+    # Activate IQtree    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate IQtree
 
-#     cd {path_in}
+    cd {path_in}
 
-#     #Actual IQtree tree search. 
-#     iqtree2 -s {gene}_output_taper.fasta -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
+    #Actual IQtree tree search. 
+    iqtree2 -s {gene}_output_taper.fasta -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
 
-#     mv {gene}*.treefile {path_out}
-#     mv {gene}*.model.gz {path_out}
-#     mv {gene}*.contree {path_out}
-#     mv {gene}*.bionj {path_out}
-#     mv {gene}*.ckp.gz {path_out}
-#     mv {gene}*.iqtree {path_out}
-#     mv {gene}*.log {path_out}
-#     mv {gene}*.mldist {path_out}
-#     mv {gene}*.splits.nex {path_out}
+    mv {gene}*.treefile {path_out}
+    mv {gene}*.model.gz {path_out}
+    mv {gene}*.contree {path_out}
+    mv {gene}*.bionj {path_out}
+    mv {gene}*.ckp.gz {path_out}
+    mv {gene}*.iqtree {path_out}
+    mv {gene}*.log {path_out}
+    mv {gene}*.mldist {path_out}
+    mv {gene}*.splits.nex {path_out}
         
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
+    """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 
 # Prior to running the below code a folder with the required genes - a combination of supercontig partitioner and exon genes should be made.
@@ -1059,27 +1059,27 @@ gwf = Workflow()
 # First manually copy partion files to path_out 
 # cp *treefile /home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10
 
-def move(path_exons, gene_select, path_out, done):
-    """ move """
-    inputs = [path_out]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
+# def move(path_exons, gene_select, path_out, done):
+#     """ move """
+#     inputs = [path_out]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
-    cd {path_out}
-    rm {gene_select}_part.txt.treefile
+#     cd {path_out}
+#     rm {gene_select}_part.txt.treefile
 
-    cd {path_exons}
-    cp {gene_select}_output_taper.fasta.treefile {path_out}
-    cd {path_out}
-    mv {gene_select}_output_taper.fasta.treefile {gene_select}_part.txt.treefile
+#     cd {path_exons}
+#     cp {gene_select}_output_taper.fasta.treefile {path_out}
+#     cd {path_out}
+#     mv {gene_select}_output_taper.fasta.treefile {gene_select}_part.txt.treefile
    
-    touch {done}
+#     touch {done}
 
-    """.format(gene_select = gene_select, path_out = path_out, path_exons = path_exons, done = done)
+#     """.format(gene_select = gene_select, path_out = path_out, path_exons = path_exons, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 # ########################################################################################################################
 # #####################################---- Astral Tree Search ----#######################################################
@@ -1338,22 +1338,22 @@ def move(path_exons, gene_select, path_out, done):
 #                                                         astral_tree="/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/16_Astral/PAFTOL_trees_BP10_SpeciesTree_rooted2.tre",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/19_sortadate/done/sorted"))
 
-# # Exon genes from Taper output
-# gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
+# Exon genes from Taper output
+gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
 
-# #Running IQTREE for exon files trimmed with trimal and CIAlign (to get same format as supercontig partitioner)                                            
-# for i in range(0, len(gene)):
-#    gwf.target_from_template('Iqtree_'+gene[i], iq_tree_exon(gene = gene[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/done/"+gene[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
+#Running IQTREE for exon files trimmed with trimal and CIAlign (to get same format as supercontig partitioner)                                            
+for i in range(0, len(gene)):
+   gwf.target_from_template('Iqtree_'+gene[i], iq_tree_exon(gene = gene[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/done/"+gene[i],
+                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
-gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
+# gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
 
-for i in range(0, len(gene_select)):
-   gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
-                                                    path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
+# for i in range(0, len(gene_select)):
+#    gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
+#                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
 
