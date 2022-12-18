@@ -1371,8 +1371,8 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 gene_select = ["5968", "6550", "6284", "6383", "5531", "6148", "6226", "5299", "6274", "6538", "5744", "5489", "6176", "6797", "6029", "5469", "5188", "5398", "6601", "6227", "5949", "5578", "5980", "5990", "7194", "6398", "6050", "5841", "5840", "6532", "6198", "6258", "6303", "5821", "6552", "6265", "5960", "6238", "6320", "6875", "5919", "6717", "5090", "6792", "4796", "7628", "6979", "6746", "6407", "5944", "6854", "5460", "4806", "6366", "6405", "6507", "6048", "5822", "6946", "5866", "6859", "5123", "6026", "5974", "6962", "5304", "6164", "5772", "6056", "6785", "5853", "6114", "6128", "7128", "6034", "4471", "6130", "6660", "6958", "4744", "7135", "6506", "6620", "6221", "6713", "6393", "5354", "5660", "7273", "6526"]
 for i in range(0, len(gene_select)):
    gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/30_Astral-mix/20/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/30_Astral-mix/20/done/gene_select/"+gene_select[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/30/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/30/done/gene_select/"+gene_select[i],
                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
 
