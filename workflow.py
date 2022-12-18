@@ -343,7 +343,7 @@ gwf = Workflow()
 # # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
 # def stats(path_in, done, path_out, in_done, name):
-#    """Gather statistics about the HybPiper run(s).""" 
+#    """Gather statistics about the HybPiper run(s).""", 
 #    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
 #    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
 #    options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
@@ -544,11 +544,11 @@ gwf = Workflow()
 
 # # Make sure to adjust path in script 'gap_trimming.sh'
 # # Seems like it is necessary to rename the *.fasta to *.fasta.old yourself. Otherwise perhaps my path was wrong?
-# # find . -depth -name "*.fasta" -exec sh -c 'f="{}"; mv -- "$f" "${f%.fasta}.fasta.old"' \;
+# # find . -depth -name "*.fasta", -exec sh -c 'f="{}"; mv -- "$f", "${f%.fasta}.fasta.old"' \;
 # # This way it did take the *.old files and move them to each directory 0.1 etc. and trim them. 
 
 # def gt_trimming(path_in, path_out, done, gene):
-#     """ Use trimal for trimming all alignments for each of the GT values specified"""
+#     """, Use trimal for trimming all alignments for each of the GT values specified"""
 #     inputs = [path_in+gene+"_aligned.fasta"]
 #     outputs = [done]
 #     options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
@@ -908,11 +908,11 @@ gwf = Workflow()
 #     cd {path_in} 
   
     # while read name
-    # do cat RAxML_bipartitions.*_tree >> beilschmiedia_trees.tre && echo "" >> beilschmiedia_trees.tre
+    # do cat RAxML_bipartitions.*_tree >> beilschmiedia_trees.tre && echo "", >> beilschmiedia_trees.tre
 #     done < /home/laurakf/cryptocarya/Workflow/Lauraceae/15_Raxml/Astral_names.txt
 
 #     while read name
-#     do cat RAxML_bestTree.*_tree >> beilschmiedia_bestTree_trees.tre && echo "" >> beilschmiedia_bestTree_trees.tre
+#     do cat RAxML_bestTree.*_tree >> beilschmiedia_bestTree_trees.tre && echo "", >> beilschmiedia_bestTree_trees.tre
 #     done < /home/laurakf/cryptocarya/Workflow/Lauraceae/15_Raxml/Astral_names.txt
 
 #     /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed beilschmiedia_trees.tre 'i & b<=10' o > beilschmiedia_trees_BP10.tre
@@ -1048,78 +1048,82 @@ gwf = Workflow()
 # First try with a folder excluding the 10% worst supercontig partitioner genes and replace them with the exon genes. 
 # Repeat until the correct topology has been obtained.
 
-# ########################################################################################################################
-# ##############################################---- Folder ----##########################################################
-# ########################################################################################################################
+########################################################################################################################
+##############################################---- Folder ----##########################################################
+########################################################################################################################
 
-# # Folder: -10% supercontig partitioner genes
-# # Supercontig partitioner genes: 6139 6500 4951 5614 6036 7029 7111 5116 6064 4992 5162 6098 6488 5427 5335 6913 5131 5620 6318 5770 6363 5594 5168 5554 5328 6016 6563 6460 6384 7313 5858 6782 6420 5032 5318 6883 5333 7572 6494 5639 5339 4954 5899 6909 4802 5716 6373 5404 6462 6570 5271 5699 6528 5849 6639 6992 5463 5426 5893 5428 6914 4527 6961 6544 5449 5034 6051 7136 5702 7577 5454 6533 6457 5163 5894 6924 4932 5348 6447 7371 5421 5280 5870 6496 5791 5945 5634 7363 6072 5038 5343 5913 5596 7324 6458 5857 5816 5942 5981 6295 6641 4942 5815 5406 6689 5326 4757 6779 4793 6954 7024 6652 6848 6933 6003 6978 7279 5926 5502 6068 6404 5477 6738 6631 5138 6649 5977 6432 6450 6459 6216 6968 7067 7021 6376 5177 7141 7336 6865 7174 6732 4691 4724 5910 6947 5562 4848 6175 6282 6038 6412 6483 6667 5464 5264 5664 6860 6882 5865 5104 5670 5220 6733 6636 5703 5551 5950 6389 6559 5200 7241 5644 6572 5018 5721 7331 6454 5366 6685 6439 6825 5257 5528 7367 5296 5206 4890 6000 6298 6492 5918 5843 5273 5802 7325 7333 6299 6378 5536 5513 4889 6527 5933 6004 5968 6550 6284 6383 5531 6148 6226 5299 6274 6538 5744 5489 6176 6797 6029 5469 5188 5398 6601 6227 5949 5578 5980 5990 7194 6398 6050 5841 5840 6532 6198 6258 6303 5821 6552 6265 5960 6238 6320 6875 5919 6717 5090 6792 4796 7628 6979 6746 6407 5944 6854 5460 4806 6366 6405 6507 6048 5822 6946 
-# # Exons: 5866 6859 5123 6026 5974 6962 5304 6164 5772 6056 6785 5853 6114 6128 7128 6034 4471 6130 6660 6958 4744 7135 6506 6620 6221 6713 6393 5354 5660 7273 6526
+# Folder: -10% supercontig partitioner genes
+# Supercontig partitioner genes: 6139 6500 4951 5614 6036 7029 7111 5116 6064 4992 5162 6098 6488 5427 5335 6913 5131 5620 6318 5770 6363 5594 5168 5554 5328 6016 6563 6460 6384 7313 5858 6782 6420 5032 5318 6883 5333 7572 6494 5639 5339 4954 5899 6909 4802 5716 6373 5404 6462 6570 5271 5699 6528 5849 6639 6992 5463 5426 5893 5428 6914 4527 6961 6544 5449 5034 6051 7136 5702 7577 5454 6533 6457 5163 5894 6924 4932 5348 6447 7371 5421 5280 5870 6496 5791 5945 5634 7363 6072 5038 5343 5913 5596 7324 6458 5857 5816 5942 5981 6295 6641 4942 5815 5406 6689 5326 4757 6779 4793 6954 7024 6652 6848 6933 6003 6978 7279 5926 5502 6068 6404 5477 6738 6631 5138 6649 5977 6432 6450 6459 6216 6968 7067 7021 6376 5177 7141 7336 6865 7174 6732 4691 4724 5910 6947 5562 4848 6175 6282 6038 6412 6483 6667 5464 5264 5664 6860 6882 5865 5104 5670 5220 6733 6636 5703 5551 5950 6389 6559 5200 7241 5644 6572 5018 5721 7331 6454 5366 6685 6439 6825 5257 5528 7367 5296 5206 4890 6000 6298 6492 5918 5843 5273 5802 7325 7333 6299 6378 5536 5513 4889 6527 5933 6004 5968 6550 6284 6383 5531 6148 6226 5299 6274 6538 5744 5489 6176 6797 6029 5469 5188 5398 6601 6227 5949 5578 5980 5990 7194 6398 6050 5841 5840 6532 6198 6258 6303 5821 6552 6265 5960 6238 6320 6875 5919 6717 5090 6792 4796 7628 6979 6746 6407 5944 6854 5460 4806 6366 6405 6507 6048 5822 6946 
+# Exons: 5866 6859 5123 6026 5974 6962 5304 6164 5772 6056 6785 5853 6114 6128 7128 6034 4471 6130 6660 6958 4744 7135 6506 6620 6221 6713 6393 5354 5660 7273 6526
 
-# # First manually copy partion files to path_out 
-# # cp *treefile /home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10
+# Folder: -20% supercontig partitioner genes
+# Supercontig partitioner genes: 6139 6500 4951 5614 6036 7029 7111 5116 6064 4992 5162 6098 6488 5427 5335 6913 5131 5620 6318 5770 6363 5594 5168 5554 5328 6016 6563 6460 6384 7313 5858 6782 6420 5032 5318 6883 5333 7572 6494 5639 5339 4954 5899 6909 4802 5716 6373 5404 6462 6570 5271 5699 6528 5849 6639 6992 5463 5426 5893 5428 6914 4527 6961 6544 5449 5034 6051 7136 5702 7577 5454 6533 6457 5163 5894 6924 4932 5348 6447 7371 5421 5280 5870 6496 5791 5945 5634 7363 6072 5038 5343 5913 5596 7324 6458 5857 5816 5942 5981 6295 6641 4942 5815 5406 6689 5326 4757 6779 4793 6954 7024 6652 6848 6933 6003 6978 7279 5926 5502 6068 6404 5477 6738 6631 5138 6649 5977 6432 6450 6459 6216 6968 7067 7021 6376 5177 7141 7336 6865 7174 6732 4691 4724 5910 6947 5562 4848 6175 6282 6038 6412 6483 6667 5464 5264 5664 6860 6882 5865 5104 5670 5220 6733 6636 5703 5551 5950 6389 6559 5200 7241 5644 6572 5018 5721 7331 6454 5366 6685 6439 6825 5257 5528 7367 5296 5206 4890 6000 6298 6492 5918 5843 5273 5802 7325 7333 6299 6378 5536 5513 4889 6527 5933 6004 5968 6550 6284 6383 5531 6148 6226 5299 6274 6538 5744 5489 6176 6797 6029 5469 5188 5398 6601 6227 5949 5578 5980 5990 7194 6398 6050 5841 5840 6532 6198 6258 6303 5821 6552 6265 5960 6238 6320 6875 5919 6717 5090 6792 4796 7628 6979 6746 6407 5944 6854 5460 4806 6366 6405 6507 6048 5822 6946 
+# Exons: 6198 6258 6303 5821 6552 6265 5960 6238 6320 6875 5919 6717 5090 6792 4796 7628 6979 6746 6407 5944 6854 5460 4806 6366 6405 6507 6048 5822 6946 5866 6859 5123 6026 5974 6962 5304 6164 5772 6056 6785 5853 6114 6128 7128 6034 4471 6130 6660 6958 4744 7135 6506 6620 6221 6713 6393 5354 5660 7273 6526
 
-# def move(path_exons, gene_select, path_out, done):
-#     """ move """
-#     inputs = [path_out]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
+# First manually copy partion files to path_out 
+# cp *treefile /home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10
 
-#     spec = """
+def move(path_exons, gene_select, path_out, done):
+    """, move """
+    inputs = [path_out]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "1g", 'walltime': "00:10:00", 'account':"cryptocarya"}
 
-#     cd {path_out}
-#     rm {gene_select}_part.txt.treefile
+    spec = """
 
-#     cd {path_exons}
-#     cp {path_exons}{gene_select}_output_taper.fasta.treefile {path_out}
-#     cd {path_out}
-#     mv {path_out}{gene_select}_output_taper.fasta.treefile {path_out}{gene_select}_part.txt.treefile
+    cd {path_out}
+    rm {gene_select}_part.txt.treefile
+
+    cd {path_exons}
+    cp {path_exons}{gene_select}_output_taper.fasta.treefile {path_out}
+    cd {path_out}
+    mv {path_out}{gene_select}_output_taper.fasta.treefile {path_out}{gene_select}_part.txt.treefile
    
-#     touch {done}
+    touch {done}
 
-#     """.format(gene_select = gene_select, path_out = path_out, path_exons = path_exons, done = done)
+    """.format(gene_select = gene_select, path_out = path_out, path_exons = path_exons, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
 
 # ########################################################################################################################
 # #####################################---- Astral Tree Search ----#######################################################
 # ########################################################################################################################
 
-def astral2(path_in, path_out, done):
-    """ ASTRAL """
-    inputs = [path_out]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def astral2(path_in, path_out, done):
+#     """, ASTRAL """
+#     inputs = [path_out]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "10g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
-    # Activate phyx
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Phyx
+#     # Activate phyx
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Phyx
 
-    cd {path_in}
+#     cd {path_in}
 
-    while read name
-    do cat "$name"_part.txt.treefile >> PAFTOL_trees.tre && echo "" >> PAFTOL_trees.tre
-    done
+#     while read name
+#     do cat "$name"_part.txt.treefile >> PAFTOL_trees.tre && echo "", >> PAFTOL_trees.tre
+#     done
 
-    /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed PAFTOL_trees.tre 'i & b<=10' o > PAFTOL_trees_BP10.tre
+#     /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed PAFTOL_trees.tre 'i & b<=10' o > PAFTOL_trees_BP10.tre
 
-    java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 2 -o PAFTOL_trees_BP10_SpeciesTree_annotQ.tre
+#     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 2 -o PAFTOL_trees_BP10_SpeciesTree_annotQ.tre
 
-    java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 0 -o PAFTOL_trees_BP10_SpeciesTree.tre
+#     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 0 -o PAFTOL_trees_BP10_SpeciesTree.tre
 
-    pxrr -t PAFTOL_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_rooted.tre
+#     pxrr -t PAFTOL_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_rooted.tre
 
-    pxrr -t PAFTOL_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre
+#     pxrr -t PAFTOL_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre
 
-    mv *.tre {path_out}
+#     mv *.tre {path_out}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_out = path_out, path_in = path_in, done = done)
+#     """.format(path_out = path_out, path_in = path_in, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -1206,7 +1210,7 @@ def astral2(path_in, path_out, done):
 # #### Paralogs
 # gwf.target_from_template('Paralogs', paralogs(name = sp[i],
 #                                                       path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/" ,
+#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/", ,
 #                                                       done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Paralogs/done",
 #                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
 
@@ -1292,7 +1296,7 @@ def astral2(path_in, path_out, done):
 #                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/move/move", 
 #                                                 path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
 
-# Removing genes that were not included in "optimal_final_results" - 
+# Removing genes that were not included in "optimal_final_results", - 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
 # Running CIAlign on the trimmed_fasta - excluded some genes earlier with paralog warnings.
 # for i in range(0, len(gene)):
@@ -1360,18 +1364,17 @@ gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", 
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/done/"+gene[i],
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/13_Taper/"))  
 
-# gene_select = ["5866","6859","5123","6026","5974","6962","5304","6164","5772","6056","6785","5853","6114","6128","7128","6034","4471","6130","6660","6958","4744","7135","6506","6620","6221","6713","6393","5354","5660","7273","6526"]
-
-# for i in range(0, len(gene_select)):
-#    gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/gene_select/"+gene_select[i],
-#                                                     path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
-
+gene_select = ["6198", "6258", "6303", "5821", "6552", "6265", "5960", "6238", "6320", "6875", "5919", "6717", "5090", "6792", "4796", "7628", "6979", "6746", "6407", "5944", "6854", "5460", "4806", "6366", "6405", "6507", "6048", "5822", "6946", "5866", "6859", "5123", "6026", "5974", "6962", "5304", "6164", "5772", "6056", "6785", "5853", "6114", "6128", "7128", "6034", "4471", "6130", "6660", "6958", "4744", "7135", "6506", "6620", "6221", "6713", "6393", "5354", "5660", "7273", "6526"]
+for i in range(0, len(gene_select)):
+   gwf.target_from_template('gene_select_'+gene_select[i], move(gene_select = gene_select[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/20/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/20/done/gene_select/"+gene_select[i],
+                                                    path_exons = "/home/laurakf/cryptocarya/Workflow/PAFTOL-exons/17_IQtree_geneTrees/gene_trees/"))  
 
 
-gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
-                                            done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/astral/astral",
-                                            path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/"))  
+
+# gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/astral/",
+#                                             done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/done/astral/astral",
+#                                             path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/20_Astral-mix/10/"))  
 
 
