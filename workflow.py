@@ -408,7 +408,7 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
 
     touch {done}
 
-    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk, path_out = path_out)
 
     return (path_ins, outputs, options, spec)
 
