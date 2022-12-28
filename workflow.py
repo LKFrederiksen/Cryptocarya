@@ -398,6 +398,10 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
 
     python3 /home/laurakf/cryptocarya/Scripts/coverage_comb.py {name} {dir_in} {dir_out} {dir_wrk}
     
+    # Added this step to concatenate files after combining them in the coverage script. 
+    # Remove this step when running the remaining part of the coverage script.
+    cat {gene}'.fasta_supercontig' {gene}'.fasta_exon' > {gene}'.fasta'
+
     echo touching {done}
 
     touch {done}
@@ -791,6 +795,7 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
 #         touch {done}
 
 
+ # Partitioning skal køres på alle gener med exon og supercontig.
 #     """.format(path_in = path_in, gene = gene, done = done, path_out = path_out)
 
 #     return (inputs, outputs, options, spec)
