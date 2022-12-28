@@ -400,7 +400,7 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
     
     # Added this step to concatenate files after combining them in the coverage script. 
     # Remove this step when running the remaining part of the coverage script.
-    cat {name}'.fasta_supercontig' {name}'.fasta_exon' > {name}'.fasta'
+    cat {name}.fasta_supercontig {name}.fasta_exon > {name}.fasta
 
     echo touching {done}
 
