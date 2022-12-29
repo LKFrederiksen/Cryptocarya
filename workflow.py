@@ -386,7 +386,7 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
      path_out+name+fasta_sa,
       path_out+name+trimmed_fasta,
        path_out+name+up_bam,done] #ALL the output files
-    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "4g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
     spec = """
     
@@ -406,7 +406,7 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
 
     # rm *.fasta_supercontig
     # rm *.fasta_exon
-    
+
     echo touching {done}
 
     touch {done}
