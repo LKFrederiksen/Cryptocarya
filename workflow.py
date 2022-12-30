@@ -1291,16 +1291,16 @@ cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0
 
 #### Generating AMAS statistics for gt_alignments
 for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
                                                 cut_off = cut_off[i],
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
-                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/"+gene[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                          done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/done/optrimal/optrimal", 
-#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/11_Optrimal/"))
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
+#                                                          done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/done/optrimal/optrimal", 
+#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/"))
 
 
 # #### Move files from trimal to optrimal folder
