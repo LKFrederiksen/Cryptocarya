@@ -710,63 +710,63 @@ gwf = Workflow()
     
 # # Here we lost several genes. 5943 etc. (removed before running CIAlign) (see list further down)
 
-########################################################################################################################
-###############################################---- TAPER ----##########################################################
-########################################################################################################################
+# ########################################################################################################################
+# ###############################################---- TAPER ----##########################################################
+# ########################################################################################################################
 
-def taper(path_in, gene, path_out, done):
-    """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
-    inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
-    outputs = [done]
-    options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def taper(path_in, gene, path_out, done):
+#     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
+#     inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
-    
-    # Activate Taper    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Taper
-        
-    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
-    
-    mv {gene}_output_taper.fasta {path_out}
-
-    echo touching {done}
-
-    touch {done}
-        
-    """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
-
-    return (inputs, outputs, options, spec)
-    
-
-# ########################################################################################################################
-# #############################################---- Exon Mapper ----######################################################
-# ########################################################################################################################
-
-# def exon_map(path_in,path_out,done,gene):
-#     # """This creates new alignments in `07_mapping` that contain the original alignments plus the exon sequences of the two species that had the highest recovery success at each locus.."""
-#     inputs = ["/home/laurakf/cryptocarya/Workflow/PAFTOL/13_Taper/done/"+gene]
-#     outputs = [done,path_out+gene+"_output_taper_mapped.fasta"] 
-#     options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
-
-#     spec="""
-
-#     #Activating conda HybPiper environment (to get numpy etc.)
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate HybPiper
-
-#     #Going to folder with data (Taper)
 #     cd {path_in}
+    
+#     # Activate Taper    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Taper
+        
+#     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
+    
+#     mv {gene}_output_taper.fasta {path_out}
 
-#     # Running Exon_mapper
-#     python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
+#     echo touching {done}
 
 #     touch {done}
-#     """.format(path_in=path_in, done=done, gene=gene, path_out=path_out)
+        
+#     """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
 
-#     return(inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
+    
+
+########################################################################################################################
+#############################################---- Exon Mapper ----######################################################
+########################################################################################################################
+
+def exon_map(path_in,path_out,done,gene):
+    # """This creates new alignments in `07_mapping` that contain the original alignments plus the exon sequences of the two species that had the highest recovery success at each locus.."""
+    inputs = ["/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/done/"+gene]
+    outputs = [done,path_out+gene+"_output_taper_mapped.fasta"] 
+    options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+    spec="""
+
+    #Activating conda HybPiper environment (to get numpy etc.)
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate HybPiper
+
+    #Going to folder with data (Taper)
+    cd {path_in}
+
+    # Running Exon_mapper
+    python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
+
+    touch {done}
+    """.format(path_in=path_in, done=done, gene=gene, path_out=path_out)
+
+    return(inputs, outputs, options, spec)
 
 
 # ##########################################################################################################################
@@ -1319,17 +1319,17 @@ for i in range(0, len(gene)):
     #                                           path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/",
     #                                           done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/done/"+gene[i]))
 
-## Running TAPER after CIALIGN
-    gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/",
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/done/"+gene[i]))
+# ## Running TAPER after CIALIGN
+#     gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/done/"+gene[i]))
 
-    # #### Running Exon_mapper
-    # gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
-    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/13_Taper/",
-    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-partitions/17_mapping/done/"+gene[i]))
+    #### Running Exon_mapper
+    gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_mapping/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_mapping/done/"+gene[i]))
 
    # ### Creating the partition files for each gene
    #  gwf.target_from_template('Partition_'+gene[i], partitioner(gene = gene[i],
