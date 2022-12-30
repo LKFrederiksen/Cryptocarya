@@ -532,50 +532,18 @@ gwf = Workflow()
 #     return(inputs, outputs, options, spec)
     
     
-#######################################################################################################################
-################################################---- AMAS ----#########################################################
-#######################################################################################################################
-#Make file summary_0.txt
+# #######################################################################################################################
+# ################################################---- AMAS ----#########################################################
+# #######################################################################################################################
+# #Make file summary_0.txt
 
-####### Calculating amas summary (raw)
+# ####### Calculating amas summary (raw)
 
-#For raw alignments
-def amas_raw(path_in, done, in_done):
-    """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [in_done]
-    outputs = [path_in+"summary_0.txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
-
-    spec="""
-
-    #Activating AMAS
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Amas
-    
-    cd {path_in}
-
-    #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
-
-    mv summary.txt summary_0.txt 
-
-    echo touching {done}
-
-    touch {done}
-    
-    """.format(path_in = path_in, done = done, in_done = in_done)
-
-    return(inputs, outputs, options, spec)
-
-
-# ######## Calculating amas summary (gt)
-# # Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
-
-# #For cutoff (gt) alignments
-# def amas_gt(path_in, cut_off, done, in_done):
+# #For raw alignments
+# def amas_raw(path_in, done, in_done):
 #     """Creating summary files for all the trimmed alignments for each raw alignment"""
-#     inputs = [path_in+cut_off, in_done]
-#     outputs = [path_in+"summary_"+cut_off+".txt", done]
+#     inputs = [in_done]
+#     outputs = [path_in+"summary_0.txt", done]
 #     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
 #     spec="""
@@ -584,24 +552,56 @@ def amas_raw(path_in, done, in_done):
 #     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 #     conda activate Amas
     
-#     cd {path_in}{cut_off} 
+#     cd {path_in}
 
 #     #Calculating amas summary
 #     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
-   
-#     mv summary.txt ../summary_{cut_off}.txt 
+
+#     mv summary.txt summary_0.txt 
+
+#     echo touching {done}
 
 #     touch {done}
-
-#     echo {done}
-
-#     echo {cut_off}
-
-#     echo {path_in}
     
-#     """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
+#     """.format(path_in = path_in, done = done, in_done = in_done)
 
 #     return(inputs, outputs, options, spec)
+
+
+######## Calculating amas summary (gt)
+# Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
+
+#For cutoff (gt) alignments
+def amas_gt(path_in, cut_off, done, in_done):
+    """Creating summary files for all the trimmed alignments for each raw alignment"""
+    inputs = [path_in+cut_off, in_done]
+    outputs = [path_in+"summary_"+cut_off+".txt", done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+
+    spec="""
+
+    #Activating AMAS
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Amas
+    
+    cd {path_in}{cut_off} 
+
+    #Calculating amas summary
+    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+   
+    mv summary.txt ../summary_{cut_off}.txt 
+
+    touch {done}
+
+    echo {done}
+
+    echo {cut_off}
+
+    echo {path_in}
+    
+    """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
+
+    return(inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -1282,19 +1282,19 @@ def amas_raw(path_in, done, in_done):
 #                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/"+gene[i]))
 
-### Generating AMAS statistics for raw_alignments
-gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal",
-                                        in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/",
-                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/AMAS_raw/raw"))
+# ### Generating AMAS statistics for raw_alignments
+# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal",
+#                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/",
+#                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/AMAS_raw/raw"))
 
-# cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
+cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
-# #### Generating AMAS statistics for gt_alignments
-# for i in range(len(cut_off)):
-#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
-#                                                 cut_off = cut_off[i],
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+#### Generating AMAS statistics for gt_alignments
+for i in range(len(cut_off)):
+    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/",
+                                                cut_off = cut_off[i],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/"+gene[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
