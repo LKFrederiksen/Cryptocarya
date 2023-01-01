@@ -1136,7 +1136,7 @@ def astral2(path_in, path_out, done):
 
     cd {path_in}
 
-    do cat *treefile >> PAFTOL_trees.tre && echo
+    cat *treefile >> PAFTOL_trees.tre && echo
 
     /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed Beilschmiedia-Outgroup_trees.tre 'i & b<=10' o > Beilschmiedia-Outgroup_trees_BP10.tre
 
