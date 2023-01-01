@@ -1155,10 +1155,8 @@ def astral2(path_in, path_out, done):
 
     touch {done}
 
-    ## Do this manually with unix.
-    # sed 's/\;\n/\;\r\n/' PAFTOL_trees_BP10_SpeciesTree_rooted.tre > PAFTOL_trees_BP10_SpeciesTree_rooted2.tre
+    ## Do last step manually with unix.
 
-    # sed 's/\;\n/\;\r\n/' PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted2.tre
   
     """.format(path_out = path_out, path_in = path_in, done = done)
 
