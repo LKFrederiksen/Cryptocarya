@@ -807,48 +807,48 @@ gwf = Workflow()
 #     return (inputs, outputs, options, spec)
 
 
-###########################################################################################################################
-#############################################---- IQ-tree ----#############################################################
-###########################################################################################################################
+# ###########################################################################################################################
+# #############################################---- IQ-tree ----#############################################################
+# ###########################################################################################################################
 
-def iq_tree(path_in, gene,path_out, done):
-    """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
-    inputs = [path_in+gene+"_part.txt", path_in+gene+"_clean.fasta"]
-    outputs = [path_out+gene+".txt.tre"]
-    options = {'cores': 10, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# def iq_tree(path_in, gene,path_out, done):
+#     """Using Iq-tree to produce trees for each gene with a partition file to use individual substitution rates for each gene"""
+#     inputs = [path_in+gene+"_part.txt", path_in+gene+"_clean.fasta"]
+#     outputs = [path_out+gene+".txt.tre"]
+#     options = {'cores': 10, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
 
-    # Activate IQtree    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate IQtree
+#     # Activate IQtree    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate IQtree
 
-    cd {path_in}
+#     cd {path_in}
 
-    #Actual IQtree tree search. 
-    iqtree2 -s {gene}_clean.fasta -p {gene}_part.txt -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
+#     #Actual IQtree tree search. 
+#     iqtree2 -s {gene}_clean.fasta -p {gene}_part.txt -T AUTO -ntmax 20 -m MFP -B 1000 -redo 
 
-    mv {gene}*.treefile {path_out}
-    mv {gene}*.model.gz {path_out}
-    mv {gene}*.contree {path_out}
-    mv {gene}*.bionj {path_out}
-    mv {gene}*.ckp.gz {path_out}
-    mv {gene}*.iqtree {path_out}
-    mv {gene}*.log {path_out}
-    mv {gene}*.mldist {path_out}
-    mv {gene}*.splits.nex {path_out}
+#     mv {gene}*.treefile {path_out}
+#     mv {gene}*.model.gz {path_out}
+#     mv {gene}*.contree {path_out}
+#     mv {gene}*.bionj {path_out}
+#     mv {gene}*.ckp.gz {path_out}
+#     mv {gene}*.iqtree {path_out}
+#     mv {gene}*.log {path_out}
+#     mv {gene}*.mldist {path_out}
+#     mv {gene}*.splits.nex {path_out}
         
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
+#     """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
-# ########################################################################################################################
-# #####################################---- Astral Tree Search ----#######################################################
-# ########################################################################################################################
+########################################################################################################################
+#####################################---- Astral Tree Search ----#######################################################
+########################################################################################################################
 
 
 # def astral(path_in, done):
@@ -861,8 +861,8 @@ def iq_tree(path_in, gene,path_out, done):
                      
 #     cd {path_in} 
   
-    # while read name
-    # do cat RAxML_bipartitions.*_tree >> beilschmiedia_trees.tre && echo "", >> beilschmiedia_trees.tre
+#     while read name
+#     do cat RAxML_bipartitions.*_tree >> beilschmiedia_trees.tre && echo "", >> beilschmiedia_trees.tre
 #     done < /home/laurakf/cryptocarya/Workflow/Lauraceae/15_Raxml/Astral_names.txt
 
 #     while read name
@@ -1090,47 +1090,74 @@ def iq_tree(path_in, gene,path_out, done):
 # for f in *.treefile; do (sed -i -e 's/guia-/guian/g' $f); done
 # for f in *.treefile; do (sed -i -e 's/Sy-d/Synd/g' $f); done
 # for f in *.treefile; do (sed -i -e 's/chi-e/chine/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/fu-gi/fungi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/appe-/appen/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/bre-e/brene/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/he-gh/hengh/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/li-ha/linha/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/li-oc/linoc/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ma--i/manni/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/tu-gf/tungf/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/uga-d/ugand/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/yu--a/yunna/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/co-ci/conci/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/de-si/densi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/hai-a/haina/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/hor-e/horne/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ma-di/mandi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/-ite-/niten/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/poly-/polyn/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/tra-s/trans/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/jo-es/jones/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/pube-n/puben/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/sa-ke/sanke/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/xa-th/xanth/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/co-fl/confl/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ho-gk/hongk/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/kwa-g/kwang/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Si-o/Sino/g' $f); done
 
-# ########################################################################################################################
-# #####################################---- Astral Tree Search ----#######################################################
-# ########################################################################################################################
 
-# def astral2(path_in, path_out, done):
-#     """, ASTRAL """
-#     inputs = [path_out]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+########################################################################################################################
+#####################################---- Astral Tree Search ----#######################################################
+########################################################################################################################
 
-#     spec = """
+def astral2(path_in, path_out, done):
+    """, ASTRAL """
+    inputs = [path_out]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-#     # Activate phyx
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Phyx
+    spec = """
 
-#     cd {path_in}
+    # Activate phyx
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Phyx
 
-#     do cat *treefile >> PAFTOL_trees.tre && echo
+    cd {path_in}
 
-#     /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed PAFTOL_trees.tre 'i & b<=10' o > PAFTOL_trees_BP10.tre
+    do cat *treefile >> PAFTOL_trees.tre && echo
 
-#     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 2 -o PAFTOL_trees_BP10_SpeciesTree_annotQ.tre
+    /home/laurakf/cryptocarya/Programs/newick-utils-1.6/src/nw_ed Beilschmiedia-Outgroup_trees.tre 'i & b<=10' o > Beilschmiedia-Outgroup_trees_BP10.tre
 
-#     java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i PAFTOL_trees_BP10.tre -t 0 -o PAFTOL_trees_BP10_SpeciesTree.tre
+    java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i Beilschmiedia-Outgroup_trees_BP10.tre -t 2 -o Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_annotQ.tre
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Phyx
+    java -jar /home/laurakf/cryptocarya/Programs/Astral/astral.5.7.8.jar -i Beilschmiedia-Outgroup_trees_BP10.tre -t 0 -o Beilschmiedia-Outgroup_trees_BP10_SpeciesTree.tre
 
-#     pxrr -t PAFTOL_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_rooted.tre
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Phyx
 
-#     pxrr -t PAFTOL_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > PAFTOL_trees_BP10_SpeciesTree_annotQ_rooted.tre
+    pxrr -t Beilschmiedia-Outgroup_trees_BP10_SpeciesTree.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted.tre
 
-#     mv *.tre {path_out}
+    pxrr -t Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_annotQ.tre -g Myri-fragr-PAFTOL, Magn-grand-PAFTOL > Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_annotQ_rooted.tre
 
-#     touch {done}
+    mv *.tre {path_out}
 
-#     """.format(path_out = path_out, path_in = path_in, done = done)
+    touch {done}
 
-#     return (inputs, outputs, options, spec)
+    """.format(path_out = path_out, path_in = path_in, done = done)
+
+    return (inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -1342,21 +1369,30 @@ def iq_tree(path_in, gene,path_out, done):
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/done/"+gene[i]))
 
 
-gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
+# gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
 
 
-#Running IQTREE for files trimmed with trimal and CIAlign                                             
-for i in range(0, len(gene)):
-   gwf.target_from_template('Iqtree_'+gene[i], iq_tree(gene = gene[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/done/"+gene[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/"))  
+# #Running IQTREE for files trimmed with trimal and CIAlign                                             
+# for i in range(0, len(gene)):
+#    gwf.target_from_template('Iqtree_'+gene[i], iq_tree(gene = gene[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/done/"+gene[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/"))  
 
 
-# # Running ASTRAL 
+# # Running ASTRAL with Raxml files
 # gwf.target_from_template('astral_tapper', astral(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/15_Raxml/",
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/16_Astral/done/Astral"))
 
+# # Running ASTRAL with IQtree files
+gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/",
+                                            done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/done/astral",
+                                            path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree"))  
+
+
+
+
+#### Steps needed for sortadate and to see PAFTOL trees with a different amount of included supercontigs.
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
 # # Removed 3 genes not present in rooted folder (4893, 6487, 7628)
 
