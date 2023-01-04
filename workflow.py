@@ -1411,7 +1411,7 @@ for i in range(0, len(gene)):
     #Running Root gene trees
     gwf.target_from_template('Root_'+gene[i], root_genetrees(gene = gene[i],
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree"))
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/"))
 
 
 
