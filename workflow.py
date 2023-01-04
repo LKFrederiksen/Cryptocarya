@@ -1419,7 +1419,7 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # Running SortaDate on the Astral tree using the gene trees
 gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/",
                                                         path_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/output/",
-                                                        astral_tree="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/Beilschmiedia-Outgroup_trees/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_annotQ_rooted2.tre",
+                                                        astral_tree="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/Beilschmiedia-Outgroup_trees/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted2.tre",
                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/done/sorted"))
 
 # # Exon genes from Taper output
