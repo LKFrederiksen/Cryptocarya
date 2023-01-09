@@ -36,114 +36,114 @@ import glob
 
 gwf = Workflow()
 
-################################################################################################################################
-###############################################---- Move raw sequences (PAFTOL)----#############################################
-################################################################################################################################
+# ################################################################################################################################
+# ###############################################---- Move raw sequences (PAFTOL)----#############################################
+# ################################################################################################################################
 
-def move_raw_PAFTOL(PAFTOL_name, path_PAFTOL, path_out, done):
-    """Quality checking using fastqc as this should work on individual species"""
-    path_ins = [path_PAFTOL+PAFTOL_name+"_R1.fastq", path_PAFTOL+PAFTOL_name+"_R2.fastq"]
-    outputs = [path_out+PAFTOL_name, done]
-    options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
-
-    spec = """
-
-    cd {path_PAFTOL}
-
-    cp {PAFTOL_name}_R1.fastq {path_out} 
-    cp {PAFTOL_name}_R2.fastq {path_out} 
-
-    cd {path_out}
-    
-    echo touching {done}
-    
-    touch {done}
-
-    """.format(path_PAFTOL = path_PAFTOL, PAFTOL_name = PAFTOL_name, path_out = path_out, done = done)
-
-    return (path_ins, outputs, options, spec)
-
-
-####################################################################################################################################
-###############################################---- Move raw sequences (Lauraceae) ----#############################################
-####################################################################################################################################
-
-def move_raw_Lauraceae(Lauraceae_name, path_Lauraceae, path_out, done):
-    """Quality checking using fastqc as this should work on individual species"""
-    path_ins = [path_Lauraceae+Lauraceae_name+"_R1.fastq", path_Lauraceae+Lauraceae_name+"_R2.fastq"]
-    outputs = [path_out+Lauraceae_name, done]
-    options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
-
-    spec = """
-
-    cd {path_Lauraceae}
-
-    cp {Lauraceae_name}_R1.fastq {path_out} 
-    cp {Lauraceae_name}_R2.fastq {path_out} 
-
-    cd {path_out}
-    
-    echo touching {done}
-    
-    touch {done}
-
-    """.format(path_Lauraceae = path_Lauraceae, Lauraceae_name = Lauraceae_name, path_out = path_out, done = done)
-
-    return (path_ins, outputs, options, spec)
-
-# ########################################################################################################################
-# ###############################################---- Fastqc quality check raw ----#######################################
-# ########################################################################################################################
-# def fastqc_raw(name,path_in ,path_out, done,):
+# def move_raw_PAFTOL(PAFTOL_name, path_PAFTOL, path_out, done):
 #     """Quality checking using fastqc as this should work on individual species"""
-#     path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
-#     outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
-#     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
-
+#     path_ins = [path_PAFTOL+PAFTOL_name+"_R1.fastq", path_PAFTOL+PAFTOL_name+"_R2.fastq"]
+#     outputs = [path_out+PAFTOL_name, done]
+#     options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 #     spec = """
 
-#     echo {name}
+#     cd {path_PAFTOL}
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     cp {PAFTOL_name}_R1.fastq {path_out} 
+#     cp {PAFTOL_name}_R2.fastq {path_out} 
 
-#     conda activate fastqc
-
-#     fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
+#     cd {path_out}
     
 #     echo touching {done}
     
 #     touch {done}
 
-#     """.format(path_in = path_in, name = name, path_out = path_out, done = done)
+#     """.format(path_PAFTOL = path_PAFTOL, PAFTOL_name = PAFTOL_name, path_out = path_out, done = done)
 
 #     return (path_ins, outputs, options, spec)
 
-# #######################################################################################################################
-# #############################################---- Multiqc quality check raw ----#######################################
-# #######################################################################################################################
-# def multiqc_raw(path_in ,path_out, done,):
-#     """Quality checking using multiqc"""
-#     inputs = [path_in+"Alse-petio-PAFTOL_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL_R1_fastqc.html", path_in+"Caly-flori-PAFTOL_R1_fastqc.html", path_in+"Cass-filif-PAFTOL_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL_R1_fastqc.html", path_in+"Deha-haina-PAFTOL_R1_fastqc.html", path_in+"Endi-macro-PAFTOL_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL_R1_fastqc.html", path_in+"Idio-austr-PAFTOL_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL_R1_fastqc.html", path_in+"Mach-salic-PAFTOL_R1_fastqc.html", path_in+"Magn-grand-PAFTOL_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL_R1_fastqc.html", path_in+"Synd-chine-PAFTOL_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R1_fastqc.html", path_in+"Alse-petio-PAFTOL_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL_R2_fastqc.html", path_in+"Caly-flori-PAFTOL_R2_fastqc.html", path_in+"Cass-filif-PAFTOL_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL_R2_fastqc.html", path_in+"Deha-haina-PAFTOL_R2_fastqc.html", path_in+"Endi-macro-PAFTOL_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL_R2_fastqc.html", path_in+"Idio-austr-PAFTOL_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL_R2_fastqc.html", path_in+"Mach-salic-PAFTOL_R2_fastqc.html", path_in+"Magn-grand-PAFTOL_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL_R2_fastqc.html", path_in+"Synd-chine-PAFTOL_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R2_fastqc.html"]
-#     outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
-#     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
+# ####################################################################################################################################
+# ###############################################---- Move raw sequences (Lauraceae) ----#############################################
+# ####################################################################################################################################
+
+# def move_raw_Lauraceae(Lauraceae_name, path_Lauraceae, path_out, done):
+#     """Quality checking using fastqc as this should work on individual species"""
+#     path_ins = [path_Lauraceae+Lauraceae_name+"_R1.fastq", path_Lauraceae+Lauraceae_name+"_R2.fastq"]
+#     outputs = [path_out+Lauraceae_name, done]
+#     options = {'cores': 2, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
 #     spec = """
 
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     cd {path_Lauraceae}
 
-#     conda activate multiqc
+#     cp {Lauraceae_name}_R1.fastq {path_out} 
+#     cp {Lauraceae_name}_R2.fastq {path_out} 
 
-#     multiqc -o {path_out} {path_in}
+#     cd {path_out}
     
 #     echo touching {done}
-
+    
 #     touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done)
+#     """.format(path_Lauraceae = path_Lauraceae, Lauraceae_name = Lauraceae_name, path_out = path_out, done = done)
 
-#     return (inputs, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
+
+########################################################################################################################
+###############################################---- Fastqc quality check raw ----#######################################
+########################################################################################################################
+def fastqc_raw(name, path_in ,path_out, done,):
+    """Quality checking using fastqc as this should work on individual species"""
+    path_ins = [path_in+name+"_R1.fastq", path_in+name+"_R2.fastq"]
+    outputs = [path_out+name+"_R1_fastqc.html",path_out+name+"_R2_fastqc.html", done]
+    options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+
+    spec = """
+
+    echo {name}
+
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+    conda activate fastqc
+
+    fastqc -o {path_out} {path_in}{name}_R1.fastq {path_in}{name}_R2.fastq
+    
+    echo touching {done}
+    
+    touch {done}
+
+    """.format(path_in = path_in, name = name, path_out = path_out, done = done)
+
+    return (path_ins, outputs, options, spec)
+
+#######################################################################################################################
+#############################################---- Multiqc quality check raw ----#######################################
+#######################################################################################################################
+def multiqc_raw(path_in ,path_out, done,):
+    """Quality checking using multiqc"""
+    inputs = [path_in+"Alse-petio-PAFTOL_R1_fastqc.html", path_in+"Athe-mosch-PAFTOL_R1_fastqc.html", path_in+"Beil-pendu-PAFTOL_R1_fastqc.html", path_in+"Beil-tsang-PAFTOL_R1_fastqc.html", path_in+"Cary-tonki-PAFTOL_R1_fastqc.html", path_in+"Caly-flori-PAFTOL_R1_fastqc.html", path_in+"Cass-filif-PAFTOL_R1_fastqc.html", path_in+"Cinn-camph-PAFTOL_R1_fastqc.html", path_in+"Cryp-acuti-743AL1_R1_fastqc.html", path_in+"Cryp-alba-PAFTOL_R1_fastqc.html", path_in+"Deha-haina-PAFTOL_R1_fastqc.html", path_in+"Endi-macro-PAFTOL_R1_fastqc.html", path_in+"Gomo-keule-PAFTOL_R1_fastqc.html", path_in+"Hern-nymph-PAFTOL_R1_fastqc.html", path_in+"Idio-austr-PAFTOL_R1_fastqc.html", path_in+"Laur-nobil-PAFTOL_R1_fastqc.html", path_in+"Mach-salic-PAFTOL_R1_fastqc.html", path_in+"Magn-grand-PAFTOL_R1_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R1_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R1_fastqc.html", path_in+"Moni-rotun-PAFTOL_R1_fastqc.html", path_in+"Myri-fragr-PAFTOL_R1_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R1_fastqc.html", path_in+"Noth-umbel-PAFTOL_R1_fastqc.html", path_in+"Pers-borbo-PAFTOL_R1_fastqc.html", path_in+"Peum-boldu-PAFTOL_R1_fastqc.html", path_in+"Phoe-lance-PAFTOL_R1_fastqc.html", path_in+"Sipa-guian-PAFTOL_R1_fastqc.html", path_in+"Spar-botoc-PAFTOL_R1_fastqc.html", path_in+"Synd-chine-PAFTOL_R1_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R1_fastqc.html", path_in+"Aspi-fungi-686AL1_R1_fastqc.html", path_in+"Aspi-parvi-687AL1_R1_fastqc.html", path_in+"Beil-appen-688AL1_R1_fastqc.html", path_in+"Beil-berte-689AL1_R1_fastqc.html", path_in+"Beil-brach-690AL1_R1_fastqc.html", path_in+"Beil-brene-691AL1_R1_fastqc.html", path_in+"Beil-dicty-692AL1_R1_fastqc.html", path_in+"Beil-emarg-693AL1_R1_fastqc.html", path_in+"Beil-fasci-694AL1_R1_fastqc.html", path_in+"Beil-fulva-695AL1_R1_fastqc.html", path_in+"Beil-furfu-696AL1_R1_fastqc.html", path_in+"Beil-hengh-697AL1_R1_fastqc.html", path_in+"Beil-latif-699AL1_R1_fastqc.html", path_in+"Beil-latif-700AL1_R1_fastqc.html", path_in+"Beil-linha-701AL1_R1_fastqc.html", path_in+"Beil-linoc-702AL1_R1_fastqc.html", path_in+"Beil-macro-703AL1_R1_fastqc.html", path_in+"Beil-madag-704AL1_R1_fastqc.html", path_in+"Beil-manni-705AL1_R1_fastqc.html", path_in+"Beil-manni-706AL1_R1_fastqc.html", path_in+"Beil-manni-707AL1_R1_fastqc.html", path_in+"Beil-miers-708AL1_R1_fastqc.html", path_in+"Beil-morat-709AL1_R1_fastqc.html", path_in+"Beil-pauci-710AL1_R1_fastqc.html", path_in+"Beil-pedic-711AL1_R1_fastqc.html", path_in+"Beil-per-C-713AL1_R1_fastqc.html", path_in+"Beil-perco-712AL1_R1_fastqc.html", path_in+"Beil-purpu-714AL1_R1_fastqc.html", path_in+"Beil-robus-715AL1_R1_fastqc.html", path_in+"Beil-roxbu-716AL1_R1_fastqc.html", path_in+"Beil-roxbu-717AL1_R1_fastqc.html", path_in+"Beil-rufoh-718AL1_R1_fastqc.html", path_in+"Beil-rugos-719AL1_R1_fastqc.html", path_in+"Beil-sary-720AL1_R1_fastqc.html", path_in+"Beil-seric-721AL1_R1_fastqc.html", path_in+"Beil-tarai-722AL1_R1_fastqc.html", path_in+"Beil-tarai-723AL1_R1_fastqc.html", path_in+"Beil-tawa-724AL1_R1_fastqc.html", path_in+"Beil-tawa-742AL1_R1_fastqc.html", path_in+"Beil-tawar-725AL1_R1_fastqc.html", path_in+"Beil-tilar-726AL1_R1_fastqc.html", path_in+"Beil-tungf-727AL1_R1_fastqc.html", path_in+"Beil-ugand-728AL1_R1_fastqc.html", path_in+"Beil-velut-729AL1_R1_fastqc.html", path_in+"Beil-volck-730AL1_R1_fastqc.html", path_in+"Beil-yunna-731AL1_R1_fastqc.html", path_in+"Cryp-alba-800AL1_R1_fastqc.html", path_in+"Cryp-albi-745AL1_R1_fastqc.html", path_in+"Cryp-ampl-746AL1_R1_fastqc.html", path_in+"Cryp-asche-747AL1_R1_fastqc.html", path_in+"Cryp-botel-748AL1_R1_fastqc.html", path_in+"Cryp-calci-749AL1_R1_fastqc.html", path_in+"Cryp-chine-750AL1_R1_fastqc.html", path_in+"Cryp-citri-751AL1_R1_fastqc.html", path_in+"Cryp-conci-752AL1_R1_fastqc.html", path_in+"Cryp-densi-753AL1_R1_fastqc.html", path_in+"Cryp-ferre-754AL1_R1_fastqc.html", path_in+"Cryp-fusca-755AL1_R1_fastqc.html", path_in+"Cryp-haina-756AL1_R1_fastqc.html", path_in+"Cryp-horne-757AL1_R1_fastqc.html", path_in+"Cryp-krame-758AL1_R1_fastqc.html", path_in+"Cryp-lepto-759AL1_R1_fastqc.html", path_in+"Cryp-liebe-732AL1_R1_fastqc.html", path_in+"Cryp-litor-733AL1_R1_fastqc.html", path_in+"Cryp-litor-734AL1_R1_fastqc.html", path_in+"Cryp-mandi-735AL1_R1_fastqc.html", path_in+"Cryp-medic-736AL1_R1_fastqc.html", path_in+"Cryp-micra-738AL1_R1_fastqc.html", path_in+"Cryp-mosch-739AL1_R1_fastqc.html", path_in+"Cryp-niten-740AL1_R1_fastqc.html", path_in+"Cryp-oubat-741AL1_R1_fastqc.html", path_in+"Cryp-ovali-778AL1_R1_fastqc.html", path_in+"Cryp-pauci-779AL1_R1_fastqc.html", path_in+"Cryp-pervi-780AL1_R1_fastqc.html", path_in+"Cryp-pervi-781AL1_R1_fastqc.html", path_in+"Cryp-polyn-782AL1_R1_fastqc.html", path_in+"Cryp-polyn-783AL1_R1_fastqc.html", path_in+"Cryp-rhodo-784AL1_R1_fastqc.html", path_in+"Cryp-riede-785AL1_R1_fastqc.html", path_in+"Cryp-rigid-786AL1_R1_fastqc.html", path_in+"Cryp-rolle-787AL1_R1_fastqc.html", path_in+"Cryp-salig-788AL1_R1_fastqc.html", path_in+"Cryp-sello-789AL1_R1_fastqc.html", path_in+"Cryp-spath-790AL1_R1_fastqc.html", path_in+"Cryp-spath-791AL1_R1_fastqc.html", path_in+"Cryp-subtr-793AL1_R1_fastqc.html", path_in+"Cryp-thou-794AL1_R1_fastqc.html", path_in+"Cryp-trans-795AL1_R1_fastqc.html", path_in+"Cryp-vello-796AL1_R1_fastqc.html", path_in+"Cryp-woodi-797AL1_R1_fastqc.html", path_in+"Cryp-wylie-798AL1_R1_fastqc.html", path_in+"Cryp-yunna-799AL1_R1_fastqc.html", path_in+"Endi-impre-801AL1_R1_fastqc.html", path_in+"Endi-jones-802AL1_R1_fastqc.html", path_in+"Endi-latif-803AL1_R1_fastqc.html", path_in+"Endi-lecar-804AL1_R1_fastqc.html", path_in+"Endi-palme-805AL1_R1_fastqc.html", path_in+"Endi-phaeo-767AL1_R1_fastqc.html", path_in+"Endi-pilos-760AL1_R1_fastqc.html", path_in+"Endi-poueb-761AL1_R1_fastqc.html", path_in+"Endi-puben-762AL1_R1_fastqc.html", path_in+"Endi-sanke-763AL1_R1_fastqc.html", path_in+"Endi-scrob-764AL1_R1_fastqc.html", path_in+"Endi-sulav-765AL1_R1_fastqc.html", path_in+"Endi-xanth-766AL1_R1_fastqc.html", path_in+"Eusi-zwage-768AL1_R1_fastqc.html", path_in+"Pota-confl-769AL1_R1_fastqc.html", path_in+"Pota-micro-770AL1_R1_fastqc.html", path_in+"Pota-obtus-771AL1_R1_fastqc.html", path_in+"Pota-obtus-772AL1_R1_fastqc.html", path_in+"Poto-melag-773AL1_R1_fastqc.html", path_in+"Sino-hongk-774AL1_R1_fastqc.html", path_in+"Synd-kwang-775AL1_R1_fastqc.html", path_in+"Synd-marli-776AL1_R1_fastqc.html", path_in+"Synd-marli-777AL1", path_in+"Alse-petio-PAFTOL_R2_fastqc.html", path_in+"Athe-mosch-PAFTOL_R2_fastqc.html", path_in+"Beil-pendu-PAFTOL_R2_fastqc.html", path_in+"Beil-tsang-PAFTOL_R2_fastqc.html", path_in+"Cary-tonki-PAFTOL_R2_fastqc.html", path_in+"Caly-flori-PAFTOL_R2_fastqc.html", path_in+"Cass-filif-PAFTOL_R2_fastqc.html", path_in+"Cinn-camph-PAFTOL_R2_fastqc.html", path_in+"Cryp-alba-PAFTOL_R2_fastqc.html", path_in+"Deha-haina-PAFTOL_R2_fastqc.html", path_in+"Endi-macro-PAFTOL_R2_fastqc.html", path_in+"Gomo-keule-PAFTOL_R2_fastqc.html", path_in+"Hern-nymph-PAFTOL_R2_fastqc.html", path_in+"Idio-austr-PAFTOL_R2_fastqc.html", path_in+"Laur-nobil-PAFTOL_R2_fastqc.html", path_in+"Mach-salic-PAFTOL_R2_fastqc.html", path_in+"Magn-grand-PAFTOL_R2_fastqc.html", path_in+"Mezi-ita-uba-PAFTOL_R2_fastqc.html", path_in+"Moll-gilgi-PAFTOL_R2_fastqc.html", path_in+"Moni-rotun-PAFTOL_R2_fastqc.html", path_in+"Myri-fragr-PAFTOL_R2_fastqc.html", path_in+"Neoc-cauda-PAFTOL_R2_fastqc.html", path_in+"Noth-umbel-PAFTOL_R2_fastqc.html", path_in+"Pers-borbo-PAFTOL_R2_fastqc.html", path_in+"Peum-boldu-PAFTOL_R2_fastqc.html", path_in+"Phoe-lance-PAFTOL_R2_fastqc.html", path_in+"Sipa-guian-PAFTOL_R2_fastqc.html", path_in+"Spar-botoc-PAFTOL_R2_fastqc.html", path_in+"Synd-chine-PAFTOL_R2_fastqc.html", path_in+"Tamb-ficus-PAFTOL_R2_fastqc.html", path_in+"Aspi-fungi-686AL1_R2_fastqc.html", path_in+"Aspi-parvi-687AL1_R2_fastqc.html", path_in+"Beil-appen-688AL1_R2_fastqc.html", path_in+"Beil-berte-689AL1_R2_fastqc.html", path_in+"Beil-brach-690AL1_R2_fastqc.html", path_in+"Beil-brene-691AL1_R2_fastqc.html", path_in+"Beil-dicty-692AL1_R2_fastqc.html", path_in+"Beil-emarg-693AL1_R2_fastqc.html", path_in+"Beil-fasci-694AL1_R2_fastqc.html", path_in+"Beil-fulva-695AL1_R2_fastqc.html", path_in+"Beil-furfu-696AL1_R2_fastqc.html", path_in+"Beil-hengh-697AL1_R2_fastqc.html", path_in+"Beil-latif-699AL1_R2_fastqc.html", path_in+"Beil-latif-700AL1_R2_fastqc.html", path_in+"Beil-linha-701AL1_R2_fastqc.html", path_in+"Beil-linoc-702AL1_R2_fastqc.html", path_in+"Beil-macro-703AL1_R2_fastqc.html", path_in+"Beil-madag-704AL1_R2_fastqc.html", path_in+"Beil-manni-705AL1_R2_fastqc.html", path_in+"Beil-manni-706AL1_R2_fastqc.html", path_in+"Beil-manni-707AL1_R2_fastqc.html", path_in+"Beil-miers-708AL1_R2_fastqc.html", path_in+"Beil-morat-709AL1_R2_fastqc.html", path_in+"Beil-pauci-710AL1_R2_fastqc.html", path_in+"Beil-pedic-711AL1_R2_fastqc.html", path_in+"Beil-per-C-713AL1_R2_fastqc.html", path_in+"Beil-perco-712AL1_R2_fastqc.html", path_in+"Beil-purpu-714AL1_R2_fastqc.html", path_in+"Beil-robus-715AL1_R2_fastqc.html", path_in+"Beil-roxbu-716AL1_R2_fastqc.html", path_in+"Beil-roxbu-717AL1_R2_fastqc.html", path_in+"Beil-rufoh-718AL1_R2_fastqc.html", path_in+"Beil-rugos-719AL1_R2_fastqc.html", path_in+"Beil-sary-720AL1_R2_fastqc.html", path_in+"Beil-seric-721AL1_R2_fastqc.html", path_in+"Beil-tarai-722AL1_R2_fastqc.html", path_in+"Beil-tarai-723AL1_R2_fastqc.html", path_in+"Beil-tawa-724AL1_R2_fastqc.html", path_in+"Beil-tawa-742AL1_R2_fastqc.html", path_in+"Beil-tawar-725AL1_R2_fastqc.html", path_in+"Beil-tilar-726AL1_R2_fastqc.html", path_in+"Beil-tungf-727AL1_R2_fastqc.html", path_in+"Beil-ugand-728AL1_R2_fastqc.html", path_in+"Beil-velut-729AL1_R2_fastqc.html", path_in+"Beil-volck-730AL1_R2_fastqc.html", path_in+"Beil-yunna-731AL1_R2_fastqc.html", path_in+"Cryp-acuti-743AL1_R2_fastqc.html" path_in+"Cryp-alba-800AL1_R2_fastqc.html", path_in+"Cryp-albi-745AL1_R2_fastqc.html", path_in+"Cryp-ampl-746AL1_R2_fastqc.html", path_in+"Cryp-asche-747AL1_R2_fastqc.html", path_in+"Cryp-botel-748AL1_R2_fastqc.html", path_in+"Cryp-calci-749AL1_R2_fastqc.html", path_in+"Cryp-chine-750AL1_R2_fastqc.html", path_in+"Cryp-citri-751AL1_R2_fastqc.html", path_in+"Cryp-conci-752AL1_R2_fastqc.html", path_in+"Cryp-densi-753AL1_R2_fastqc.html", path_in+"Cryp-ferre-754AL1_R2_fastqc.html", path_in+"Cryp-fusca-755AL1_R2_fastqc.html", path_in+"Cryp-haina-756AL1_R2_fastqc.html", path_in+"Cryp-horne-757AL1_R2_fastqc.html", path_in+"Cryp-krame-758AL1_R2_fastqc.html", path_in+"Cryp-lepto-759AL1_R2_fastqc.html", path_in+"Cryp-liebe-732AL1_R2_fastqc.html", path_in+"Cryp-litor-733AL1_R2_fastqc.html", path_in+"Cryp-litor-734AL1_R2_fastqc.html", path_in+"Cryp-mandi-735AL1_R2_fastqc.html", path_in+"Cryp-medic-736AL1_R2_fastqc.html", path_in+"Cryp-micra-738AL1_R2_fastqc.html", path_in+"Cryp-mosch-739AL1_R2_fastqc.html", path_in+"Cryp-niten-740AL1_R2_fastqc.html", path_in+"Cryp-oubat-741AL1_R2_fastqc.html", path_in+"Cryp-ovali-778AL1_R2_fastqc.html", path_in+"Cryp-pauci-779AL1_R2_fastqc.html", path_in+"Cryp-pervi-780AL1_R2_fastqc.html", path_in+"Cryp-pervi-781AL1_R2_fastqc.html", path_in+"Cryp-polyn-782AL1_R2_fastqc.html", path_in+"Cryp-polyn-783AL1_R2_fastqc.html", path_in+"Cryp-rhodo-784AL1_R2_fastqc.html", path_in+"Cryp-riede-785AL1_R2_fastqc.html", path_in+"Cryp-rigid-786AL1_R2_fastqc.html", path_in+"Cryp-rolle-787AL1_R2_fastqc.html", path_in+"Cryp-salig-788AL1_R2_fastqc.html", path_in+"Cryp-sello-789AL1_R2_fastqc.html", path_in+"Cryp-spath-790AL1_R2_fastqc.html", path_in+"Cryp-spath-791AL1_R2_fastqc.html", path_in+"Cryp-subtr-793AL1_R2_fastqc.html", path_in+"Cryp-thou-794AL1_R2_fastqc.html", path_in+"Cryp-trans-795AL1_R2_fastqc.html", path_in+"Cryp-vello-796AL1_R2_fastqc.html", path_in+"Cryp-woodi-797AL1_R2_fastqc.html", path_in+"Cryp-wylie-798AL1_R2_fastqc.html", path_in+"Cryp-yunna-799AL1_R2_fastqc.html", path_in+"Endi-impre-801AL1_R2_fastqc.html", path_in+"Endi-jones-802AL1_R2_fastqc.html", path_in+"Endi-latif-803AL1_R2_fastqc.html", path_in+"Endi-lecar-804AL1_R2_fastqc.html", path_in+"Endi-palme-805AL1_R2_fastqc.html", path_in+"Endi-phaeo-767AL1_R2_fastqc.html", path_in+"Endi-pilos-760AL1_R2_fastqc.html", path_in+"Endi-poueb-761AL1_R2_fastqc.html", path_in+"Endi-puben-762AL1_R2_fastqc.html", path_in+"Endi-sanke-763AL1_R2_fastqc.html", path_in+"Endi-scrob-764AL1_R2_fastqc.html", path_in+"Endi-sulav-765AL1_R2_fastqc.html", path_in+"Endi-xanth-766AL1_R2_fastqc.html", path_in+"Eusi-zwage-768AL1_R2_fastqc.html", path_in+"Pota-confl-769AL1_R2_fastqc.html", path_in+"Pota-micro-770AL1_R2_fastqc.html", path_in+"Pota-obtus-771AL1_R2_fastqc.html", path_in+"Pota-obtus-772AL1_R2_fastqc.html", path_in+"Poto-melag-773AL1_R2_fastqc.html", path_in+"Sino-hongk-774AL1_R2_fastqc.html", path_in+"Synd-kwang-775AL1_R2_fastqc.html", path_in+"Synd-marli-776AL1_R2_fastqc.html", path_in+"Synd-marli-777AL1"]    
+    outputs = [path_out+"multiqc_report.html", path_out+"multiqc_data/", done]
+    options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+
+    spec = """
+
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+    conda activate multiqc
+
+    multiqc -o {path_out} {path_in}
+    
+    echo touching {done}
+
+    touch {done}
+
+    """.format(path_in = path_in, path_out = path_out, done = done)
+
+    return (inputs, outputs, options, spec)
 
 
 # #######################################################################################################################################
@@ -1239,41 +1239,41 @@ def move_raw_Lauraceae(Lauraceae_name, path_Lauraceae, path_out, done):
 # ########################################################################################################################
 
 # # Species (Not including following species as they have been misidentified or appear erroneous: Beil-pendu-PAFTOL)
-PAFTOL_sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# PAFTOL_sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
-for i in range(len(PAFTOL_sp)):
-      #### Move raw sequences (PAFTOL)
-        gwf.target_from_template('move_raw_PAFTOL_'+str(i), move_raw_PAFTOL(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
-                                                            PAFTOL_name = PAFTOL_sp[i],
-                                                            path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
-                                                            done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+PAFTOL_sp[i]))
+# for i in range(len(PAFTOL_sp)):
+#       #### Move raw sequences (PAFTOL)
+#         gwf.target_from_template('move_raw_PAFTOL_'+str(i), move_raw_PAFTOL(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
+#                                                             PAFTOL_name = PAFTOL_sp[i],
+#                                                             path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+#                                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+PAFTOL_sp[i]))
 
-# # Species (Not including following species as they have been misidentified or appear erroneous: Endi-latif) - "Cryp-acuti-743AL1" has been deleted (file corrupted)
-Lauraceae_sp = ["Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+# # # Species (Not including following species as they have been misidentified or appear erroneous: Endi-latif) - "Cryp-acuti-743AL1" has been deleted (file corrupted)
+# Lauraceae_sp = ["Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
-for i in range(len(Lauraceae_sp)):
-  #### Move raw sequences (Lauracea)
-    gwf.target_from_template('move_raw_Lauraceae_'+str(i), move_raw_Lauraceae(path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
-                                                        Lauraceae_name = Lauraceae_sp[i],
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+Lauraceae_sp[i]))
-
-
-# # All species - Lauraceae and PAFTOL ("Cryp-acuti-743AL1" out - moved from Lauraceae folder)
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+# for i in range(len(Lauraceae_sp)):
+#   #### Move raw sequences (Lauracea)
+#     gwf.target_from_template('move_raw_Lauraceae_'+str(i), move_raw_Lauraceae(path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
+#                                                         Lauraceae_name = Lauraceae_sp[i],
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+Lauraceae_sp[i]))
 
 
-# for i in range(len(sp)):
-#     #### Running fastqc on raw data
-#     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-#                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+sp[i]))
+# All species - Lauraceae and PAFTOL ("Cryp-acuti-743AL1" out - moved from Lauraceae folder)
+sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
-# #### Running multiqc on raw data
-# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/done/multiqc_raw"))
+
+for i in range(len(sp)):
+    #### Running fastqc on raw data
+    gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
+                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+sp[i]))
+
+#### Running multiqc on raw data
+gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/done/multiqc_raw"))
 
 
 # for i in range(len(sp)):
