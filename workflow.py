@@ -53,11 +53,11 @@ def move_raw(PAFTOL_name, Lauraceae_name, path_PAFTOL , path_Lauraceae, path_out
 
     cd {path_PAFTOL}
 
-    cp {name}* {path_out} 
+    cp {PAFTOL_name}* {path_out} 
 
     cd {path_Lauraceae}
 
-    cp {name}* {path_out} 
+    cp {Lauraceae_name}* {path_out} 
 
     cd {path_out}
 
