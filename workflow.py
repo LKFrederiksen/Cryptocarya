@@ -168,8 +168,6 @@ def trimmomatic(name, path_in, path_out, done):
     MINLEN:40\
     2>> stderr_trim_loop_output.txt
 
-    mv /home/laurakf/cryptocarya/GitHub/Cryptocarya/stderr_trim_loop_output.txt {path_out}
-
     echo combining {path_out}{name}_1P.fastq and {path_out}{name}_1U.fastq into {path_out}secapr_postrim/{name}_1PU.fastq 
     cat {path_out}{name}_1P.fastq {path_out}{name}_1U.fastq > {path_out}secapr_postrim/{name}_1PU.fastq 
 
