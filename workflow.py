@@ -36,6 +36,44 @@ import glob
 
 gwf = Workflow()
 
+########################################################################################################################
+###############################################---- Move raw sequences ----#############################################
+########################################################################################################################
+
+def move_raw(PAFTOL_name, Lauraceae_name, path_PAFTOL , path_Lauraceae, path_out, done):
+    """Quality checking using fastqc as this should work on individual species"""
+    path_ins = [path_PAFTOL+PAFTOL_name+"_R1.fastq", path_PAFTOL+name+"_R2.fastq", path_Lauraceae+name+"_R1.fastq", path_Lauraceae+name+"_R2.fastq"]
+    outputs = [path_out+PAFTOL_name, path_out+Lauraceae_name, done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+
+
+    spec = """
+
+    echo {name}
+
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+    cd {path_PAFTOL}
+
+    cp {name}* {path_out} 
+
+    cd {path_Lauraceae}
+
+    cp {name}* {path_out} 
+
+    cd {path_out}
+
+    gunzip *gz
+    
+    echo touching {done}
+    
+    touch {done}
+
+    """.format(path_PAFTOL = path_PAFTOL, path_Lauraceae = path_Lauraceae, PAFTOL_name = PAFTOL_name, Lauraceae_name = Lauraceae_name, path_out = path_out, done = done)
+
+    return (path_ins, outputs, options, spec)
+
+
 # ########################################################################################################################
 # ###############################################---- Fastqc quality check raw ----#######################################
 # ########################################################################################################################
@@ -251,7 +289,7 @@ gwf = Workflow()
     
 #    cd {path_in}
     
-#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'supercontig' {path_in}namelist.txt # Get stats
+#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
 
 #    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
@@ -749,7 +787,7 @@ gwf = Workflow()
 
 # def exon_map(path_in,path_out,done,gene):
 #     # """This creates new alignments in `07_mapping` that contain the original alignments plus the exon sequences of the two species that had the highest recovery success at each locus.."""
-#     inputs = ["/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/done/"+gene]
+#     inputs = ["/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/done/"+gene]
 #     outputs = [done,path_out+gene+"_output_taper_mapped.fasta"] 
 #     options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
@@ -930,40 +968,40 @@ gwf = Workflow()
 #     return (inputs, outputs, options, spec)
 
 
-#############################################################################################################################
-#####################################---- SortaDate ----#####################################################################
-#############################################################################################################################
+# #############################################################################################################################
+# #####################################---- SortaDate ----#####################################################################
+# #############################################################################################################################
 
-def sorta_date(path_in, path_out, astral_tree, done):
-    """Using SortaDate to produce a CSV file which can be used to evaluate the use of different genes in dating the trees"""
-    inputs = [astral_tree]
-    outputs = [path_out+"var",path_out+"bp",path_out+"comb", path_out+"gg", done]
-    options = {'cores': 3, 'memory': "10g", 'walltime': "00:10:00", 'account':"cryptocarya"}
+# def sorta_date(path_in, path_out, astral_tree, done):
+#     """Using SortaDate to produce a CSV file which can be used to evaluate the use of different genes in dating the trees"""
+#     inputs = [astral_tree]
+#     outputs = [path_out+"var",path_out+"bp",path_out+"comb", path_out+"gg", done]
+#     options = {'cores': 3, 'memory': "10g", 'walltime': "00:10:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
-    #Activating conda base environment 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Phyx # SortaDate scripts are dependent on python and 3 phyx programs. 
+#     #Activating conda base environment 
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Phyx # SortaDate scripts are dependent on python and 3 phyx programs. 
 
-    #Get the root-to-tip variance with
-    python {SortaDate}get_var_length.py {path_in} --flend _rooted.tre --outf {path_out}var --outg Magn-grand-PAFTOL,Myri-fragr-PAFTOL
+#     #Get the root-to-tip variance with
+#     python {SortaDate}get_var_length.py {path_in} --flend _rooted.tre --outf {path_out}var --outg Magn-grand-PAFTOL,Myri-fragr-PAFTOL
 
-    #Get the bipartition support with
-    python {SortaDate}get_bp_genetrees.py {path_in} {astral_tree} --flend _rooted.tre --outf {path_out}bp
+#     #Get the bipartition support with
+#     python {SortaDate}get_bp_genetrees.py {path_in} {astral_tree} --flend _rooted.tre --outf {path_out}bp
 
-    #Combine the results from these two runs with
-    python {SortaDate}combine_results.py {path_out}var {path_out}bp --outf {path_out}comb
+#     #Combine the results from these two runs with
+#     python {SortaDate}combine_results.py {path_out}var {path_out}bp --outf {path_out}comb
 
-    #Sort and get the list of the good genes with
-    python {SortaDate}get_good_genes.py {path_out}comb --max 1000 --order 3,1,2 --outf {path_out}gg
+#     #Sort and get the list of the good genes with
+#     python {SortaDate}get_good_genes.py {path_out}comb --max 1000 --order 3,1,2 --outf {path_out}gg
 
-    touch {done}
+#     touch {done}
 
 
-    """.format(path_in = path_in, path_out = path_out, SortaDate = "/home/laurakf/cryptocarya/Programs/SortaDate/src/", astral_tree = astral_tree, done = done)
+#     """.format(path_in = path_in, path_out = path_out, SortaDate = "/home/laurakf/cryptocarya/Programs/SortaDate/src/", astral_tree = astral_tree, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 
 # #######################--- Code to reconstruct outgroup with combination of supercontig partitioner and exon data ---#######################
@@ -1183,78 +1221,129 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # ######################################################---- RUN ----#####################################################
 # ########################################################################################################################
 
-# #Species 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# # Species (Not including following species as they have been misidentified or appear erroneous: Beil-pendu-PAFTOL,  )
+sp_PAFTOL = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Beil-berte-689AL1","Beil-brach-690AL1","Beil-brene-691AL1","Beil-dicty-692AL1","Beil-emarg-693AL1","Beil-fasci-694AL1","Beil-fulva-695AL1","Beil-furfu-696AL1","Beil-hengh-697AL1","Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+
+
+#### Move raw sequences
+gwf.target_from_template('move_raw', move_raw(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
+                                                    path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
+                                                    PAFTOL_name = sp_PAFTOL[i],
+                                                    Lauraceae_name = sp_Lauraceae[i],
+                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+                                                    done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"))
+
+
+
+
+# # All species - Lauraceae and PAFTOL
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
 
 # for i in range(len(sp)):
 #     #### Running fastqc on raw data
 #     gwf.target_from_template('fastqc_raw_'+str(i), fastqc_raw(name = sp[i],
-#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/done/"+sp[i]))
+#                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"+sp[i]))
 
 # #### Running multiqc on raw data
-# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/01_FastQC/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/02_MultiQC/done/multiqc_raw"))
+# gwf.target_from_template('multiqc_raw', multiqc_raw(path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/done/multiqc_raw"))
 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# # All species - Lauraceae and PAFTOL
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
 # for i in range(len(sp)):
 #     #### Running Trimmomatic (slidingwindow)
 #     gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
-#                                                         path_in= "/home/laurakf/cryptocarya/RawData/PAFTOL/", 
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/done/"+sp[i]))
+#                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/", 
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
     # #### Running fastqc on the trimmed data (slidingwindow)
     # gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/secapr_postrim/",
-    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/done/"+sp[i]))  
+    #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/",
+    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/done/"+sp[i]))  
 
 # #### Running multiqc on trimmed data (slidingwindow)
-# gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/PAFTOL/04_FastQC/slidingwindow/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
+# gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/05_MultiQC/slidingwindow/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/05_MultiQC/slidingwindow/done/multiqc_trimmed"))
 
 
-# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# sp_PAFTOL = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL"] 
+# sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Beil-berte-689AL1","Beil-brach-690AL1","Beil-brene-691AL1","Beil-dicty-692AL1","Beil-emarg-693AL1","Beil-fasci-694AL1","Beil-fulva-695AL1","Beil-furfu-696AL1","Beil-hengh-697AL1","Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 # # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
 # for i in range(len(sp)):
     
-#     #### Running Hybpiper
-#     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp[i],
+#     #### Running Hybpiper (Outgroup)
+#     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp_PAFTOL[i],
 #                                                         p1 = "_1P.fastq",
 #                                                         p2 = "_2P.fastq",
 #                                                         un = "_UN.fastq",
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp[i]))
 
-# #### Getting stats and heatmap
-# gwf.target_from_template('stats', stats(path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Stats_Heatmap/",
-#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i],
-#                                                 name = sp[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Stats/"+sp[i]))
+#     #### Running Hybpiper (Ingroup)
+#     gwf.target_from_template('Hybpiper_'+str(i), hybpiper(name = sp_Lauraceae[i],
+#                                                         p1 = "_1P.fastq",
+#                                                         p2 = "_2P.fastq",
+#                                                         un = "_UN.fastq",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp[i]))
+
+# #### Getting stats and heatmap (Outgroup)
+# gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
+#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp[i],
+#                                                 name = sp_PAFTOL[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/"+sp[i]))
+
+# #### Getting stats and heatmap (Ingroup)
+# gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
+#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp[i],
+#                                                 name = sp_Lauraceae[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/"+sp[i]))
 
                                                
-# #### Paralogs
-# gwf.target_from_template('Paralogs', paralogs(name = sp[i],
-#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Paralogs/", ,
-#                                                       done = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/Paralogs/done",
-#                                                       in_done="/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/done/HybPiper/"+sp[i]))
+# #### Paralogs (Outgroup)
+# gwf.target_from_template('Paralogs', paralogs(name = sp_PAFTOL[i],
+#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/", ,
+#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
+#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp[i]))
+
+# #### Paralogs (Ingroup)
+# gwf.target_from_template('Paralogs', paralogs(name = sp_Lauraceae[i],
+#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/", ,
+#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
+#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp[i]))
 
 
-# sp = ["Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"]
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-latif-803AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+
+
+# #### Move HybPiper sequences
+# gwf.target_from_template('move_HybPiper', move_HybPiper(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
+#                                                     path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
+#                                                     PAFTOL_name = sp_PAFTOL[i],
+#                                                     Lauraceae_name = sp_Lauraceae[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"))
+
 
 # for i in range(len(sp)):
 #     #### Coverage (Lauraceae - ingroup)
-#     gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp[i],
+#     gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp_Lauraceae[i],
 #                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/",
 #                                                         all_bam = "_all.bam",
 #                                                         all_sorted_bam ="_all_sorted.bam",
@@ -1269,18 +1358,18 @@ def sorta_date(path_in, path_out, astral_tree, done):
 #                                                         fasta_sa = ".fasta.sa",
 #                                                         trimmed_fasta = "_trimmed.fasta",
 #                                                         up_bam = "_up.bam",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/done/Coverage/"+sp[i],
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp[i],
 #                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/",
 #                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Lauraceae/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
-#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/")) # folder with coverage
+#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 # sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-pendu-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
 # for i in range(len(sp)):
 #     #### Coverage (Paftol - outgroup)
-#     gwf.target_from_template('CoverageOut_'+str(i), coverageOutgroup(name = sp[i],
+#     gwf.target_from_template('CoverageOut_'+str(i), coverageOutgroup(name = sp_PAFTOL[i],
 #                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
 #                                                         all_bam = "_all.bam",
 #                                                         all_sorted_bam ="_all_sorted.bam",
@@ -1295,15 +1384,15 @@ def sorta_date(path_in, path_out, astral_tree, done):
 #                                                         fasta_sa = ".fasta.sa",
 #                                                         trimmed_fasta = "_trimmed.fasta",
 #                                                         up_bam = "_up.bam",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/done/Coverage/"+sp[i],
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp[i],
 #                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/",
 #                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/", #Folder with clean reads + unpaired
-#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/")) # folder with coverage
+#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 # #### Retrieve sequences and sort into files with gene names
-# gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/07_Coverage/", 
-#                                               done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/08_Retrieve/done/retrieve"))
+# gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/", 
+#                                               done = "/home/laurakf/cryptocarya/Workflow/Final_tree/08_Retrieve/done/retrieve"))
 
 
 # ### Kan jeg vente med at fjerne de gener der måske er paraloge indtil dette step, hvor jeg vælger hvilke gener der skal inkluderes? ### JA
@@ -1316,66 +1405,66 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # #### MAFFT
 # for i in range(len(genes)):
 #     gwf.target_from_template('Mafft_'+genes[i], mafft(genes = genes[i],
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/09_Mafft/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/08_Retrieve/",
+#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/09_Mafft/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/08_Retrieve/",
 #                                                         gene = gene[i],
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/09_Mafft/done/"+genes[i]))
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/09_Mafft/done/"+genes[i]))
 
 
 # #### Trimal according to a pre-defined gt values
 # for i in range(len(gene)):
 #    gwf.target_from_template('gt_trimming_'+gene[i], gt_trimming(gene = gene[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/09_Mafft/",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/"+gene[i]))
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/09_Mafft/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/"+gene[i]))
 
 # ### Generating AMAS statistics for raw_alignments
-# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal",
-#                                         in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/",
-#                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/AMAS_raw/raw"))
+# gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal",
+#                                         in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/",
+#                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw"))
 
 # cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
 # #### Generating AMAS statistics for gt_alignments
 # for i in range(len(cut_off)):
-#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
 #                                                 cut_off = cut_off[i],
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/"+gene[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/"+gene[i],
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
-# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
-#                                                          done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/done/optrimal/optrimal", 
-#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/"))
+# gwf.target_from_template('optrim', optrim(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                          done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/optrimal/optrimal", 
+#                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/"))
 
 
 # #### Move files from trimal to optrimal folder
-# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/10_Trimal/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/done/optrimal/optrimal",
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/done/move/move", 
-#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/"))
+# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/optrimal/optrimal",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/move/move", 
+#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/"))
 
 # # Removing genes that were not included in "optimal_final_results", - 7572, 5943, 5163, 5427, 5599
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
 # # Running CIAlign on the trimmed_fasta - excluded some genes earlier with paralog warnings.
 # for i in range(0, len(gene)):
     # gwf.target_from_template('Cialign'+gene[i], cialign1(gene = gene[i],
-    #                                           path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/11_Optrimal/optimal_final_results/",
-    #                                           path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/",
-    #                                           done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/done/"+gene[i]))
+    #                                           path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/optimal_final_results/",
+    #                                           path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/12_CIAlign/",
+    #                                           done = "/home/laurakf/cryptocarya/Workflow/Final_tree/12_CIAlign/done/"+gene[i]))
 
 # ## Running TAPER after CIALIGN
 #     gwf.target_from_template('Taper_'+gene[i], taper(gene = gene[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/12_CIAlign/",
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/done/"+gene[i]))
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/12_CIAlign/",
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/done/"+gene[i]))
 
     # #### Running Exon_mapper
     # gwf.target_from_template('Exon_map_'+gene[i], exon_map(gene = gene[i],
-    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/13_Taper/",
-    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/14_mapping/",
-    #                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/14_mapping/done/"+gene[i]))
+    #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/",
+    #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/14_mapping/",
+    #                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/14_mapping/done/"+gene[i]))
 
 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
@@ -1383,9 +1472,9 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # for i in range(0, len(gene)):
 #    ### Creating the partition files for each gene
 #     gwf.target_from_template('Partition_'+gene[i], partitioner(gene = gene[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/14_mapping/",
-#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/done/"+gene[i]))
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/14_mapping/",
+#                                                         path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/15_partitions/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/15_partitions/done/"+gene[i]))
 
 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
@@ -1394,15 +1483,15 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # #Running IQTREE for files trimmed with trimal and CIAlign                                             
 # for i in range(0, len(gene)):
 #    gwf.target_from_template('Iqtree_'+gene[i], iq_tree(gene = gene[i],
-#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/",
-#                                                     done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/done/"+gene[i],
-#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/15_partitions/"))  
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/16_IQtree/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/16_IQtree/done/"+gene[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/15_partitions/"))  
 
 
 # # Running ASTRAL with IQtree files
-# gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/",
-#                                             done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/done/astral",
-#                                             path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree"))  
+# gwf.target_from_template('astral_', astral2(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/17_Astral/",
+#                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/17_Astral/done/astral",
+#                                             path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/16_IQtree"))  
 
 
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4989", "4992", "5018", "5032", "5034", "5038", "5064", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5260", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5347", "5348", "5354", "5355", "5357", "5366", "5398", "5404", "5406", "5421", "5426", "5428", "5430", "5434", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5642", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5733", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5859", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5922", "5926", "5933", "5936", "5940", "5941", "5942", "5944", "5945", "5949", "5950", "5958", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6110", "6114", "6119", "6128", "6130", "6139", "6148", "6150", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6270", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6379", "6383", "6384", "6387", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6430", "6432", "6439", "6447", "6448", "6449", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6498", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6557", "6559", "6563", "6565", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6679", "6685", "6689", "6705", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6780", "6782", "6785", "6791", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6864", "6865", "6875", "6882", "6883", "6886", "6893", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6955", "6958", "6961", "6962", "6968", "6969", "6977", "6978", "6979", "6992", "6995", "7013", "7021", "7024", "7028", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7296", "7313", "7324", "7325", "7331", "7333", "7336", "7361", "7363", "7367", "7371", "7577", "7583", "7602", "7628"]
@@ -1410,17 +1499,17 @@ def sorta_date(path_in, path_out, astral_tree, done):
 # for i in range(0, len(gene)):
 #     #Running Root gene trees
 #     gwf.target_from_template('Root_'+gene[i], root_genetrees(gene = gene[i],
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/",
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/16_IQtree/"))
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/16_IQtree/"))
 
 
 
 
-# Running SortaDate on the Astral tree using the gene trees
-gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/",
-                                                        path_out ="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/output/",
-                                                        astral_tree="/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/17_Astral/Beilschmiedia-Outgroup_trees/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted2.tre",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/PAFTOL-comb/18_SortaDate/done/sorted"))
+# # Running SortaDate on the Astral tree using the gene trees
+# gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/",
+#                                                         path_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/output/",
+#                                                         astral_tree="/home/laurakf/cryptocarya/Workflow/Final_tree/17_Astral/Beilschmiedia-Outgroup_trees/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted2.tre",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/done/sorted"))
 
 # # Exon genes from Taper output
 # gene = ["4471", "4527", "4691", "4724", "4744", "4757", "4793", "4796", "4802", "4806", "4848", "4889", "4890", "4893", "4932", "4942", "4951", "4954", "4992", "5018", "5032", "5034", "5038", "5090", "5104", "5116", "5123", "5131", "5138", "5162", "5163", "5168", "5177", "5188", "5200", "5206", "5220", "5257", "5264", "5271", "5273", "5280", "5296", "5299", "5304", "5318", "5326", "5328", "5333", "5335", "5339", "5343", "5348", "5354", "5366", "5398", "5404", "5406", "5421", "5426", "5427", "5428", "5449", "5454", "5460", "5463", "5464", "5469", "5477", "5489", "5502", "5513", "5528", "5531", "5536", "5551", "5554", "5562", "5578", "5594", "5596", "5614", "5620", "5634", "5639", "5644", "5656", "5660", "5664", "5670", "5699", "5702", "5703", "5716", "5721", "5744", "5770", "5772", "5791", "5802", "5815", "5816", "5821", "5822", "5840", "5841", "5842", "5843", "5849", "5853", "5857", "5858", "5865", "5866", "5870", "5893", "5894", "5899", "5910", "5913", "5918", "5919", "5926", "5933", "5942", "5944", "5945", "5949", "5950", "5960", "5968", "5974", "5977", "5980", "5981", "5990", "6000", "6003", "6004", "6016", "6026", "6029", "6034", "6036", "6038", "6048", "6050", "6051", "6056", "6064", "6068", "6072", "6098", "6114", "6119", "6128", "6130", "6139", "6148", "6164", "6175", "6176", "6198", "6216", "6221", "6226", "6227", "6238", "6258", "6265", "6274", "6282", "6284", "6295", "6298", "6299", "6303", "6318", "6320", "6363", "6366", "6373", "6376", "6378", "6383", "6384", "6389", "6393", "6398", "6404", "6405", "6406", "6407", "6412", "6420", "6432", "6439", "6447", "6450", "6454", "6457", "6458", "6459", "6460", "6462", "6483", "6487", "6488", "6492", "6494", "6496", "6500", "6506", "6507", "6526", "6527", "6528", "6532", "6533", "6538", "6540", "6544", "6550", "6552", "6559", "6563", "6570", "6572", "6601", "6620", "6631", "6636", "6639", "6641", "6649", "6652", "6660", "6667", "6685", "6689", "6713", "6717", "6732", "6733", "6738", "6746", "6779", "6782", "6785", "6792", "6797", "6825", "6848", "6854", "6859", "6860", "6865", "6875", "6882", "6883", "6909", "6913", "6914", "6924", "6933", "6946", "6947", "6954", "6958", "6961", "6962", "6968", "6978", "6979", "6992", "7021", "7024", "7029", "7067", "7111", "7128", "7135", "7136", "7141", "7174", "7194", "7241", "7273", "7279", "7313", "7324", "7325", "7331", "7333", "7336", "7363", "7367", "7371", "7572", "7577", "7583", "7602", "7628"]                                            
