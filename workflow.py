@@ -50,7 +50,8 @@ def move_raw_PAFTOL(PAFTOL_name, path_PAFTOL, path_out, done):
 
     cd {path_PAFTOL}
 
-    cp {PAFTOL_name}* {path_out} 
+    cp {PAFTOL_name}_R1.fastq {path_out} 
+    cp {PAFTOL_name}_R2.fastq {path_out} 
 
     cd {path_out}
     
@@ -77,7 +78,8 @@ def move_raw_Lauraceae(Lauraceae_name, path_Lauraceae, path_out, done):
 
     cd {path_Lauraceae}
 
-    cp {Lauraceae_name}* {path_out} 
+    cp {Lauraceae_name}_R1.fastq {path_out} 
+    cp {Lauraceae_name}_R2.fastq {path_out} 
 
     cd {path_out}
 
@@ -1243,7 +1245,7 @@ PAFTOL_sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Car
 
 for i in range(len(PAFTOL_sp)):
       #### Move raw sequences (PAFTOL)
-        gwf.target_from_template('move_raw_PAFTOL'+PAFTOL_sp[i], move_raw_PAFTOL(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
+        gwf.target_from_template('move_raw_PAFTOL_'+PAFTOL_sp[i], move_raw_PAFTOL(path_PAFTOL = "/home/laurakf/cryptocarya/RawData/PAFTOL/",
                                                             PAFTOL_name = PAFTOL_sp[i],
                                                             path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
                                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"))
@@ -1253,7 +1255,7 @@ Lauraceae_sp = ["Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "
 
 for i in range(len(Lauraceae_sp)):
   #### Move raw sequences (Lauracea)
-    gwf.target_from_template('move_raw_Lauraceae'+Lauraceae_sp[i], move_raw_Lauraceae(path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
+    gwf.target_from_template('move_raw_Lauraceae_'+Lauraceae_sp[i], move_raw_Lauraceae(path_Lauraceae = "/home/laurakf/cryptocarya/RawData/Lauraceae/",
                                                         Lauraceae_name = Lauraceae_sp[i],
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/done/"))
