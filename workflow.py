@@ -78,8 +78,8 @@ def move_raw_Lauraceae(Lauraceae_name, path_Lauraceae, path_out, done):
 
     cd {path_Lauraceae}
 
-    cp {Lauraceae_name}_R1.fastq {path_out} 
-    cp {Lauraceae_name}_R2.fastq {path_out} 
+    cp {Lauraceae_name}_R1.fastq* {path_out} 
+    cp {Lauraceae_name}_R2.fastq* {path_out} 
 
     cd {path_out}
 
