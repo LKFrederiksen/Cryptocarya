@@ -1276,7 +1276,7 @@ sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki
 #                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/02_MultiQC/done/multiqc_raw"))
 
 
-for i in range(len(sp)):
+# for i in range(len(sp)):
     # #### Running Trimmomatic (slidingwindow)
     # gwf.target_from_template('trimmomatic_'+str(i), trimmomatic(name = sp[i],
     #                                                     path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/01_FastQC/data/", 
