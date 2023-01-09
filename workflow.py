@@ -51,8 +51,6 @@ def move_raw(PAFTOL_name, Lauraceae_name, path_PAFTOL , path_Lauraceae, path_out
 
     echo {name}
 
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
     cd {path_PAFTOL}
 
     cp {name}* {path_out} 
