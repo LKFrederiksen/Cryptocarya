@@ -325,190 +325,98 @@ gwf = Workflow()
 #     return (path_ins, outputs, options, spec)
 
 #################################################################################################################################
-###################################################---- Stats Outgroup)----######################################################
-#################################################################################################################################
+# ###################################################---- Stats Outgroup)----######################################################
+# #################################################################################################################################
 
-# In this step you should run the statistics on the folder where we have the Hybpiper_results
-# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+# # In this step you should run the statistics on the folder where we have the Hybpiper_results
+# # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-def stats_outgroup(path_in, done, path_out, in_done):
-   """Gather statistics about the HybPiper run(s).""", 
-   path_ins = [path_in, in_done] # The files that has to be present before the job runs.
-   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-   options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
+# def stats_outgroup(path_in, done, path_out, in_done):
+#    """Gather statistics about the HybPiper run(s).""", 
+#    path_ins = [path_in, in_done] # The files that has to be present before the job runs.
+#    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+#    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
 
-   spec = """
+#    spec = """
    
-   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-   conda activate HybPiper
+#    conda activate HybPiper
     
-   cd {path_in}
+#    cd {path_in}
     
-   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
+#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
 
-   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+#    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
-   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+#    mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
     
-   mv hybpiper_stats.tsv {path_out}
+#    mv hybpiper_stats.tsv {path_out}
 
-   mv recovery_heatmap.png {path_out} 
+#    mv recovery_heatmap.png {path_out} 
 
-   echo touching {done}
+#    echo touching {done}
 
-   touch {done}
+#    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
+#    """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
 
-   return (path_ins, outputs, options, spec)
+#    return (path_ins, outputs, options, spec)
 
-#################################################################################################################################
-###################################################---- Stats Ingroup)----#######################################################
-#################################################################################################################################
+# ### Taken Peum_boldus out - the file is empty
 
-# In this step you should run the statistics on the folder where we have the Hybpiper_results
-# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+# #################################################################################################################################
+# ###################################################---- Stats Ingroup)----#######################################################
+# #################################################################################################################################
 
-def stats_ingroup(path_in, done, path_out, in_done):
-   """Gather statistics about the HybPiper run(s).""", 
-   path_ins = [path_in, in_done] # The files that has to be present before the job runs.
-   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-   options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
+# # In this step you should run the statistics on the folder where we have the Hybpiper_results
+# # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-   spec = """
+# def stats_ingroup(path_in, done, path_out, in_done):
+#    """Gather statistics about the HybPiper run(s).""", 
+#    path_ins = [path_in, in_done] # The files that has to be present before the job runs.
+#    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+#    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
+
+#    spec = """
    
-   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-   conda activate HybPiper
+#    conda activate HybPiper
     
-   cd {path_in}
+#    cd {path_in}
     
-   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
+#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
 
-   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+#    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
-   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+#    mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
     
-   mv hybpiper_stats.tsv {path_out}
+#    mv hybpiper_stats.tsv {path_out}
 
-   mv recovery_heatmap.png {path_out} 
+#    mv recovery_heatmap.png {path_out} 
 
-   echo touching {done}
+#    echo touching {done}
 
-   touch {done}
+#    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
+#    """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
 
-   return (path_ins, outputs, options, spec)  
+#    return (path_ins, outputs, options, spec)  
 
+# ### Taken Peum_boldus out - the file is empty
 
-################################################################################################################################
-#############################################---- Paralogs Outgroup----#########################################################
-################################################################################################################################
+# ################################################################################################################################
+# #############################################---- Paralogs Outgroup----#########################################################
+# ################################################################################################################################
 
-##### This is the approach to use. #####
+# ##### This is the approach to use. #####
 
-def paralogs_outgroup(path_in, done, in_done, path_out):
-    """Run HybPiper v. 2.1 - paralog retriever """
-    path_ins = [path_in, in_done]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
-
-    spec = """
-    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-    conda activate HybPiper
-    
-    cd {path_in}
-
-    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
-    
-    mv paralog_report.tsv {path_out}
-    mv paralogs_above_threshold_report.txt {path_out}
-    mv paralogs_all {path_out}
-    mv paralogs_no_chimeras {path_out}
-    mv paralog_heatmap.png {path_out}
-
-    echo touching {done}
-
-    touch {done}
-
-     """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
-    
-    return (path_ins, outputs, options, spec)
-
-### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
-
-################################################################################################################################
-#############################################---- Paralogs Ingroup----##########################################################
-################################################################################################################################
-
-##### This is the approach to use. #####
-
-def paralogs_ingroup(path_in, done, in_done, path_out):
-    """Run HybPiper v. 2.1 - paralog retriever """
-    path_ins = [path_in, in_done]
-    outputs = [done]
-    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
-
-    spec = """
-    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-    conda activate HybPiper
-    
-    cd {path_in}
-
-    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
-    
-    mv paralog_report.tsv {path_out}
-    mv paralogs_above_threshold_report.txt {path_out}
-    mv paralogs_all {path_out}
-    mv paralogs_no_chimeras {path_out}
-    mv paralog_heatmap.png {path_out}
-
-    echo touching {done}
-
-    touch {done}
-
-     """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
-    
-    return (path_ins, outputs, options, spec)
-
-### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
-
-
-# ####################################################################################################################################################
-# ######################################################---- Coverage (Lauraceae-ingroup)----#########################################################
-# ####################################################################################################################################################
-
-# #This script does the following:
-# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# # Map paired and unpaired reads to that fasta using BWA mem
-# # Deduplicate reads using Picard
-# # Calculate depth using samtools
-# # Mask/strip any bases with coverage <2
-# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
-
-# def coverageIngroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-#     """Calculating coverage of sequences."""
-#     path_ins = [path_in+name]
-#     outputs = [path_out+name+all_bam,
-#      path_out+name+all_sorted_bam,
-#       path_out+name+all_sorted_bam_bai,
-#        path_out+name+bam,
-#     path_out+name+cov,
-#      path_out+name+fasta,
-#       path_out+name+fasta_amb,
-#        path_out+name+fasta_ann,
-#         path_out+name+fasta_bwt,
-#     path_out+name+fasta_pac,
-#      path_out+name+fasta_sa,
-#       path_out+name+trimmed_fasta,
-#        path_out+name+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+# def paralogs_outgroup(path_in, done, in_done, path_out):
+#     """Run HybPiper v. 2.1 - paralog retriever """
+#     path_ins = [path_in, in_done]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
 #     spec = """
     
@@ -518,47 +426,37 @@ def paralogs_ingroup(path_in, done, in_done, path_out):
     
 #     cd {path_in}
 
-#     # Taking supercontig files for all Lauraceae samples from Jens Rohwer
-#     python3 /home/laurakf/cryptocarya/Scripts/coverage_Laura.py {name} {dir_in} {dir_out} {dir_wrk}
+#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
     
+#     mv paralog_report.tsv {path_out}
+#     mv paralogs_above_threshold_report.txt {path_out}
+#     mv paralogs_all {path_out}
+#     mv paralogs_no_chimeras {path_out}
+#     mv paralog_heatmap.png {path_out}
+
 #     echo touching {done}
 
 #     touch {done}
 
-#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
-
+#      """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+    
 #     return (path_ins, outputs, options, spec)
 
+# ### Taken Peum_boldus out - the file is empty
 
-# ############################################################################################################################################
-# #############################################---- Coverage (PAFTOL/outgroup)----############################################################
-# ############################################################################################################################################
+# ### No genes found with >2 gene duplications
 
-# #This script does the following:
-# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# # Map paired and unpaired reads to that fasta using BWA mem
-# # Deduplicate reads using Picard
-# # Calculate depth using samtools
-# # Mask/strip any bases with coverage <2
-# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+# ################################################################################################################################
+# #############################################---- Paralogs Ingroup----##########################################################
+# ################################################################################################################################
 
-# def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-#     """Calculating coverage of sequences."""
-#     path_ins = [path_in+name]
-#     outputs = [path_out+name+all_bam,
-#      path_out+name+all_sorted_bam,
-#       path_out+name+all_sorted_bam_bai,
-#        path_out+name+bam,
-#     path_out+name+cov,
-#      path_out+name+fasta,
-#       path_out+name+fasta_amb,
-#        path_out+name+fasta_ann,
-#         path_out+name+fasta_bwt,
-#     path_out+name+fasta_pac,
-#      path_out+name+fasta_sa,
-#       path_out+name+trimmed_fasta,
-#        path_out+name+up_bam,done] #ALL the output files
-#     options = {'cores': 4, 'memory': "4g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# ##### This is the approach to use. #####
+
+# def paralogs_ingroup(path_in, done, in_done, path_out):
+#     """Run HybPiper v. 2.1 - paralog retriever """
+#     path_ins = [path_in, in_done]
+#     outputs = [done]
+#     options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
 #     spec = """
     
@@ -568,25 +466,133 @@ def paralogs_ingroup(path_in, done, in_done, path_out):
     
 #     cd {path_in}
 
-#     #### From sortadate (found I need 10% best genes as supercontigs and 90% worst as exons). Made this script take exons and introns for these genes respectively for the PAFTOL samples.
-#     python3 /home/laurakf/cryptocarya/Scripts/coverage_comb.py {name} {dir_in} {dir_out} {dir_wrk}
+#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
     
-#     # Added this step to concatenate files after combining them in the coverage script. 
-#     # Remove this step when running the remaining part of the coverage script.
-    
-#     # cd {path_out}
-#     # cat {name}.fasta_supercontig {name}.fasta_exon > {name}.fasta
-
-#     # rm *.fasta_supercontig
-#     # rm *.fasta_exon
+#     mv paralog_report.tsv {path_out}
+#     mv paralogs_above_threshold_report.txt {path_out}
+#     mv paralogs_all {path_out}
+#     mv paralogs_no_chimeras {path_out}
+#     mv paralog_heatmap.png {path_out}
 
 #     echo touching {done}
 
 #     touch {done}
 
-#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk, path_out = path_out)
-
+#      """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+    
 #     return (path_ins, outputs, options, spec)
+
+# ### Taken Peum_boldus out - the file is empty
+
+# ### No genes found with >2 gene duplications
+
+####################################################################################################################################################
+######################################################---- Coverage (Lauraceae-ingroup)----#########################################################
+####################################################################################################################################################
+
+#This script does the following:
+# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# Map paired and unpaired reads to that fasta using BWA mem
+# Deduplicate reads using Picard
+# Calculate depth using samtools
+# Mask/strip any bases with coverage <2
+# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+
+def coverageIngroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+    """Calculating coverage of sequences."""
+    path_ins = [path_in+name]
+    outputs = [path_out+name+all_bam,
+     path_out+name+all_sorted_bam,
+      path_out+name+all_sorted_bam_bai,
+       path_out+name+bam,
+    path_out+name+cov,
+     path_out+name+fasta,
+      path_out+name+fasta_amb,
+       path_out+name+fasta_ann,
+        path_out+name+fasta_bwt,
+    path_out+name+fasta_pac,
+     path_out+name+fasta_sa,
+      path_out+name+trimmed_fasta,
+       path_out+name+up_bam,done] #ALL the output files
+    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+
+    spec = """
+    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
+    
+    cd {path_in}
+
+    # Taking supercontig files for all Lauraceae samples from Jens Rohwer
+    python3 /home/laurakf/cryptocarya/Scripts/coverage_Laura.py {name} {dir_in} {dir_out} {dir_wrk}
+    
+    echo touching {done}
+
+    touch {done}
+
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
+
+    return (path_ins, outputs, options, spec)
+
+
+############################################################################################################################################
+#############################################---- Coverage (PAFTOL/outgroup)----############################################################
+############################################################################################################################################
+
+#This script does the following:
+# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# Map paired and unpaired reads to that fasta using BWA mem
+# Deduplicate reads using Picard
+# Calculate depth using samtools
+# Mask/strip any bases with coverage <2
+# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+
+def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+    """Calculating coverage of sequences."""
+    path_ins = [path_in+name]
+    outputs = [path_out+name+all_bam,
+     path_out+name+all_sorted_bam,
+      path_out+name+all_sorted_bam_bai,
+       path_out+name+bam,
+    path_out+name+cov,
+     path_out+name+fasta,
+      path_out+name+fasta_amb,
+       path_out+name+fasta_ann,
+        path_out+name+fasta_bwt,
+    path_out+name+fasta_pac,
+     path_out+name+fasta_sa,
+      path_out+name+trimmed_fasta,
+       path_out+name+up_bam,done] #ALL the output files
+    options = {'cores': 4, 'memory': "4g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+
+    spec = """
+    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
+    
+    cd {path_in}
+
+    #### From sortadate (found I need 10% best genes as supercontigs and 90% worst as exons). Made this script take exons and introns for these genes respectively for the PAFTOL samples.
+    python3 /home/laurakf/cryptocarya/Scripts/coverage_comb.py {name} {dir_in} {dir_out} {dir_wrk}
+    
+    # Added this step to concatenate files after combining them in the coverage script. 
+    # Remove this step when running the remaining part of the coverage script.
+    
+    # cd {path_out}
+    # cat {name}.fasta_supercontig {name}.fasta_exon > {name}.fasta
+
+    # rm *.fasta_supercontig
+    # rm *.fasta_exon
+
+    echo touching {done}
+
+    touch {done}
+
+    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk, path_out = path_out)
+
+    return (path_ins, outputs, options, spec)
 
 # ########################################################################################################################
 # #############################################---- Retrieve ----#########################################################
@@ -1444,83 +1450,83 @@ sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Bei
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
 
-#### Getting stats and heatmap (Outgroup)
-gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
-                                                path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/done"))
+# #### Getting stats and heatmap (Outgroup)
+# gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
+#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/done"))
 
-#### Getting stats and heatmap (Ingroup)
-gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
-                                                path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/done"))
+# #### Getting stats and heatmap (Ingroup)
+# gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
+#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/done"))
 
                                                
-#### Paralogs (Outgroup)
-gwf.target_from_template('Paralogs_outgroup', paralogs_outgroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/",
-                                                      done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
-                                                      in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done"))
+# #### Paralogs (Outgroup)
+# gwf.target_from_template('Paralogs_outgroup', paralogs_outgroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/",
+#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
+#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done"))
 
-#### Paralogs (Ingroup)
-gwf.target_from_template('Paralogs_ingroup', paralogs_ingroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Paralogs/",
-                                                      done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
-                                                      in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done"))
+# #### Paralogs (Ingroup)
+# gwf.target_from_template('Paralogs_ingroup', paralogs_ingroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Paralogs/",
+#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
+#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done"))
 
 # Perhaps delete.
 # # sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
 
-# for i in range(len(sp_Lauraceae)):
-#     #### Coverage (Lauraceae - ingroup)
-#     gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp_Lauraceae[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/Ingroup/",
-#                                                         all_bam = "_all.bam",
-#                                                         all_sorted_bam ="_all_sorted.bam",
-#                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
-#                                                         bam =".bam",
-#                                                         cov=".cov",
-#                                                         fasta = ".fasta",
-#                                                         fasta_amb = ".fasta.amb",
-#                                                         fasta_ann = ".fasta.ann",
-#                                                         fasta_bwt = ".fasta.bwt",
-#                                                         fasta_pac = ".fasta.pac",
-#                                                         fasta_sa = ".fasta.sa",
-#                                                         trimmed_fasta = "_trimmed.fasta",
-#                                                         up_bam = "_up.bam",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_Lauraceae[i],
-#                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/Ingroup/",
-#                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Lauraceae/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
-#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
+for i in range(len(sp_Lauraceae)):
+    #### Coverage (Lauraceae - ingroup)
+    gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp_Lauraceae[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+                                                        all_bam = "_all.bam",
+                                                        all_sorted_bam ="_all_sorted.bam",
+                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
+                                                        bam =".bam",
+                                                        cov=".cov",
+                                                        fasta = ".fasta",
+                                                        fasta_amb = ".fasta.amb",
+                                                        fasta_ann = ".fasta.ann",
+                                                        fasta_bwt = ".fasta.bwt",
+                                                        fasta_pac = ".fasta.pac",
+                                                        fasta_sa = ".fasta.sa",
+                                                        trimmed_fasta = "_trimmed.fasta",
+                                                        up_bam = "_up.bam",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_Lauraceae[i],
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/Ingroup/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Lauraceae/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
+                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 # #sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 # # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
-# for i in range(len(sp_PAFTOL)):
-#     #### Coverage (Paftol - outgroup)
-#     gwf.target_from_template('CoverageOut_'+str(i), coverageOutgroup(name = sp_PAFTOL[i],
-#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Outgroup/",
-#                                                         all_bam = "_all.bam",
-#                                                         all_sorted_bam ="_all_sorted.bam",
-#                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
-#                                                         bam =".bam",
-#                                                         cov=".cov",
-#                                                         fasta = ".fasta",
-#                                                         fasta_amb = ".fasta.amb",
-#                                                         fasta_ann = ".fasta.ann",
-#                                                         fasta_bwt = ".fasta.bwt",
-#                                                         fasta_pac = ".fasta.pac",
-#                                                         fasta_sa = ".fasta.sa",
-#                                                         trimmed_fasta = "_trimmed.fasta",
-#                                                         up_bam = "_up.bam",
-#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
-#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_PAFTOL[i],
-#                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Outgroup/",
-#                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/Outgroup/", #Folder with clean reads + unpaired
-#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
+for i in range(len(sp_PAFTOL)):
+    #### Coverage (Paftol - outgroup)
+    gwf.target_from_template('CoverageOut_'+str(i), coverageOutgroup(name = sp_PAFTOL[i],
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+                                                        all_bam = "_all.bam",
+                                                        all_sorted_bam ="_all_sorted.bam",
+                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
+                                                        bam =".bam",
+                                                        cov=".cov",
+                                                        fasta = ".fasta",
+                                                        fasta_amb = ".fasta.amb",
+                                                        fasta_ann = ".fasta.ann",
+                                                        fasta_bwt = ".fasta.bwt",
+                                                        fasta_pac = ".fasta.pac",
+                                                        fasta_sa = ".fasta.sa",
+                                                        trimmed_fasta = "_trimmed.fasta",
+                                                        up_bam = "_up.bam",
+                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
+                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_PAFTOL[i],
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Outgroup/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/Outgroup/", #Folder with clean reads + unpaired
+                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 # #### Retrieve sequences and sort into files with gene names
 # gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/", 
