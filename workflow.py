@@ -278,6 +278,8 @@ gwf = Workflow()
 #     echo touching {done}
 
 #     touch {done}
+
+#     touch {path_out}done/HybPiper/done
     
 
 #     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
@@ -313,6 +315,8 @@ gwf = Workflow()
 #     echo touching {done}
 
 #     touch {done}
+
+#     touch {path_out}done/HybPiper/done
     
 
 #     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
@@ -1442,16 +1446,16 @@ sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Bei
 #### Getting stats and heatmap (Outgroup)
 gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done",
                                                 name = sp_PAFTOL[i],
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/"+sp_PAFTOL[i]))
+                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/done"))
 
 #### Getting stats and heatmap (Ingroup)
 gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i],
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done",
                                                 name = sp_Lauraceae[i],
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/"+sp_Lauraceae[i]))
+                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/done"))
 
                                                
 #### Paralogs (Outgroup)
