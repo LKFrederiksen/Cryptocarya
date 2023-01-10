@@ -1359,7 +1359,7 @@ for i in range(len(sp_Lauraceae)):
                                                         p2 = "_2P.fastq",
                                                         un = "_UN.fastq",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup",
+                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
 # #### Getting stats and heatmap (Outgroup)
