@@ -486,54 +486,54 @@ gwf = Workflow()
 
 # ### No genes found with >2 gene duplications
 
-####################################################################################################################################################
-######################################################---- Coverage (Lauraceae-ingroup)----#########################################################
-####################################################################################################################################################
+# ####################################################################################################################################################
+# ######################################################---- Coverage (Lauraceae-ingroup)----#########################################################
+# ####################################################################################################################################################
 
-#This script does the following:
-# Gather all contigs from each sample in one fasta file: coverage/sample.fasta
-# Map paired and unpaired reads to that fasta using BWA mem
-# Deduplicate reads using Picard
-# Calculate depth using samtools
-# Mask/strip any bases with coverage <2
-# Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
+# #This script does the following:
+# # Gather all contigs from each sample in one fasta file: coverage/sample.fasta
+# # Map paired and unpaired reads to that fasta using BWA mem
+# # Deduplicate reads using Picard
+# # Calculate depth using samtools
+# # Mask/strip any bases with coverage <2
+# # Generate a new trimmed sample-level fasta: coverage/sample_trimmed.fasta
 
-def coverageIngroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
-    """Calculating coverage of sequences."""
-    path_ins = [path_in+name]
-    outputs = [path_out+name+all_bam,
-     path_out+name+all_sorted_bam,
-      path_out+name+all_sorted_bam_bai,
-       path_out+name+bam,
-    path_out+name+cov,
-     path_out+name+fasta,
-      path_out+name+fasta_amb,
-       path_out+name+fasta_ann,
-        path_out+name+fasta_bwt,
-    path_out+name+fasta_pac,
-     path_out+name+fasta_sa,
-      path_out+name+trimmed_fasta,
-       path_out+name+up_bam,done] #ALL the output files
-    options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+# def coverageIngroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_sorted_bam_bai, bam, cov,fasta,fasta_amb,fasta_ann,fasta_bwt,fasta_pac,fasta_sa,trimmed_fasta,up_bam,dir_in,dir_out, dir_wrk):
+#     """Calculating coverage of sequences."""
+#     path_ins = [path_in+name]
+#     outputs = [path_out+name+all_bam,
+#      path_out+name+all_sorted_bam,
+#       path_out+name+all_sorted_bam_bai,
+#        path_out+name+bam,
+#     path_out+name+cov,
+#      path_out+name+fasta,
+#       path_out+name+fasta_amb,
+#        path_out+name+fasta_ann,
+#         path_out+name+fasta_bwt,
+#     path_out+name+fasta_pac,
+#      path_out+name+fasta_sa,
+#       path_out+name+trimmed_fasta,
+#        path_out+name+up_bam,done] #ALL the output files
+#     options = {'cores': 4, 'memory': "24g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
     
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
     
-    conda activate HybPiper
+#     conda activate HybPiper
     
-    cd {path_in}
+#     cd {path_in}
 
-    # Taking supercontig files for all Lauraceae samples from Jens Rohwer
-    python3 /home/laurakf/cryptocarya/Scripts/coverage_Laura.py {name} {dir_in} {dir_out} {dir_wrk}
+#     # Taking supercontig files for all Lauraceae samples from Jens Rohwer
+#     python3 /home/laurakf/cryptocarya/Scripts/coverage_Laura.py {name} {dir_in} {dir_out} {dir_wrk}
     
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
+#     """.format(name = name, done = done, path_in = path_in, dir_in = dir_in, dir_out = dir_out, dir_wrk = dir_wrk)
 
-    return (path_ins, outputs, options, spec)
+#     return (path_ins, outputs, options, spec)
 
 
 ############################################################################################################################################
@@ -1471,30 +1471,30 @@ def coverageOutgroup(name, path_in, path_out, done,all_bam,all_sorted_bam, all_s
 #                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
 #                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done"))
 
-sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Beil-berte-689AL1","Beil-brach-690AL1","Beil-brene-691AL1","Beil-dicty-692AL1","Beil-emarg-693AL1","Beil-fasci-694AL1","Beil-fulva-695AL1","Beil-furfu-696AL1","Beil-hengh-697AL1","Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+# sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Beil-berte-689AL1","Beil-brach-690AL1","Beil-brene-691AL1","Beil-dicty-692AL1","Beil-emarg-693AL1","Beil-fasci-694AL1","Beil-fulva-695AL1","Beil-furfu-696AL1","Beil-hengh-697AL1","Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
-for i in range(len(sp_Lauraceae)):
-    #### Coverage (Lauraceae - ingroup)
-    gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp_Lauraceae[i],
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                        all_bam = "_all.bam",
-                                                        all_sorted_bam ="_all_sorted.bam",
-                                                        all_sorted_bam_bai="_all_sorted.bam.bai",
-                                                        bam =".bam",
-                                                        cov=".cov",
-                                                        fasta = ".fasta",
-                                                        fasta_amb = ".fasta.amb",
-                                                        fasta_ann = ".fasta.ann",
-                                                        fasta_bwt = ".fasta.bwt",
-                                                        fasta_pac = ".fasta.pac",
-                                                        fasta_sa = ".fasta.sa",
-                                                        trimmed_fasta = "_trimmed.fasta",
-                                                        up_bam = "_up.bam",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_Lauraceae[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
-                                                        dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
+# for i in range(len(sp_Lauraceae)):
+#     #### Coverage (Lauraceae - ingroup)
+#     gwf.target_from_template('CoverageIn_'+str(i), coverageIngroup(name = sp_Lauraceae[i],
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                         all_bam = "_all.bam",
+#                                                         all_sorted_bam ="_all_sorted.bam",
+#                                                         all_sorted_bam_bai="_all_sorted.bam.bai",
+#                                                         bam =".bam",
+#                                                         cov=".cov",
+#                                                         fasta = ".fasta",
+#                                                         fasta_amb = ".fasta.amb",
+#                                                         fasta_ann = ".fasta.ann",
+#                                                         fasta_bwt = ".fasta.bwt",
+#                                                         fasta_pac = ".fasta.pac",
+#                                                         fasta_sa = ".fasta.sa",
+#                                                         trimmed_fasta = "_trimmed.fasta",
+#                                                         up_bam = "_up.bam",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_Lauraceae[i],
+#                                                         dir_wrk = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                         dir_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
+#                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 
 # # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
