@@ -1492,8 +1492,8 @@ for i in range(len(sp_Lauraceae)):
                                                         up_bam = "_up.bam",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_Lauraceae[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Lauraceae/06_HybPiper/Ingroup/",
-                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Lauraceae/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
 
@@ -1519,10 +1519,11 @@ for i in range(len(sp_PAFTOL)):
                                                         up_bam = "_up.bam",
                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/",
                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/done/Coverage/"+sp_PAFTOL[i],
-                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/PAFTOL/06_HybPiper/Outgroup/",
-                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/PAFTOL/03_Trimmomatic/slidingwindow/Outgroup/", #Folder with clean reads + unpaired
+                                                        dir_wrk = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+                                                        dir_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Outgroup/", #Folder with clean reads + unpaired
                                                         dir_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/")) # folder with coverage
 
+# Added the files: Synd-chine-PAFTOL_trimmed.fasta, Peum-boldu-PAFTOL_trimmed.fasta and Chim-salic-PAFTOL_trimmed.fasta to the 07_Coverage folder
 # #### Retrieve sequences and sort into files with gene names
 # gwf.target_from_template('retrieve', retrieve(path_in ="/home/laurakf/cryptocarya/Workflow/Final_tree/07_Coverage/", 
 #                                               done = "/home/laurakf/cryptocarya/Workflow/Final_tree/08_Retrieve/done/retrieve"))
