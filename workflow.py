@@ -1458,13 +1458,13 @@ gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf
 
                                                
 #### Paralogs (Outgroup)
-gwf.target_from_template('Paralogs', paralogs_outgroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+gwf.target_from_template('Paralogs_outgroup', paralogs_outgroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/",
                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done"))
 
 #### Paralogs (Ingroup)
-gwf.target_from_template('Paralogs', paralogs_ingroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+gwf.target_from_template('Paralogs_ingroup', paralogs_ingroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Paralogs/",
                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done"))
