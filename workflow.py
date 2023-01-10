@@ -1443,6 +1443,8 @@ sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Bei
 #                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
+sp_PAFTOL = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
+
 #### Getting stats and heatmap (Outgroup)
 gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
