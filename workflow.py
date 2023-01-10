@@ -345,7 +345,7 @@ def stats_outgroup(path_in, done, path_out, in_done):
     
    cd {path_in}
     
-   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
 
    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
@@ -384,7 +384,7 @@ def stats_ingroup(path_in, done, path_out, in_done):
     
    cd {path_in}
     
-   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'gene' {path_in}namelist.txt # Get stats
 
    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
 
