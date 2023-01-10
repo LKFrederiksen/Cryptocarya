@@ -1464,7 +1464,7 @@ gwf.target_from_template('Paralogs', paralogs_outgroup(name = sp_PAFTOL[i],
 #### Paralogs (Ingroup)
 gwf.target_from_template('Paralogs', paralogs_ingroup(name = sp_Lauraceae[i],
                                                       path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/", ,
+                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/",
                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
