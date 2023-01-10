@@ -194,33 +194,33 @@ gwf = Workflow()
 #     return (path_ins, outputs, options, spec)
 
 
-########################################################################################################################################
-###########################################---- Fastqc quality check trimmed (slidingwindow) ----#######################################
-########################################################################################################################################
-def fastqc_trimmed(name,path_in ,path_out, done,):
-     """Quality checking using fastqc as this should work on individual species"""
-     path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
-     outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
-     options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# ########################################################################################################################################
+# ###########################################---- Fastqc quality check trimmed (slidingwindow) ----#######################################
+# ########################################################################################################################################
+# def fastqc_trimmed(name,path_in ,path_out, done,):
+#      """Quality checking using fastqc as this should work on individual species"""
+#      path_ins = [path_in+name+"_UN.fastq", path_in+name+"_1PU.fastq", path_in+name+"_2PU.fastq"] # The files gwf looks for before it runs.
+#      outputs = [path_out+name+"_1PU_fastqc.html", path_out+name+"_2PU_fastqc.html",path_out+name+"_UN_fastqc.html", done]
+#      options = {'cores': 1, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
 
 
-     spec = """
+#      spec = """
 
-     echo {name}
+#      echo {name}
      
-     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#      source /home/laurakf/miniconda3/etc/profile.d/conda.sh
 
-     conda activate fastqc
+#      conda activate fastqc
 
-     fastqc -o {output} {path_in}{name}_1PU.fastq {path_in}{name}_2PU.fastq {path_in}{name}_UN.fastq
+#      fastqc -o {output} {path_in}{name}_1PU.fastq {path_in}{name}_2PU.fastq {path_in}{name}_UN.fastq
     
-     echo touching {done}
+#      echo touching {done}
 
-     touch {done}
+#      touch {done}
 
-     """.format(path_in = path_in, name = name, output = path_out, done = done)
+#      """.format(path_in = path_in, name = name, output = path_out, done = done)
 
-     return (path_ins, outputs, options, spec)
+#      return (path_ins, outputs, options, spec)
 
 
 # #######################################################################################################################################
@@ -250,153 +250,230 @@ def fastqc_trimmed(name,path_in ,path_out, done,):
 #     return (inputs, outputs, options, spec)
 
 
-###################################################################################################################################
-################################################---- Hybpiper (Outgroup) ----######################################################
-###################################################################################################################################
-def hybpiper_outgroup(name, p1, p2, un, path_out, path_in, done):
-    """Hybpiper."""
-    path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
-    outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-    options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
-
-    spec = """
-
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
-    conda activate HybPiper
-
-    TMPDIR=/scratch/$SLURM_JOBID
-    export TMPDIR
-    mkdir -p $TMPDIR
-    cd $TMPDIR
-    
-    # Here I have used the Rohwer target file!
-    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
-
-    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/
-
-    echo touching {done}
-
-    touch {done}
-    
-
-    """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
-
-
-    return (path_ins, outputs, options, spec)
-
-###################################################################################################################################
-################################################---- Hybpiper (Ingroup) ----#######################################################
-###################################################################################################################################
-def hybpiper_ingroup(name, p1, p2, un, path_out, path_in, done):
-    """Hybpiper."""
-    path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
-    outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
-    options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
-
-    spec = """
-
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
-    conda activate HybPiper
-
-    TMPDIR=/scratch/$SLURM_JOBID
-    export TMPDIR
-    mkdir -p $TMPDIR
-    cd $TMPDIR
-    
-    # Here I have used the Rohwer target file!
-    hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
-
-    cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/
-
-    echo touching {done}
-
-    touch {done}
-    
-
-    """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
-
-
-    return (path_ins, outputs, options, spec)
-
-# ########################################################################################################################
-# ###################################################---- Stats ----######################################################
-# ########################################################################################################################
-
-# # In this step you should run the statistics on the folder where we have the Hybpiper_results
-# # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
-
-# def stats(path_in, done, path_out, in_done, name):
-#    """Gather statistics about the HybPiper run(s).""", 
-#    path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
-#    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
-#    options = {'cores': 2, 'memory': "16g", 'walltime': "04:00:00", 'account':"cryptocarya"} #Slurm commands
-
-#    spec = """
-   
-#    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-
-#    conda activate HybPiper
-    
-#    cd {path_in}
-    
-#    hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
-
-#    hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
-
-#    mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
-    
-#    mv hybpiper_stats.tsv {path_out}
-
-#    mv recovery_heatmap.png {path_out} 
-
-#    echo touching {done}
-
-#    touch {done}
-      
-#    """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
-
-#    return (path_ins, outputs, options, spec) 
-
-
-# ########################################################################################################################
-# #############################################---- Paralogs ----#########################################################
-# ########################################################################################################################
-
-# ##### This is the approach to use. #####
-
-# def paralogs(name, path_in, done, in_done, path_out):
-#     """Run HybPiper v. 2.1 - paralog retriever """
-#     path_ins = [path_in+name, in_done]
-#     outputs = [done]
-#     options = {'cores': 2, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+# ###################################################################################################################################
+# ################################################---- Hybpiper (Outgroup) ----######################################################
+# ###################################################################################################################################
+# def hybpiper_outgroup(name, p1, p2, un, path_out, path_in, done):
+#     """Hybpiper."""
+#     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
+#     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
+#     options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
 
 #     spec = """
-    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    
-#     conda activate HybPiper
-    
-#     cd {path_in}
 
-#     hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+#     conda activate HybPiper
+
+#     TMPDIR=/scratch/$SLURM_JOBID
+#     export TMPDIR
+#     mkdir -p $TMPDIR
+#     cd $TMPDIR
     
-#     mv paralog_report.tsv {path_out}
-#     mv paralogs_above_threshold_report.txt {path_out}
-#     mv paralogs_all {path_out}
-#     mv paralogs_no_chimeras {path_out}
-#     mv paralog_heatmap.png {path_out}
+#     # Here I have used the Rohwer target file!
+#     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
+
+#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/
 
 #     echo touching {done}
 
 #     touch {done}
-
-#      """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
     
+
+#     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
+
+
 #     return (path_ins, outputs, options, spec)
 
-# ### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
+# ###################################################################################################################################
+# ################################################---- Hybpiper (Ingroup) ----#######################################################
+# ###################################################################################################################################
+# def hybpiper_ingroup(name, p1, p2, un, path_out, path_in, done):
+#     """Hybpiper."""
+#     path_ins = [path_in+name+p1, path_in+name+p2, path_in+name+un] # The files which the job will look for before it runs
+#     outputs = [path_out+name, done] # The files which will have to be created in order for the job to be "completed"
+#     options = {'cores': 2, 'memory': "12g", 'walltime': "2:00:00", 'account':"cryptocarya"} #Slurm commands
+
+#     spec = """
+
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+#     conda activate HybPiper
+
+#     TMPDIR=/scratch/$SLURM_JOBID
+#     export TMPDIR
+#     mkdir -p $TMPDIR
+#     cd $TMPDIR
+    
+#     # Here I have used the Rohwer target file!
+#     hybpiper assemble --cpu 2 --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta --readfiles {p1} {p2} --unpaired {un} --prefix {name} --bwa --run_intronerate
+
+#     cp --recursive --update {name} /home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/
+
+#     echo touching {done}
+
+#     touch {done}
+    
+
+#     """.format(name=name, p1=path_in+name+p1, p2=path_in+name+p2, un=path_in+name+un, out=path_out+name, done=done)
+
+
+#     return (path_ins, outputs, options, spec)
+
+#################################################################################################################################
+###################################################---- Stats Outgroup)----######################################################
+#################################################################################################################################
+
+# In this step you should run the statistics on the folder where we have the Hybpiper_results
+# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+
+def stats_outgroup(path_in, done, path_out, in_done, name):
+   """Gather statistics about the HybPiper run(s).""", 
+   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
+
+   spec = """
+   
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+   conda activate HybPiper
+    
+   cd {path_in}
+    
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
+
+   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+
+   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+    
+   mv hybpiper_stats.tsv {path_out}
+
+   mv recovery_heatmap.png {path_out} 
+
+   echo touching {done}
+
+   touch {done}
+      
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+
+   return (path_ins, outputs, options, spec)
+
+#################################################################################################################################
+###################################################---- Stats Ingroup)----#######################################################
+#################################################################################################################################
+
+# In this step you should run the statistics on the folder where we have the Hybpiper_results
+# I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
+
+def stats_ingroup(path_in, done, path_out, in_done, name):
+   """Gather statistics about the HybPiper run(s).""", 
+   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
+   options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
+
+   spec = """
+   
+   source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+
+   conda activate HybPiper
+    
+   cd {path_in}
+    
+   hybpiper stats --targetfile_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta 'exon' {path_in}namelist.txt # Get stats
+
+   hybpiper recovery_heatmap {path_in}seq_lengths.tsv # Make heatmap
+
+   mv seq_lengths.tsv {path_out} # Move all stats and the heatmap to a new subfolder
+    
+   mv hybpiper_stats.tsv {path_out}
+
+   mv recovery_heatmap.png {path_out} 
+
+   echo touching {done}
+
+   touch {done}
+      
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+
+   return (path_ins, outputs, options, spec)  
+
+
+################################################################################################################################
+#############################################---- Paralogs Outgroup----#########################################################
+################################################################################################################################
+
+##### This is the approach to use. #####
+
+def paralogs_outgroup(name, path_in, done, in_done, path_out):
+    """Run HybPiper v. 2.1 - paralog retriever """
+    path_ins = [path_in+name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+
+    spec = """
+    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
+    
+    cd {path_in}
+
+    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
+    
+    mv paralog_report.tsv {path_out}
+    mv paralogs_above_threshold_report.txt {path_out}
+    mv paralogs_all {path_out}
+    mv paralogs_no_chimeras {path_out}
+    mv paralog_heatmap.png {path_out}
+
+    echo touching {done}
+
+    touch {done}
+
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+    
+    return (path_ins, outputs, options, spec)
+
+### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
+
+################################################################################################################################
+#############################################---- Paralogs Ingroup----##########################################################
+################################################################################################################################
+
+##### This is the approach to use. #####
+
+def paralogs_ingroup(name, path_in, done, in_done, path_out):
+    """Run HybPiper v. 2.1 - paralog retriever """
+    path_ins = [path_in+name, in_done]
+    outputs = [done]
+    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
+
+    spec = """
+    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    
+    conda activate HybPiper
+    
+    cd {path_in}
+
+    hybpiper paralog_retriever namelist.txt -t_dna /home/laurakf/cryptocarya/TargetFile/mega353_rohwer.fasta
+    
+    mv paralog_report.tsv {path_out}
+    mv paralogs_above_threshold_report.txt {path_out}
+    mv paralogs_all {path_out}
+    mv paralogs_no_chimeras {path_out}
+    mv paralog_heatmap.png {path_out}
+
+    echo touching {done}
+
+    touch {done}
+
+     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+    
+    return (path_ins, outputs, options, spec)
+
+### Genes found with paralogs: 4951, 4989, 5343, 5347, 5355, 5428, 5434, 5859, 5940, 5958, 6110, 6387, 6449, 6498, 6782, 6955, 6995, 7336.
 
 
 # ####################################################################################################################################################
@@ -1318,16 +1395,16 @@ def hybpiper_ingroup(name, p1, p2, un, path_out, path_in, done):
     #                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/",
     #                      ''                               done = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/done/"+sp[i]))
 
-# All species - Lauraceae and PAFTOL ("Cryp-acuti-743AL1" in species list)
-sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
+# # All species - Lauraceae and PAFTOL ("Cryp-acuti-743AL1" in species list)
+# sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 
 
-for i in range(len(sp)):
-    #### Running fastqc on the trimmed data (slidingwindow)
-    gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
-                                                        path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/secapr_postrim/",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/done/"+sp[i]))  
+# for i in range(len(sp)):
+#     #### Running fastqc on the trimmed data (slidingwindow)
+#     gwf.target_from_template('fastqc_trimmed_'+str(i), fastqc_trimmed(name = sp[i],
+#                                                         path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/secapr_postrim/",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/done/"+sp[i]))  
 
 # #### Running multiqc on trimmed data (slidingwindow)
 # gwf.target_from_template('multiqc_trimmed_slidingwindow', multiqc_trimmed(path_in= "/home/laurakf/cryptocarya/Workflow/Final_tree/04_FastQC/slidingwindow/",
@@ -1337,59 +1414,59 @@ for i in range(len(sp)):
 
 sp_PAFTOL = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
-for i in range(len(sp_PAFTOL)):
+# for i in range(len(sp_PAFTOL)):
     
-    #### Running Hybpiper (Outgroup)
-    gwf.target_from_template('Hybpiper_outgroup_'+str(i), hybpiper_outgroup(name = sp_PAFTOL[i],
-                                                        p1 = "_1P.fastq",
-                                                        p2 = "_2P.fastq",
-                                                        un = "_UN.fastq",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Outgroup/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i]))
+#     #### Running Hybpiper (Outgroup)
+#     gwf.target_from_template('Hybpiper_outgroup_'+str(i), hybpiper_outgroup(name = sp_PAFTOL[i],
+#                                                         p1 = "_1P.fastq",
+#                                                         p2 = "_2P.fastq",
+#                                                         un = "_UN.fastq",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Outgroup/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i]))
 
 sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Beil-berte-689AL1","Beil-brach-690AL1","Beil-brene-691AL1","Beil-dicty-692AL1","Beil-emarg-693AL1","Beil-fasci-694AL1","Beil-fulva-695AL1","Beil-furfu-696AL1","Beil-hengh-697AL1","Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
 # Taken Synd-chine-PAFTOL out = too large. Taken Peum-boldu-PAFTOL out. They do not seem to work. 
 
-for i in range(len(sp_Lauraceae)):
+# for i in range(len(sp_Lauraceae)):
 
-    #### Running Hybpiper (Ingroup)
-    gwf.target_from_template('Hybpiper_ingroup_'+str(i), hybpiper_ingroup(name = sp_Lauraceae[i],
-                                                        p1 = "_1P.fastq",
-                                                        p2 = "_2P.fastq",
-                                                        un = "_UN.fastq",
-                                                        path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-                                                        path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
+#     #### Running Hybpiper (Ingroup)
+#     gwf.target_from_template('Hybpiper_ingroup_'+str(i), hybpiper_ingroup(name = sp_Lauraceae[i],
+#                                                         p1 = "_1P.fastq",
+#                                                         p2 = "_2P.fastq",
+#                                                         un = "_UN.fastq",
+#                                                         path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+#                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
-# #### Getting stats and heatmap (Outgroup)
-# gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
-#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i],
-#                                                 name = sp_PAFTOL[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/"+sp_PAFTOL[i]))
+#### Getting stats and heatmap (Outgroup)
+gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
+                                                path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i],
+                                                name = sp_PAFTOL[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/"+sp_PAFTOL[i]))
 
-# #### Getting stats and heatmap (Ingroup)
-# gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
-#                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i],
-#                                                 name = sp_Lauraceae[i],
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/"+sp_Lauraceae[i]))
+#### Getting stats and heatmap (Ingroup)
+gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
+                                                path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i],
+                                                name = sp_Lauraceae[i],
+                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/"+sp_Lauraceae[i]))
 
                                                
-# #### Paralogs (Outgroup)
-# gwf.target_from_template('Paralogs', paralogs(name = sp_PAFTOL[i],
-#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/", ,
-#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
-#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i]))
+#### Paralogs (Outgroup)
+gwf.target_from_template('Paralogs', paralogs_outgroup(name = sp_PAFTOL[i],
+                                                      path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/", ,
+                                                      done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
+                                                      in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/"+sp_PAFTOL[i]))
 
-# #### Paralogs (Ingroup)
-# gwf.target_from_template('Paralogs', paralogs(name = sp_Lauraceae[i],
-#                                                       path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
-#                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/", ,
-#                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
-#                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
+#### Paralogs (Ingroup)
+gwf.target_from_template('Paralogs', paralogs_ingroup(name = sp_Lauraceae[i],
+                                                      path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+                                                      path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/", ,
+                                                      done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
+                                                      in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
 # Perhaps delete.
 # # sp = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Synd-chine-PAFTOL", "Tamb-ficus-PAFTOL", "Aspi-fungi-686AL1", "Aspi-parvi-687AL1", "Beil-appen-688AL1", "Beil-berte-689AL1", "Beil-brach-690AL1", "Beil-brene-691AL1", "Beil-dicty-692AL1", "Beil-emarg-693AL1", "Beil-fasci-694AL1", "Beil-fulva-695AL1", "Beil-furfu-696AL1", "Beil-hengh-697AL1", "Beil-latif-699AL1", "Beil-latif-700AL1", "Beil-linha-701AL1", "Beil-linoc-702AL1", "Beil-macro-703AL1", "Beil-madag-704AL1", "Beil-manni-705AL1", "Beil-manni-706AL1", "Beil-manni-707AL1", "Beil-miers-708AL1", "Beil-morat-709AL1", "Beil-pauci-710AL1", "Beil-pedic-711AL1", "Beil-per-C-713AL1", "Beil-perco-712AL1", "Beil-purpu-714AL1", "Beil-robus-715AL1", "Beil-roxbu-716AL1", "Beil-roxbu-717AL1", "Beil-rufoh-718AL1", "Beil-rugos-719AL1", "Beil-sary-720AL1", "Beil-seric-721AL1", "Beil-tarai-722AL1", "Beil-tarai-723AL1", "Beil-tawa-724AL1", "Beil-tawa-742AL1", "Beil-tawar-725AL1", "Beil-tilar-726AL1", "Beil-tungf-727AL1", "Beil-ugand-728AL1", "Beil-velut-729AL1", "Beil-volck-730AL1", "Beil-yunna-731AL1", "Cryp-acuti-743AL1", "Cryp-alba-800AL1", "Cryp-albi-745AL1", "Cryp-ampl-746AL1", "Cryp-asche-747AL1", "Cryp-botel-748AL1", "Cryp-calci-749AL1", "Cryp-chine-750AL1", "Cryp-citri-751AL1", "Cryp-conci-752AL1", "Cryp-densi-753AL1", "Cryp-ferre-754AL1", "Cryp-fusca-755AL1", "Cryp-haina-756AL1", "Cryp-horne-757AL1", "Cryp-krame-758AL1", "Cryp-lepto-759AL1", "Cryp-liebe-732AL1", "Cryp-litor-733AL1", "Cryp-litor-734AL1", "Cryp-mandi-735AL1", "Cryp-medic-736AL1", "Cryp-micra-738AL1", "Cryp-mosch-739AL1", "Cryp-niten-740AL1", "Cryp-oubat-741AL1", "Cryp-ovali-778AL1", "Cryp-pauci-779AL1", "Cryp-pervi-780AL1", "Cryp-pervi-781AL1", "Cryp-polyn-782AL1", "Cryp-polyn-783AL1", "Cryp-rhodo-784AL1", "Cryp-riede-785AL1", "Cryp-rigid-786AL1", "Cryp-rolle-787AL1", "Cryp-salig-788AL1", "Cryp-sello-789AL1", "Cryp-spath-790AL1", "Cryp-spath-791AL1", "Cryp-subtr-793AL1", "Cryp-thou-794AL1", "Cryp-trans-795AL1", "Cryp-vello-796AL1", "Cryp-woodi-797AL1", "Cryp-wylie-798AL1", "Cryp-yunna-799AL1", "Endi-impre-801AL1", "Endi-jones-802AL1", "Endi-lecar-804AL1", "Endi-palme-805AL1", "Endi-phaeo-767AL1", "Endi-pilos-760AL1", "Endi-poueb-761AL1", "Endi-puben-762AL1", "Endi-sanke-763AL1", "Endi-scrob-764AL1", "Endi-sulav-765AL1", "Endi-xanth-766AL1", "Eusi-zwage-768AL1", "Pota-confl-769AL1", "Pota-micro-770AL1", "Pota-obtus-771AL1", "Pota-obtus-772AL1", "Poto-melag-773AL1", "Sino-hongk-774AL1", "Synd-kwang-775AL1", "Synd-marli-776AL1", "Synd-marli-777AL1"] 
