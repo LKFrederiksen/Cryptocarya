@@ -331,9 +331,9 @@ gwf = Workflow()
 # In this step you should run the statistics on the folder where we have the Hybpiper_results
 # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-def stats_outgroup(path_in, done, path_out, in_done, name):
+def stats_outgroup(path_in, done, path_out, in_done):
    """Gather statistics about the HybPiper run(s).""", 
-   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   path_ins = [path_in, in_done] # The files that has to be present before the job runs.
    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
 
@@ -359,7 +359,7 @@ def stats_outgroup(path_in, done, path_out, in_done, name):
 
    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
 
    return (path_ins, outputs, options, spec)
 
@@ -370,9 +370,9 @@ def stats_outgroup(path_in, done, path_out, in_done, name):
 # In this step you should run the statistics on the folder where we have the Hybpiper_results
 # I did not create a folder just for Hybpiper results, then I will create here and move the assemble results to there
 
-def stats_ingroup(path_in, done, path_out, in_done, name):
+def stats_ingroup(path_in, done, path_out, in_done):
    """Gather statistics about the HybPiper run(s).""", 
-   path_ins = [path_in+name, in_done] # The files that has to be present before the job runs.
+   path_ins = [path_in, in_done] # The files that has to be present before the job runs.
    outputs = [path_out+"seq_lengths.tsv", path_out+"hybpiper_stats.tsv", path_out+"recovery_heatmap.png"]  # The files which will have to be created in order for the job to be "completed"
    options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"} #Slurm commands
 
@@ -398,7 +398,7 @@ def stats_ingroup(path_in, done, path_out, in_done, name):
 
    touch {done}
       
-   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done, name = name)
+   """.format(path_in = path_in, done = done, path_out = path_out, in_done = in_done)
 
    return (path_ins, outputs, options, spec)  
 
@@ -409,9 +409,9 @@ def stats_ingroup(path_in, done, path_out, in_done, name):
 
 ##### This is the approach to use. #####
 
-def paralogs_outgroup(name, path_in, done, in_done, path_out):
+def paralogs_outgroup(path_in, done, in_done, path_out):
     """Run HybPiper v. 2.1 - paralog retriever """
-    path_ins = [path_in+name, in_done]
+    path_ins = [path_in, in_done]
     outputs = [done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
@@ -435,7 +435,7 @@ def paralogs_outgroup(name, path_in, done, in_done, path_out):
 
     touch {done}
 
-     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+     """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
     
     return (path_ins, outputs, options, spec)
 
@@ -447,9 +447,9 @@ def paralogs_outgroup(name, path_in, done, in_done, path_out):
 
 ##### This is the approach to use. #####
 
-def paralogs_ingroup(name, path_in, done, in_done, path_out):
+def paralogs_ingroup(path_in, done, in_done, path_out):
     """Run HybPiper v. 2.1 - paralog retriever """
-    path_ins = [path_in+name, in_done]
+    path_ins = [path_in, in_done]
     outputs = [done]
     options = {'cores': 2, 'memory': "10g", 'walltime': "01:30:00", 'account':"cryptocarya"}
 
@@ -473,7 +473,7 @@ def paralogs_ingroup(name, path_in, done, in_done, path_out):
 
     touch {done}
 
-     """.format(name = name, done = done, path_in = path_in, path_out = path_out, in_done = in_done)
+     """.format(done = done, path_in = path_in, path_out = path_out, in_done = in_done)
     
     return (path_ins, outputs, options, spec)
 
@@ -1443,33 +1443,28 @@ sp_Lauraceae = ["Aspi-fungi-686AL1","Aspi-parvi-687AL1","Beil-appen-688AL1","Bei
 #                                                         path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/03_Trimmomatic/slidingwindow/Ingroup/",
 #                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/"+sp_Lauraceae[i]))
 
-sp_PAFTOL = ["Alse-petio-PAFTOL", "Athe-mosch-PAFTOL", "Beil-tsang-PAFTOL", "Cary-tonki-PAFTOL", "Caly-flori-PAFTOL", "Cass-filif-PAFTOL", "Cinn-camph-PAFTOL", "Cryp-alba-PAFTOL", "Deha-haina-PAFTOL", "Endi-macro-PAFTOL", "Gomo-keule-PAFTOL", "Hern-nymph-PAFTOL", "Idio-austr-PAFTOL", "Laur-nobil-PAFTOL", "Mach-salic-PAFTOL", "Magn-grand-PAFTOL", "Mezi-ita-uba-PAFTOL", "Moll-gilgi-PAFTOL", "Moni-rotun-PAFTOL", "Myri-fragr-PAFTOL", "Neoc-cauda-PAFTOL", "Noth-umbel-PAFTOL", "Pers-borbo-PAFTOL", "Peum-boldu-PAFTOL", "Phoe-lance-PAFTOL", "Sipa-guian-PAFTOL", "Spar-botoc-PAFTOL", "Tamb-ficus-PAFTOL"] 
 
 #### Getting stats and heatmap (Outgroup)
 gwf.target_from_template('stats_outgroup', stats_outgroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done",
-                                                name = sp_PAFTOL[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Stats/done"))
 
 #### Getting stats and heatmap (Ingroup)
 gwf.target_from_template('stats_ingroup', stats_ingroup(path_out= "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/Stats_Heatmap/",
                                                 path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done",
-                                                name = sp_Lauraceae[i],
                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Stats/done"))
 
                                                
 #### Paralogs (Outgroup)
-gwf.target_from_template('Paralogs', paralogs_outgroup(name = sp_PAFTOL[i],
-                                                      path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
+gwf.target_from_template('Paralogs', paralogs_outgroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/",
                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/Paralogs/",
                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Outgroup/done/HybPiper/done"))
 
 #### Paralogs (Ingroup)
-gwf.target_from_template('Paralogs', paralogs_ingroup(name = sp_Lauraceae[i],
-                                                      path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
+gwf.target_from_template('Paralogs', paralogs_ingroup(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/",
                                                       path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Paralogs/Ingroup/",
                                                       done = "/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/Paralogs/done",
                                                       in_done="/home/laurakf/cryptocarya/Workflow/Final_tree/06_HybPiper/Ingroup/done/HybPiper/done"))
