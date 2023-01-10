@@ -667,8 +667,7 @@ gwf = Workflow()
 # Cleaning according trimal
 # Get raw alignments and trim them according to a gap threshold.
 
-# Removed 5943_aligned.fasta, 5599_aligned.fasta, 5427_aligned.fasta, 5163_aligned.fasta 
-# Hereafter you need to do some manual work and remove the headlines statistics.
+# Move MAFFT files to Trimal folder before running the script.
 
 # Make sure to adjust path in script 'gap_trimming.sh'
 
