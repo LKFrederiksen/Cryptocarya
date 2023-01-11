@@ -818,97 +818,97 @@ def amas_gt(path_in, cut_off, done, in_done):
 #HERE you can have an annoying error in R: "Error in real_loss[1:(length(real_loss) - 1)] :  only 0's may be mixed with negative subscripts"
 # Download all the summary and cutoff files.
 # Run the R code in your computer
-# Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
+# Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those from folders and summary files.
 # Copy the genes that you delete from raw_alignments to the trimal_output
 
-# Error in file 7572 and 7361. This file has now been deleted from the gt value folders.
+# Alternatively try rerunning trimal, amas raw and amas gt.
 
-# ####################################################################################################################################################
-# ##############################################---- Move optrimal files to new folder ----###########################################################
-# ####################################################################################################################################################
+####################################################################################################################################################
+##############################################---- Move optrimal files to new folder ----###########################################################
+####################################################################################################################################################
 
-# def move(path_in, path_out, in_done, done):
-#     """Moving files from trimal folder to optrimal folder."""
-#     inputs = [in_done]
-#     outputs = [done]
-#     options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
+def move(path_in, path_out, in_done, done):
+    """Moving files from trimal folder to optrimal folder."""
+    inputs = [in_done]
+    outputs = [done]
+    options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     cd {path_in}
+    cd {path_in}
 
-#     mv dldp_* {path_out}optrim_output/
+    mv dldp_* {path_out}optrim_output/
     
-#     mv optimal_final_results {path_out}
+    mv optimal_final_results {path_out}
 
-#     mv overlost.txt {path_out}
+    mv overlost.txt {path_out}
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
+    """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
 
-#     return(inputs, outputs, options, spec)
+    return(inputs, outputs, options, spec)
 
-# ##########################################################################################################################
-# ##############################################---- CIALIGN ----###########################################################
-# ##########################################################################################################################
+##########################################################################################################################
+##############################################---- CIALIGN ----###########################################################
+##########################################################################################################################
 
-# def cialign1(gene, path_in, path_out, done):
-#     """Cleaning alignments using cialign default."""
-#     inputs = [path_in+gene+"_aligned.fasta.old"]
-#     outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
-#     options = {'cores': 4, 'memory': "5g", 'walltime': "00:15:00", 'account':"cryptocarya"}
+def cialign1(gene, path_in, path_out, done):
+    """Cleaning alignments using cialign default."""
+    inputs = [path_in+gene+"_aligned.fasta.old"]
+    outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
+    options = {'cores': 4, 'memory': "5g", 'walltime': "00:15:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
     
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate CIAlign
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate CIAlign
 
-#     cd {path_in}
+    cd {path_in}
 
-#     CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned
+    CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
 
-#     """.format(gene = gene, done = done, path_in = path_in, path_out = path_out)
+    """.format(gene = gene, done = done, path_in = path_in, path_out = path_out)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
     
-# # Here we lost several genes. 5943 etc. (removed before running CIAlign) (see list further down)
+# Here we lost several genes. 5943 etc. (removed before running CIAlign) (see list further down)
 
-# ########################################################################################################################
-# ###############################################---- TAPER ----##########################################################
-# ########################################################################################################################
+########################################################################################################################
+###############################################---- TAPER ----##########################################################
+########################################################################################################################
 
-# def taper(path_in, gene, path_out, done):
-#     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
-#     inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
-#     outputs = [done]
-#     options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+def taper(path_in, gene, path_out, done):
+    """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
+    inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
+    outputs = [done]
+    options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
      
-#     cd {path_in}
+    cd {path_in}
     
-#     # Activate Taper    
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate Taper
+    # Activate Taper    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate Taper
         
-#     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
+    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
     
-#     mv {gene}_output_taper.fasta {path_out}
+    mv {gene}_output_taper.fasta {path_out}
 
-#     echo touching {done}
+    echo touching {done}
 
-#     touch {done}
+    touch {done}
         
-#     """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
+    """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
 
-#     return (inputs, outputs, options, spec)
+    return (inputs, outputs, options, spec)
     
 
 # ########################################################################################################################
@@ -1545,14 +1545,14 @@ for i in range(len(gene)):
 #                                         in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/",
 #                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw"))
 
-cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
+# cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
-#### Generating AMAS statistics for gt_alignments
-for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
-                                                cut_off = cut_off[i],
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+# #### Generating AMAS statistics for gt_alignments
+# for i in range(len(cut_off)):
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                 cut_off = cut_off[i],
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
@@ -1561,11 +1561,11 @@ for i in range(len(cut_off)):
 #                                                          path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/"))
 
 
-# #### Move files from trimal to optrimal folder
-# gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
-#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/optrimal/optrimal",
-#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/move/move", 
-#                                                 path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/"))
+#### Move files from trimal to optrimal folder
+gwf.target_from_template('move', move(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/optrimal/optrimal",
+                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/done/move/move", 
+                                                path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/11_Optrimal/"))
 
 # Removing files that are empty or not present: 5163, 5427, 5599, 5614, 5921, 5943, 6041
 # # Removing genes that were not included in "optimal_final_results", - 7572, 5943, 5163, 5427, 5599
