@@ -918,7 +918,7 @@ def hyb_move(path_in,path_out,done):
     # """This copies HybPiper directories into another directory"""
     inputs = []
     outputs = [done] 
-    options = {'cores': 4, 'memory': "10g", 'walltime': "01:00:00", 'account':"cryptocarya"}
+    options = {'cores': 4, 'memory': "10g", 'walltime': "03:00:00", 'account':"cryptocarya"}
 
     spec="""
 
