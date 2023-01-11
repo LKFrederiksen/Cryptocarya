@@ -821,7 +821,7 @@ def amas_gt(path_in, cut_off, done, in_done):
 # Check the file lost, and see if there is a gene that only has 1.00000 for all gt values, and delete those
 # Copy the genes that you delete from raw_alignments to the trimal_output
 
-# Error in file 7572. This file has now been deleted from the gt value folders.
+# Error in file 7572 and 7361. This file has now been deleted from the gt value folders.
 
 # ####################################################################################################################################################
 # ##############################################---- Move optrimal files to new folder ----###########################################################
@@ -1545,14 +1545,14 @@ for i in range(len(gene)):
 #                                         in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/",
 #                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw"))
 
-cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
+# cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
-#### Generating AMAS statistics for gt_alignments
-for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
-                                                cut_off = cut_off[i],
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+# #### Generating AMAS statistics for gt_alignments
+# for i in range(len(cut_off)):
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                 cut_off = cut_off[i],
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
