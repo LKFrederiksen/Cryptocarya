@@ -1042,49 +1042,49 @@ def iq_tree(path_in, gene,path_out, done):
 # ########################################################################################################################
 
 # # Manually: From within the path_out directory I will change the errors related to the removed n's in species names.
-for f in *.treefile; do (sed -i -e 's/pe-du/pendu/g' $f); done
-for f in *.treefile; do (sed -i -e 's/tsa-g/tsang/g' $f); done
-for f in *.treefile; do (sed -i -e 's/to-ki/tonki/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Ci--/Cinn/g' $f); done
-for f in *.treefile; do (sed -i -e 's/hai-a/haina/g' $f); done
-for f in *.treefile; do (sed -i -e 's/E-di/Endi/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Her-/Hern/g' $f); done
-for f in *.treefile; do (sed -i -e 's/-ymph/nymph/g' $f); done
-for f in *.treefile; do (sed -i -e 's/-obil/nobil/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Mag-/Magn/g' $f); done
-for f in *.treefile; do (sed -i -e 's/gra-d/grand/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Mo-i/Moni/g' $f); done
-for f in *.treefile; do (sed -i -e 's/rotu-/rotun/g' $f); done
-for f in *.treefile; do (sed -i -e 's/la-ce/lance/g' $f); done
-for f in *.treefile; do (sed -i -e 's/guia-/guian/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Sy-d/Synd/g' $f); done
-for f in *.treefile; do (sed -i -e 's/chi-e/chine/g' $f); done
-for f in *.treefile; do (sed -i -e 's/fu-gi/fungi/g' $f); done
-for f in *.treefile; do (sed -i -e 's/appe-/appen/g' $f); done
-for f in *.treefile; do (sed -i -e 's/bre-e/brene/g' $f); done
-for f in *.treefile; do (sed -i -e 's/he-gh/hengh/g' $f); done
-for f in *.treefile; do (sed -i -e 's/li-ha/linha/g' $f); done
-for f in *.treefile; do (sed -i -e 's/li-oc/linoc/g' $f); done
-for f in *.treefile; do (sed -i -e 's/ma--i/manni/g' $f); done
-for f in *.treefile; do (sed -i -e 's/tu-gf/tungf/g' $f); done
-for f in *.treefile; do (sed -i -e 's/uga-d/ugand/g' $f); done
-for f in *.treefile; do (sed -i -e 's/yu--a/yunna/g' $f); done
-for f in *.treefile; do (sed -i -e 's/co-ci/conci/g' $f); done
-for f in *.treefile; do (sed -i -e 's/de-si/densi/g' $f); done
-for f in *.treefile; do (sed -i -e 's/hai-a/haina/g' $f); done
-for f in *.treefile; do (sed -i -e 's/hor-e/horne/g' $f); done
-for f in *.treefile; do (sed -i -e 's/ma-di/mandi/g' $f); done
-for f in *.treefile; do (sed -i -e 's/-ite-/niten/g' $f); done
-for f in *.treefile; do (sed -i -e 's/poly-/polyn/g' $f); done
-for f in *.treefile; do (sed -i -e 's/tra-s/trans/g' $f); done
-for f in *.treefile; do (sed -i -e 's/jo-es/jones/g' $f); done
-for f in *.treefile; do (sed -i -e 's/pube-n/puben/g' $f); done
-for f in *.treefile; do (sed -i -e 's/sa-ke/sanke/g' $f); done
-for f in *.treefile; do (sed -i -e 's/xa-th/xanth/g' $f); done
-for f in *.treefile; do (sed -i -e 's/co-fl/confl/g' $f); done
-for f in *.treefile; do (sed -i -e 's/ho-gk/hongk/g' $f); done
-for f in *.treefile; do (sed -i -e 's/kwa-g/kwang/g' $f); done
-for f in *.treefile; do (sed -i -e 's/Si-o/Sino/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/pe-du/pendu/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/tsa-g/tsang/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/to-ki/tonki/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Ci--/Cinn/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/hai-a/haina/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/E-di/Endi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Her-/Hern/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/-ymph/nymph/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/-obil/nobil/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Mag-/Magn/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/gra-d/grand/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Mo-i/Moni/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/rotu-/rotun/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/la-ce/lance/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/guia-/guian/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Sy-d/Synd/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/chi-e/chine/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/fu-gi/fungi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/appe-/appen/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/bre-e/brene/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/he-gh/hengh/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/li-ha/linha/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/li-oc/linoc/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ma--i/manni/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/tu-gf/tungf/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/uga-d/ugand/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/yu--a/yunna/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/co-ci/conci/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/de-si/densi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/hai-a/haina/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/hor-e/horne/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ma-di/mandi/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/-ite-/niten/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/poly-/polyn/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/tra-s/trans/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/jo-es/jones/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/pube-n/puben/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/sa-ke/sanke/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/xa-th/xanth/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/co-fl/confl/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/ho-gk/hongk/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/kwa-g/kwang/g' $f); done
+# for f in *.treefile; do (sed -i -e 's/Si-o/Sino/g' $f); done
 
 
 # ########################################################################################################################
