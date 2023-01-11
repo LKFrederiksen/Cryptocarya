@@ -1543,14 +1543,14 @@ gwf.target_from_template('amas_raw', amas_raw(path_in = "/home/laurakf/cryptocar
                                         in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/",
                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw"))
 
-cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
+# cut_off = ["0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9"]
 
-#### Generating AMAS statistics for gt_alignments
-for i in range(len(cut_off)):
-    gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
-                                                cut_off = cut_off[i],
-                                                in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
-                                                done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
+# #### Generating AMAS statistics for gt_alignments
+# for i in range(len(cut_off)):
+#     gwf.target_from_template('amas_gt_'+cut_off[i], amas_gt(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/",
+#                                                 cut_off = cut_off[i],
+#                                                 in_done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_raw/raw",
+#                                                 done = "/home/laurakf/cryptocarya/Workflow/Final_tree/10_Trimal/done/AMAS_gt/"+cut_off[i]))
 
 
 # #### Optrimal
