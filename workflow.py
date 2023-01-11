@@ -660,118 +660,118 @@ gwf = Workflow()
 # #It is a good idea to rename the fasta files here.
 
 
-########################################################################################################################
-###############################################---- TRIMAL ----#########################################################
-########################################################################################################################
+# ########################################################################################################################
+# ###############################################---- TRIMAL ----#########################################################
+# ########################################################################################################################
 
-# Cleaning according trimal
-# Get raw alignments and trim them according to a gap threshold.
+# # Cleaning according trimal
+# # Get raw alignments and trim them according to a gap threshold.
 
-# Move MAFFT files to Trimal folder before running the script.
+# # Move MAFFT files to Trimal folder before running the script.
 
-# Make sure to adjust path in script 'gap_trimming.sh'
+# # Make sure to adjust path in script 'gap_trimming.sh'
 
-def gt_trimming(path_in, path_out, done, gene):
-    """, Use trimal for trimming all alignments for each of the GT values specified"""
-    inputs = [path_in+gene+"_aligned.fasta"]
-    outputs = [done]
-    options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
+# def gt_trimming(path_in, path_out, done, gene):
+#     """, Use trimal for trimming all alignments for each of the GT values specified"""
+#     inputs = [path_in+gene+"_aligned.fasta"]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "5g", 'walltime': "0:20:00", 'account':"cryptocarya"}
 
-    spec="""
+#     spec="""
     
-    #Activating Trimal
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Trimal
+#     #Activating Trimal
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Trimal
 
-    # Moved alignments to Trimal folder
-    #Go to alignments folder 
-    cd {path_in}
+#     # Moved alignments to Trimal folder
+#     #Go to alignments folder 
+#     cd {path_in}
 
-    #Running gaptrimming.sh
-    cd {path_out}
-    bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
+#     #Running gaptrimming.sh
+#     cd {path_out}
+#     bash /home/laurakf/cryptocarya/Scripts/gap_trimming.sh -g {gene}_aligned.fasta.old
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, done = done, gene = gene, path_out = path_out)
+#     """.format(path_in = path_in, done = done, gene = gene, path_out = path_out)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
     
     
-#######################################################################################################################
-################################################---- AMAS ----#########################################################
-#######################################################################################################################
-#Make file summary.txt
+# #######################################################################################################################
+# ################################################---- AMAS ----#########################################################
+# #######################################################################################################################
+# #Make file summary.txt
 
-####### Calculating amas summary (raw)
+# ####### Calculating amas summary (raw)
 
-#For raw alignments
-def amas_raw(path_in, done, in_done):
-    """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [in_done+"4471", in_done+"4527", in_done+"4691", in_done+"4724", in_done+"4744", in_done+"4757", in_done+"4793", in_done+"4796", in_done+"4802", in_done+"4806", in_done+"4848", in_done+"4889", in_done+"4890", in_done+"4893", in_done+"4932", in_done+"4942", in_done+"4951", in_done+"4954", in_done+"4989", in_done+"4992", in_done+"5018", in_done+"5032", in_done+"5034", in_done+"5038", in_done+"5064", in_done+"5090", in_done+"5104", in_done+"5116", in_done+"5123", in_done+"5131", in_done+"5138", in_done+"5162", in_done+"5163", in_done+"5168", in_done+"5177", in_done+"5188", in_done+"5200", in_done+"5206", in_done+"5220", in_done+"5257", in_done+"5260", in_done+"5264", in_done+"5271", in_done+"5273", in_done+"5280", in_done+"5296", in_done+"5299", in_done+"5304", in_done+"5318", in_done+"5326", in_done+"5328", in_done+"5333", in_done+"5335", in_done+"5339", in_done+"5343", in_done+"5347", in_done+"5348", in_done+"5354", in_done+"5355", in_done+"5357", in_done+"5366", in_done+"5398", in_done+"5404", in_done+"5406", in_done+"5421", in_done+"5426", in_done+"5427", in_done+"5428", in_done+"5430", in_done+"5434", in_done+"5449", in_done+"5454", in_done+"5460", in_done+"5463", in_done+"5464", in_done+"5469", in_done+"5477", in_done+"5489", in_done+"5502", in_done+"5513", in_done+"5528", in_done+"5531", in_done+"5536", in_done+"5551", in_done+"5554", in_done+"5562", in_done+"5578", in_done+"5594", in_done+"5596", in_done+"5599", in_done+"5614", in_done+"5620", in_done+"5634", in_done+"5639", in_done+"5642", in_done+"5644", in_done+"5656", in_done+"5660", in_done+"5664", in_done+"5670", in_done+"5699", in_done+"5702", in_done+"5703", in_done+"5716", in_done+"5721", in_done+"5733", in_done+"5744", in_done+"5770", in_done+"5772", in_done+"5791", in_done+"5802", in_done+"5815", in_done+"5816", in_done+"5821", in_done+"5822", in_done+"5840", in_done+"5841", in_done+"5842", in_done+"5843", in_done+"5849", in_done+"5853", in_done+"5857", in_done+"5858", in_done+"5859", in_done+"5865", in_done+"5866", in_done+"5870", in_done+"5893", in_done+"5894", in_done+"5899", in_done+"5910", in_done+"5913", in_done+"5918", in_done+"5919", in_done+"5921", in_done+"5922", in_done+"5926", in_done+"5933", in_done+"5936", in_done+"5940", in_done+"5941", in_done+"5942", in_done+"5943", in_done+"5944", in_done+"5945", in_done+"5949", in_done+"5950", in_done+"5958", in_done+"5960", in_done+"5968", in_done+"5974", in_done+"5977", in_done+"5980", in_done+"5981", in_done+"5990", in_done+"6000", in_done+"6003", in_done+"6004", in_done+"6016", in_done+"6026", in_done+"6029", in_done+"6034", in_done+"6036", in_done+"6038", in_done+"6041", in_done+"6048", in_done+"6050", in_done+"6051", in_done+"6056", in_done+"6064", in_done+"6068", in_done+"6072", in_done+"6098", in_done+"6110", in_done+"6114", in_done+"6119", in_done+"6128", in_done+"6130", in_done+"6139", in_done+"6148", in_done+"6150", in_done+"6164", in_done+"6175", in_done+"6176", in_done+"6198", in_done+"6216", in_done+"6221", in_done+"6226", in_done+"6227", in_done+"6238", in_done+"6258", in_done+"6265", in_done+"6270", in_done+"6274", in_done+"6282", in_done+"6284", in_done+"6295", in_done+"6298", in_done+"6299", in_done+"6303", in_done+"6318", in_done+"6320", in_done+"6363", in_done+"6366", in_done+"6373", in_done+"6376", in_done+"6378", in_done+"6379", in_done+"6383", in_done+"6384", in_done+"6387", in_done+"6389", in_done+"6393", in_done+"6398", in_done+"6404", in_done+"6405", in_done+"6406", in_done+"6407", in_done+"6412", in_done+"6420", in_done+"6430", in_done+"6432", in_done+"6439", in_done+"6447", in_done+"6448", in_done+"6449", in_done+"6450", in_done+"6454", in_done+"6457", in_done+"6458", in_done+"6459", in_done+"6460", in_done+"6462", in_done+"6483", in_done+"6487", in_done+"6488", in_done+"6492", in_done+"6494", in_done+"6496", in_done+"6498", in_done+"6500", in_done+"6506", in_done+"6507", in_done+"6526", in_done+"6527", in_done+"6528", in_done+"6532", in_done+"6533", in_done+"6538", in_done+"6540", in_done+"6544", in_done+"6550", in_done+"6552", in_done+"6557", in_done+"6559", in_done+"6563", in_done+"6565", in_done+"6570", in_done+"6572", in_done+"6601", in_done+"6620", in_done+"6631", in_done+"6636", in_done+"6639", in_done+"6641", in_done+"6649", in_done+"6652", in_done+"6660", in_done+"6667", in_done+"6679", in_done+"6685", in_done+"6689", in_done+"6705", in_done+"6713", in_done+"6717", in_done+"6732", in_done+"6733", in_done+"6738", in_done+"6746", in_done+"6779", in_done+"6780", in_done+"6782", in_done+"6785", in_done+"6791", in_done+"6792", in_done+"6797", in_done+"6825", in_done+"6848", in_done+"6854", in_done+"6859", in_done+"6860", in_done+"6864", in_done+"6865", in_done+"6875", in_done+"6882", in_done+"6883", in_done+"6886", in_done+"6893", in_done+"6909", in_done+"6913", in_done+"6914", in_done+"6924", in_done+"6933", in_done+"6946", in_done+"6947", in_done+"6954", in_done+"6955", in_done+"6958", in_done+"6961", in_done+"6962", in_done+"6968", in_done+"6969", in_done+"6977", in_done+"6978", in_done+"6979", in_done+"6992", in_done+"6995", in_done+"7013", in_done+"7021", in_done+"7024", in_done+"7028", in_done+"7029", in_done+"7067", in_done+"7111", in_done+"7128", in_done+"7135", in_done+"7136", in_done+"7141", in_done+"7174", in_done+"7194", in_done+"7241", in_done+"7273", in_done+"7279", in_done+"7296", in_done+"7313", in_done+"7324", in_done+"7325", in_done+"7331", in_done+"7333", in_done+"7336", in_done+"7361", in_done+"7363", in_done+"7367", in_done+"7371", in_done+"7572", in_done+"7577", in_done+"7583", in_done+"7602", in_done+"7628"]
-    outputs = [path_in+"summary_0.txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+# #For raw alignments
+# def amas_raw(path_in, done, in_done):
+#     """Creating summary files for all the trimmed alignments for each raw alignment"""
+#     inputs = [in_done+"4471", in_done+"4527", in_done+"4691", in_done+"4724", in_done+"4744", in_done+"4757", in_done+"4793", in_done+"4796", in_done+"4802", in_done+"4806", in_done+"4848", in_done+"4889", in_done+"4890", in_done+"4893", in_done+"4932", in_done+"4942", in_done+"4951", in_done+"4954", in_done+"4989", in_done+"4992", in_done+"5018", in_done+"5032", in_done+"5034", in_done+"5038", in_done+"5064", in_done+"5090", in_done+"5104", in_done+"5116", in_done+"5123", in_done+"5131", in_done+"5138", in_done+"5162", in_done+"5163", in_done+"5168", in_done+"5177", in_done+"5188", in_done+"5200", in_done+"5206", in_done+"5220", in_done+"5257", in_done+"5260", in_done+"5264", in_done+"5271", in_done+"5273", in_done+"5280", in_done+"5296", in_done+"5299", in_done+"5304", in_done+"5318", in_done+"5326", in_done+"5328", in_done+"5333", in_done+"5335", in_done+"5339", in_done+"5343", in_done+"5347", in_done+"5348", in_done+"5354", in_done+"5355", in_done+"5357", in_done+"5366", in_done+"5398", in_done+"5404", in_done+"5406", in_done+"5421", in_done+"5426", in_done+"5427", in_done+"5428", in_done+"5430", in_done+"5434", in_done+"5449", in_done+"5454", in_done+"5460", in_done+"5463", in_done+"5464", in_done+"5469", in_done+"5477", in_done+"5489", in_done+"5502", in_done+"5513", in_done+"5528", in_done+"5531", in_done+"5536", in_done+"5551", in_done+"5554", in_done+"5562", in_done+"5578", in_done+"5594", in_done+"5596", in_done+"5599", in_done+"5614", in_done+"5620", in_done+"5634", in_done+"5639", in_done+"5642", in_done+"5644", in_done+"5656", in_done+"5660", in_done+"5664", in_done+"5670", in_done+"5699", in_done+"5702", in_done+"5703", in_done+"5716", in_done+"5721", in_done+"5733", in_done+"5744", in_done+"5770", in_done+"5772", in_done+"5791", in_done+"5802", in_done+"5815", in_done+"5816", in_done+"5821", in_done+"5822", in_done+"5840", in_done+"5841", in_done+"5842", in_done+"5843", in_done+"5849", in_done+"5853", in_done+"5857", in_done+"5858", in_done+"5859", in_done+"5865", in_done+"5866", in_done+"5870", in_done+"5893", in_done+"5894", in_done+"5899", in_done+"5910", in_done+"5913", in_done+"5918", in_done+"5919", in_done+"5921", in_done+"5922", in_done+"5926", in_done+"5933", in_done+"5936", in_done+"5940", in_done+"5941", in_done+"5942", in_done+"5943", in_done+"5944", in_done+"5945", in_done+"5949", in_done+"5950", in_done+"5958", in_done+"5960", in_done+"5968", in_done+"5974", in_done+"5977", in_done+"5980", in_done+"5981", in_done+"5990", in_done+"6000", in_done+"6003", in_done+"6004", in_done+"6016", in_done+"6026", in_done+"6029", in_done+"6034", in_done+"6036", in_done+"6038", in_done+"6041", in_done+"6048", in_done+"6050", in_done+"6051", in_done+"6056", in_done+"6064", in_done+"6068", in_done+"6072", in_done+"6098", in_done+"6110", in_done+"6114", in_done+"6119", in_done+"6128", in_done+"6130", in_done+"6139", in_done+"6148", in_done+"6150", in_done+"6164", in_done+"6175", in_done+"6176", in_done+"6198", in_done+"6216", in_done+"6221", in_done+"6226", in_done+"6227", in_done+"6238", in_done+"6258", in_done+"6265", in_done+"6270", in_done+"6274", in_done+"6282", in_done+"6284", in_done+"6295", in_done+"6298", in_done+"6299", in_done+"6303", in_done+"6318", in_done+"6320", in_done+"6363", in_done+"6366", in_done+"6373", in_done+"6376", in_done+"6378", in_done+"6379", in_done+"6383", in_done+"6384", in_done+"6387", in_done+"6389", in_done+"6393", in_done+"6398", in_done+"6404", in_done+"6405", in_done+"6406", in_done+"6407", in_done+"6412", in_done+"6420", in_done+"6430", in_done+"6432", in_done+"6439", in_done+"6447", in_done+"6448", in_done+"6449", in_done+"6450", in_done+"6454", in_done+"6457", in_done+"6458", in_done+"6459", in_done+"6460", in_done+"6462", in_done+"6483", in_done+"6487", in_done+"6488", in_done+"6492", in_done+"6494", in_done+"6496", in_done+"6498", in_done+"6500", in_done+"6506", in_done+"6507", in_done+"6526", in_done+"6527", in_done+"6528", in_done+"6532", in_done+"6533", in_done+"6538", in_done+"6540", in_done+"6544", in_done+"6550", in_done+"6552", in_done+"6557", in_done+"6559", in_done+"6563", in_done+"6565", in_done+"6570", in_done+"6572", in_done+"6601", in_done+"6620", in_done+"6631", in_done+"6636", in_done+"6639", in_done+"6641", in_done+"6649", in_done+"6652", in_done+"6660", in_done+"6667", in_done+"6679", in_done+"6685", in_done+"6689", in_done+"6705", in_done+"6713", in_done+"6717", in_done+"6732", in_done+"6733", in_done+"6738", in_done+"6746", in_done+"6779", in_done+"6780", in_done+"6782", in_done+"6785", in_done+"6791", in_done+"6792", in_done+"6797", in_done+"6825", in_done+"6848", in_done+"6854", in_done+"6859", in_done+"6860", in_done+"6864", in_done+"6865", in_done+"6875", in_done+"6882", in_done+"6883", in_done+"6886", in_done+"6893", in_done+"6909", in_done+"6913", in_done+"6914", in_done+"6924", in_done+"6933", in_done+"6946", in_done+"6947", in_done+"6954", in_done+"6955", in_done+"6958", in_done+"6961", in_done+"6962", in_done+"6968", in_done+"6969", in_done+"6977", in_done+"6978", in_done+"6979", in_done+"6992", in_done+"6995", in_done+"7013", in_done+"7021", in_done+"7024", in_done+"7028", in_done+"7029", in_done+"7067", in_done+"7111", in_done+"7128", in_done+"7135", in_done+"7136", in_done+"7141", in_done+"7174", in_done+"7194", in_done+"7241", in_done+"7273", in_done+"7279", in_done+"7296", in_done+"7313", in_done+"7324", in_done+"7325", in_done+"7331", in_done+"7333", in_done+"7336", in_done+"7361", in_done+"7363", in_done+"7367", in_done+"7371", in_done+"7572", in_done+"7577", in_done+"7583", in_done+"7602", in_done+"7628"]
+#     outputs = [path_in+"summary_0.txt", done]
+#     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
-    spec="""
+#     spec="""
 
-    #Activating AMAS
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Amas
+#     #Activating AMAS
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Amas
     
-    cd {path_in}
+#     cd {path_in}
 
-    #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+#     #Calculating amas summary
+#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
 
-    mv summary.txt summary_0.txt 
+#     mv summary.txt summary_0.txt 
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
     
-    """.format(path_in = path_in, done = done, in_done = in_done)
+#     """.format(path_in = path_in, done = done, in_done = in_done)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
 
-# Removing files that are empty or not present: 5163, 5427, 5599, 5614, 5921, 5943, 6041
+# # Removing files that are empty or not present: 5163, 5427, 5599, 5614, 5921, 5943, 6041
 
 
-######## Calculating amas summary (gt)
-# Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
+# ######## Calculating amas summary (gt)
+# # Make file summary_0.1.txt, summary_0.15.txt, summary_0.2.txt etc. 
 
-#For cutoff (gt) alignments
-def amas_gt(path_in, cut_off, done, in_done):
-    """Creating summary files for all the trimmed alignments for each raw alignment"""
-    inputs = [path_in+cut_off,in_done]
-    outputs = [path_in+"summary_"+cut_off+".txt", done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
+# #For cutoff (gt) alignments
+# def amas_gt(path_in, cut_off, done, in_done):
+#     """Creating summary files for all the trimmed alignments for each raw alignment"""
+#     inputs = [path_in+cut_off,in_done]
+#     outputs = [path_in+"summary_"+cut_off+".txt", done]
+#     options = {'cores': 1, 'memory': "2g", 'walltime': "0:10:00", 'account':"cryptocarya"}
 
-    spec="""
+#     spec="""
 
-    #Activating AMAS
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Amas
+#     #Activating AMAS
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Amas
     
-    cd {path_in}{cut_off} 
+#     cd {path_in}{cut_off} 
 
-    #Calculating amas summary
-    /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
+#     #Calculating amas summary
+#     /home/laurakf/cryptocarya/Scripts/AMAS/amas/AMAS.py summary -f fasta -d dna -i *.fasta.old
    
-    mv summary.txt ../summary_{cut_off}.txt 
+#     mv summary.txt ../summary_{cut_off}.txt 
 
-    touch {done}
+#     touch {done}
 
-    echo {done}
+#     echo {done}
 
-    echo {cut_off}
+#     echo {cut_off}
 
-    echo {path_in}
+#     echo {path_in}
     
-    """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
+#     """.format(path_in = path_in, cut_off = cut_off, done = done, in_done = in_done)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
 
 
 # ########################################################################################################################
@@ -823,92 +823,92 @@ def amas_gt(path_in, cut_off, done, in_done):
 
 # Alternatively try rerunning trimal, amas raw and amas gt.
 
-####################################################################################################################################################
-##############################################---- Move optrimal files to new folder ----###########################################################
-####################################################################################################################################################
+# ####################################################################################################################################################
+# ##############################################---- Move optrimal files to new folder ----###########################################################
+# ####################################################################################################################################################
 
-def move(path_in, path_out, in_done, done):
-    """Moving files from trimal folder to optrimal folder."""
-    inputs = [in_done]
-    outputs = [done]
-    options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
+# def move(path_in, path_out, in_done, done):
+#     """Moving files from trimal folder to optrimal folder."""
+#     inputs = [in_done]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "2g", 'walltime': "00:05:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
 
-    cd {path_in}
+#     cd {path_in}
 
-    mv dldp_* {path_out}optrim_output/
+#     mv dldp_* {path_out}optrim_output/
     
-    mv optimal_final_results {path_out}
+#     mv optimal_final_results {path_out}
 
-    mv overlost.txt {path_out}
+#     mv overlost.txt {path_out}
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
+#     """.format(path_in = path_in, path_out = path_out, done = done, in_done = in_done)
 
-    return(inputs, outputs, options, spec)
+#     return(inputs, outputs, options, spec)
 
-##########################################################################################################################
-##############################################---- CIALIGN ----###########################################################
-##########################################################################################################################
+# ##########################################################################################################################
+# ##############################################---- CIALIGN ----###########################################################
+# ##########################################################################################################################
 
-def cialign1(gene, path_in, path_out, done):
-    """Cleaning alignments using cialign default."""
-    inputs = [path_in+gene+"_aligned.fasta.old"]
-    outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
-    options = {'cores': 4, 'memory': "5g", 'walltime': "00:15:00", 'account':"cryptocarya"}
+# def cialign1(gene, path_in, path_out, done):
+#     """Cleaning alignments using cialign default."""
+#     inputs = [path_in+gene+"_aligned.fasta.old"]
+#     outputs = [path_out+gene+"_cialign_cleaned_cleaned.fasta", done]
+#     options = {'cores': 4, 'memory': "5g", 'walltime': "00:15:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
     
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate CIAlign
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate CIAlign
 
-    cd {path_in}
+#     cd {path_in}
 
-    CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned
+#     CIAlign --infile {gene}_aligned.fasta.old --all --outfile_stem {path_out}{gene}_cialign_cleaned
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
 
-    """.format(gene = gene, done = done, path_in = path_in, path_out = path_out)
+#     """.format(gene = gene, done = done, path_in = path_in, path_out = path_out)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
     
-# Here we lost several genes. 5943 etc. (removed before running CIAlign) (see list further down)
+# # Here we lost several genes. 5943 etc. (removed before running CIAlign) (see list further down)
 
-########################################################################################################################
-###############################################---- TAPER ----##########################################################
-########################################################################################################################
+# ########################################################################################################################
+# ###############################################---- TAPER ----##########################################################
+# ########################################################################################################################
 
-def taper(path_in, gene, path_out, done):
-    """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
-    inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
-    outputs = [done]
-    options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+# def taper(path_in, gene, path_out, done):
+#     """Using TAPER AFTER CIAlign to remove errors in small species-specific stretches of the multiple sequence alignments"""
+#     inputs = [path_in+gene+"_cialign_cleaned_cleaned.fasta"]
+#     outputs = [done]
+#     options = {'cores': 1, 'memory': "5g", 'walltime': "00:30:00", 'account':"cryptocarya"}
 
-    spec = """
+#     spec = """
      
-    cd {path_in}
+#     cd {path_in}
     
-    # Activate Taper    
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate Taper
+#     # Activate Taper    
+#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+#     conda activate Taper
         
-    julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
+#     julia /home/laurakf/cryptocarya/Programs/TAPER-master/correction_multi.jl {gene}_cialign_cleaned_cleaned.fasta > {gene}_output_taper.fasta 
     
-    mv {gene}_output_taper.fasta {path_out}
+#     mv {gene}_output_taper.fasta {path_out}
 
-    echo touching {done}
+#     echo touching {done}
 
-    touch {done}
+#     touch {done}
         
-    """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
+#     """.format(path_in = path_in, gene = gene, path_out = path_out, done = done)
 
-    return (inputs, outputs, options, spec)
+#     return (inputs, outputs, options, spec)
 
 ###################################################################################################################################################
 #############################################---- Move HypPiper outgroup files to ingroup----######################################################
@@ -926,9 +926,6 @@ def hyb_move(path_in,path_out,done):
     cd {path_in}
 
     cp -r *PAFTOL {path_out} # (HybPiper ingroup)
-
-    # Running Exon_mapper
-    python3 /home/laurakf/cryptocarya/Scripts/exon_mapper.py --gene {gene} --outdir {path_out} --file_ending _output_taper.fasta
 
     touch {done}
     """.format(path_in=path_in, done=done, path_out=path_out)
