@@ -1240,33 +1240,31 @@ def iq_tree_modelfinder(path_in, gene_BEAST, path_out, done):
     return (inputs, outputs, options, spec)
 
 
-# #############################################################################################################################
-# #############################################---- Run BEAST ----#############################################################
-# #############################################################################################################################
+#############################################################################################################################
+#############################################---- Run BEAST ----#############################################################
+#############################################################################################################################
 
-# def beast(path_in, gene,path_out, done):
-#     """Using Iq-tree modelfinder to find the best substitution model for each gene without partitioning"""
-#     inputs = [path_in+gene+"_output_taper.fasta"]
-#     outputs = [path_out+gene+"_output_taper.fasta.treefile"]
-#     options = {'cores': 4, 'memory': "4g", 'walltime': "00:30:00", 'account':"cryptocarya"}
+def beast(path_in, path_out, done, BEAUTi_file):
+    """Running BEAST with a chain length of 150.000.000"""
+    inputs = [path_in+BEAUTi_file]
+    outputs = [done]
+    options = {'cores': 4, 'memory': "4g", 'walltime': "48:00:00", 'account':"cryptocarya"}
 
-#     spec = """
+    spec = """
 
-#     # Activate BEAST  
-#     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-#     conda activate BEAST
+    # Activate BEAST  
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate BEAST
 
-#     cd {path_in}
+    cd {path_in}
 
+    /home/laurakf/miniconda3/envs/BEAST/bin/beast {BEAUTi_file}
         
-#     touch {done}
+    touch {done}
 
-#     """.format(path_in = path_in, gene = gene, path_out=path_out, done = done)
+    """.format(path_in = path_in, path_out = path_out, done = done, BEAUTi_file = BEAUTi_file)
 
-#     return (inputs, outputs, options, spec)
-
-
-
+    return (inputs, outputs, options, spec)
 
 
 
@@ -1783,14 +1781,21 @@ def iq_tree_modelfinder(path_in, gene_BEAST, path_out, done):
 #  Molecular clock analysis with BEAST
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-gene_BEAST = ["4992", "5162", "5554", "5594", "5620", "6016", "6139", "6500"]
+# gene_BEAST = ["4992", "5162", "5554", "5594", "5620", "6016", "6139", "6500"]
 
-#Running IQTREE modelfinder for genes chosen for BEAST.                                             
-for i in range(0, len(gene_BEAST)):
-   gwf.target_from_template('Iqtree_modelfinder_'+gene_BEAST[i], iq_tree_modelfinder(gene_BEAST = gene_BEAST[i],
-                                                    path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/19_IQmodelfinder/",
-                                                    done = "/home/laurakf/cryptocarya/Workflow/Final_tree/19_IQmodelfinder/"+gene_BEAST[i],
-                                                    path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/"))  
+# #Running IQTREE modelfinder for genes chosen for BEAST.                                             
+# for i in range(0, len(gene_BEAST)):
+#    gwf.target_from_template('Iqtree_modelfinder_'+gene_BEAST[i], iq_tree_modelfinder(gene_BEAST = gene_BEAST[i],
+#                                                     path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/19_IQmodelfinder/",
+#                                                     done = "/home/laurakf/cryptocarya/Workflow/Final_tree/19_IQmodelfinder/"+gene_BEAST[i],
+#                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/"))  
+
+
+
+gwf.target_from_template('beast', beast(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
+                                            done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/done",
+                                            BEAUTi_file = "test_Lauraceae.xml",                                              
+                                            path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/"))  
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
