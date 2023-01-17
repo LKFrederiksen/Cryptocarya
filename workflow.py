@@ -1773,11 +1773,11 @@ def iq_tree_modelfinder(path_in, gene_BEAST, path_out, done):
 
 
 
-# Running SortaDate on the Astral tree using the gene trees
-gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/",
-                                                        path_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/output/",
-                                                        astral_tree="/home/laurakf/cryptocarya/Workflow/Final_tree/17_Astral/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted2.tre",
-                                                        done = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/done/sorted"))
+# # Running SortaDate on the Astral tree using the gene trees
+# gwf.target_from_template('Sorta_date_partition', sorta_date(path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/",
+#                                                         path_out ="/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/output/",
+#                                                         astral_tree="/home/laurakf/cryptocarya/Workflow/Final_tree/17_Astral/Beilschmiedia-Outgroup_trees_BP10_SpeciesTree_rooted2.tre",
+#                                                         done = "/home/laurakf/cryptocarya/Workflow/Final_tree/18_SortaDate/done/sorted"))
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 #  Molecular clock analysis with BEAST
