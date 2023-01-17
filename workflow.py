@@ -1230,7 +1230,7 @@ def iq_tree_modelfinder(path_in, gene_BEAST, path_out, done):
     cd {path_out}
 
     # IQtree find best model. 
-    iqtree2 -s {gene_BEAST}_output_taper.fasta -t AUTO -ntmax 20 -m MF -AICc
+    iqtree2 -s {gene_BEAST}_output_taper.fasta -m MF -AICc -nt AUTO -ntmax 20 
 
         
     touch {done}
