@@ -1258,7 +1258,7 @@ def beast(path_in, path_out, done, BEAUTi_file):
 
     cd {path_in}
 
-    /home/laurakf/miniconda3/envs/BEAST/bin/beast {BEAUTi_file}
+    beast {BEAUTi_file}
         
     touch {done}
 
