@@ -1252,6 +1252,10 @@ def beast1(path_in, path_out, done, BEAUTi_file):
 
     spec = """
 
+    # Activate BEAST (to get Beagle)    
+    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
+    conda activate BEAST
+
     cd {path_in}
 
     /home/laurakf/cryptocarya/Programs/BEASTv1.10.4/bin/beast {BEAUTi_file}
