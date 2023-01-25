@@ -1248,7 +1248,7 @@ def beast1(path_in, path_out, done, BEAUTi_file):
     """Running BEAST with a chain length of 200.000.000"""
     inputs = [path_in+BEAUTi_file]
     outputs = [done]
-    options = {'cores': 16, 'memory': "8g", 'walltime': "48:00:00", 'account':"cryptocarya"}
+    options = {'cores': 16, 'memory': "8g", 'walltime': "168:00:00", 'account':"cryptocarya"}
 
     spec = """
 
