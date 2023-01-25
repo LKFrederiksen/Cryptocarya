@@ -1244,8 +1244,8 @@ def iq_tree_modelfinder(path_in, gene_BEAST, path_out, done):
 #############################################---- Run BEAST ----#############################################################
 #############################################################################################################################
 
-def beast(path_in, path_out, done, BEAUTi_file):
-    """Running BEAST with a chain length of 150.000.000"""
+def beast1(path_in, path_out, done, BEAUTi_file):
+    """Running BEAST with a chain length of 200.000.000"""
     inputs = [path_in+BEAUTi_file]
     outputs = [done]
     options = {'cores': 4, 'memory': "4g", 'walltime': "48:00:00", 'account':"cryptocarya"}
