@@ -1252,13 +1252,9 @@ def beast(path_in, path_out, done, BEAUTi_file):
 
     spec = """
 
-    # Activate BEAST  
-    source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate BEAST
-
     cd {path_in}
 
-    beast {BEAUTi_file}
+    /home/laurakf/cryptocarya/Programs/BEASTv1.10.4/bin {BEAUTi_file}
         
     touch {done}
 
@@ -1791,12 +1787,26 @@ def beast(path_in, path_out, done, BEAUTi_file):
 #                                                     path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/13_Taper/"))  
 
 
-
-gwf.target_from_template('beast', beast(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
-                                            done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/done",
-                                            BEAUTi_file = "test_Lauraceae.xml",                                              
+gwf.target_from_template('lauraceae_fixedStartingtree_BirthDeath_Gamma_beast1', beast1(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
+                                            done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/beast1",
+                                            BEAUTi_file = "lauraceae_fixedStartingtree_BirthDeath_Gamma_beast1.xml",                                              
                                             path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/"))  
 
+# gwf.target_from_template('lauraceae_NotfixedStartingtree_BirthDeath_Gamma_beast1', beast2(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
+#                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/done",
+#                                             BEAUTi_file = "test_Lauraceae.xml",                                              
+#                                             path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/"))  
+
+
+# gwf.target_from_template('lauraceae_fixedStartingtree_Yule_Gamma_beast1', beast3(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
+#                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/done",
+#                                             BEAUTi_file = "test_Lauraceae.xml",                                              
+#                                             path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/"))  
+
+# gwf.target_from_template('lauraceae_NotfixedStartingtree_Yule_Gamma_beast1', beast4(path_out = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/",
+#                                             done = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/done",
+#                                             BEAUTi_file = "test_Lauraceae.xml",                                              
+#                                             path_in = "/home/laurakf/cryptocarya/Workflow/Final_tree/21_BEAST/"))  
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
