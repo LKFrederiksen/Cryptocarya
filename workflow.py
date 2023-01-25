@@ -1254,7 +1254,7 @@ def beast1(path_in, path_out, done, BEAUTi_file):
 
     cd {path_in}
 
-    /home/laurakf/cryptocarya/Programs/BEASTv1.10.4/bin {BEAUTi_file}
+    /home/laurakf/cryptocarya/Programs/BEASTv1.10.4/bin/beast {BEAUTi_file}
         
     touch {done}
 
