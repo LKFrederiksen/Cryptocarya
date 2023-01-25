@@ -1254,11 +1254,11 @@ def beast1(path_in, path_out, done, BEAUTi_file):
 
     # Activate BEAST (to get Beagle)    
     source /home/laurakf/miniconda3/etc/profile.d/conda.sh
-    conda activate BEAST
+    conda activate BEAST1
 
     cd {path_in}
 
-    /home/laurakf/cryptocarya/Programs/BEASTv1.10.4/bin/beast {BEAUTi_file}
+    beast {BEAUTi_file}
         
     touch {done}
 
