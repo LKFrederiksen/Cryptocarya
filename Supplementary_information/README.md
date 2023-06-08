@@ -30,14 +30,24 @@
 
 **Figure S4**
 
-# Figure S5
+Figure S5
 
-# Figure S6
+Figure S6
 
 ## TABLES
 
-# Table S1
+**``Table_S1.xlsx``**
 
-# Table S2
+**Table S1: Gene tree concordance to 'PAFTOL' outgroup topology**
+Nuclear [Angiosperms353](https://www.ncbi.nlm.nih.gov/pubmed/30535394) (Johnson et al., 2019) genes used to generate the [PAFTOL](https://www.ncbi.nlm.nih.gov/pubmed/33983440) (Baker et al., 2022) outgroup topology. We used [SortaDate](https://www.ncbi.nlm.nih.gov/pubmed/29772020) (Smith et al., 2018) to identify the supercontig genes that were most concordant to the PAFTOL outgroup topology based on exons (Baker et al., 2022). We then tested how many exons we were able to substitute with supercontigs without losing the desired topology used in [Ramirez-Barahona (2020)](https://www.nature.com/articles/s41559-020-1241-3). This was 10%. The genes in the supercontig table are the 10% most concordant genes, whereas the genes in the exon table are the remaining 90 %.
+
+**``Table_S2``**
 
 # Table S3
+
+## TEXT
+
+**``Text_S1.pdf``**
+
+**Text S1: Fossil selection**
+Justification for the eight fossils included as calibration points in our molecular dating with [BEAST]() () based on [Ramirez-Barahona et al. (2020)](https://www.nature.com/articles/s41559-020-1241-3) and [Li et al. (2020)](https://www.ncbi.nlm.nih.gov/pubmed/32619568).
