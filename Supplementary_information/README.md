@@ -1,6 +1,6 @@
 # Supplementary information for the article manuscript ["Long-distance dispersal shaped the pantropical distribution of the geographically structured Cryptocarya group"]() from the MSc thesis of Laura Kragh Frederiksen.
 
-##**DATA**
+##m**DATA**
 
 **``Data_S1.zip``**
 
@@ -12,7 +12,7 @@
 **Data S2: Gene trees**
 342 ML (maximum likelihood) gene trees generated with IQtree in Newick format. Each gene tree corresponds to one gene. The faster headers correspond to each individual in short notation. See attached [text file]() for a conversion of the short notation to the species name.
 
-##**FIGURES**
+## **FIGURES**
 
 **``Figure_S1.pdf``**
 
@@ -34,7 +34,7 @@ Ancestral range estimation for the Cryptocarya group using BioGeoBEARS based on 
 **Figure S4: Dispersal sinks and sources - BioGeoBEARS BSM**
 Number of dispersal events (range expansion and jump dispersal) for each time slice (TS1, TS2, TS3; see Figure 3 in [thesis]()) from the DEC+TS+_j_ model (see [Table 3]()). Counts of events were averaged across the 100 biogeographic stochastic mappings (BSMs) with standard deviations in parentheses. Rows represent source ranges; columns represent dispersal sinks. Darker shades indicate a higher frequency of dispersal events. The sum and percent of events in each row and column are given on the margins. Regions are abbreviated as follows: A = Andean-Argentinian, B = Neotropical, C = Southern Africa, D = African, E = Madagascan, F = Northern Australia, G = Malesian, H = Indian-Indochinese, I = Neozealandic-Patagonian and J = Eurasiatic.
 
-##**TABLES**
+## **TABLES**
 
 **``Table_S1.xlsx``**
 
@@ -56,7 +56,7 @@ Nuclear [Angiosperms353](https://www.ncbi.nlm.nih.gov/pubmed/30535394) (Johnson 
 **Table S4: BioGeoBEARS dispersal sinks and sources**
 Number of dispersal (range expansion, e; jump dispersal, _j_) events for the three time slices (see [Figure 3](); 80 Ma, 40 Ma, 20 Ma and 0 Ma) from the DEC+TS+j model (see [Table 3]()). Counts of events were averaged across the 100 biogeographic stochastic mappings (BSMs) with standard deviations in parentheses. Rows represent source ranges; columns represent dispersal sinks. Darker shades indicate a higher frequency of dispersal events. The sum and percent of events in each row and column are given on the margins. Regions are abbreviated as follows: A = Andean-Argentinian, B = Neotropical, C = Southern Africa, D = African, E = Madagascan, F = Northern Australia, G = Malesian, H = Indian-Indochinese, I = Neozealandic-Patagonian and J = Eurasiatic.
 
-##**TEXT**
+## **TEXT**
 
 **``Text_S1.pdf``**
 
