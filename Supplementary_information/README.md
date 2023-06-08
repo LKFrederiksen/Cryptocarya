@@ -2,23 +2,23 @@
 
 ## DATA
 
-**'Data_S1.zip'**
+**``Data_S1.zip``**
 
 **Data S1: Alignments**
 342 fasta files generated with MAFFT and trimmed with Trimal, Optrimal, CIalign and Taper. Each file represents one gene retrieved from the ['mega353' target file](https://github.com/chrisjackson-pellicle/NewTargets) (McLay et al., 2021). The faster headers correspond to each individual in short notation. See attached [text file]() for a conversion of the short notation to the species name.
 
-**'Data_S2.zip'**
+**``Data_S2.zip``**
 
 **Data S2: Gene trees**
 342 ML (maximum likelihood) gene trees generated with IQtree in Newick format. Each gene tree corresponds to one gene. The faster headers correspond to each individual in short notation. See attached [text file]() for a conversion of the short notation to the species name.
 
 ## FIGURES
 
-**'Figure_S1'**
+**``Figure_S1``**
 
 **Figure S1: ** 
 
-**'Figure_S2'** 
+**``Figure_S2``** 
 
 **Figure S2** 
 
