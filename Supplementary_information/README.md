@@ -29,11 +29,6 @@ Adapted from [Toussaint et al. (2017)](https://onlinelibrary.wiley.com/doi/10.11
 **Figure S3: Biogeograchic ancestral range estimation using BioGeoBEARS including range probability scores**
 Ancestral range estimation for the Cryptocarya group using BioGeoBEARS based on the DEC+TS+_j_ model, with ancestral ranges, and [dispersal rate scalers]() between regions for each time slice (TS1, TS2, TS3). Roman numerals on the nodes represent crown nodes of important colonisation events, discussed in the text and shown in [Table 4](). Pies on the nodes and branches show the probality of each range being the 'true' ancestral range. These ranges can comprise of one to three combined regions, as indicated by single letters or a combination of these (e.g., FG = Northern Australia and Malesia). Regions are abbreviated as follows: A = Andean-Argentinian, B = Neotropical, C = Southern Africa, D = African, E = Madagascan, F = Northern Australia, G = Malesian, H = Indian-Indochinese, I = Neozealandic-Patagonian and J = Eurasiatic (see [Carta et al., 2022](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9298788/). Three modes of range inheritance (range expansion, local extinction, and narrow vicariance) are indicated as symbols on branches in the phylogeny. 
 
-**``Figure_S4.pdf``**
-
-**Figure S4: Dispersal sinks and sources - BioGeoBEARS BSM**
-Number of dispersal events (range expansion and jump dispersal) for each time slice (TS1, TS2, TS3; see Figure 3 in [thesis]()) from the DEC+TS+_j_ model (see [Table 3]()). Counts of events were averaged across the 100 biogeographic stochastic mappings (BSMs) with standard deviations in parentheses. Rows represent source ranges; columns represent dispersal sinks. Darker shades indicate a higher frequency of dispersal events. The sum and percent of events in each row and column are given on the margins. Regions are abbreviated as follows: A = Andean-Argentinian, B = Neotropical, C = Southern Africa, D = African, E = Madagascan, F = Northern Australia, G = Malesian, H = Indian-Indochinese, I = Neozealandic-Patagonian and J = Eurasiatic.
-
 ## **TABLES**
 
 **``Table_S1.xlsx``**
