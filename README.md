@@ -5,14 +5,20 @@ This repository contains all the scripts, including workflows I used to conduct 
 During my thesis I studied the Cryptocarya group (Lauraceae), a pantropical group mainly linked to tropical rainforest (TRF), consisting of probably >3500 species. The focus of my thesis was understanding where the Cryptocarya group most likely originated and when, where and how this group achieved its pantropical distribution.
 The thesis is structured in two parts: 
 - Part A is a general introduction of the subjects treated in this thesis, which does not include any scripts.
-- Part B is the article manuscripy entitled ".æ..."
+- Part B is the article manuscripy entitled ".æ...", where I generated a phylogeny of the Cryptocarya group, dated the phylogeny using nine fossil calibrations and conducted ancestral range estimation.
     - The supplementary information can be found [here]().
-    - See below for a description of the workflows used to conduct the analyses:
+    - See below for a description of the workflows used to conduct the analyses included in the manuscript:
 
-The workflows include:
+## **PART B: Phylogenomics, molecular dating and biogeography of the Cryptocarya group
+
+Workflows are found in the following folders:
      
-     1. Bioinformatics workflow to reproduce generated ASTRAL species tree of the      Cryptocarya group, using the Angiosperms353 probe set (see [Johnson et al., 2018]()).
+- [1_Phylogeny](1_Phylogeny): Workflow to reproduce generated ASTRAL species tree of the Cryptocarya group, using the Angiosperms353 probe set [(Johnson et al., 2018)]().
      
-     2. Workflow to date the species tree using BEAST.
+- [2_Molecular_dating](2_Molecular_dating): Workflow to date the species tree using BEAST [(Drummond , )]().
       
-     3. Biogeographical analyses using BioGeoBEARS to explore dispersal patterns.
+- [3_Biogeography](3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)]().
+
+## **Notice**
+
+Please do not expect all the scipts to run out of the box from your device.
