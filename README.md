@@ -17,7 +17,8 @@ Workflows are found in the following folders:
      
 - [2_Molecular_dating](2_Molecular_dating): Workflow to date the species tree using BEAST [(Drummond , )]().
       
-- [3_Biogeography](3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)]().-
-## FY
+- [3_Biogeography](3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)]().
 
-Please do not expect all the scipts to run out of the box from your dev
+## For your information
+
+Please do not expect all the scipts to run out of the box from your device.
