@@ -9,7 +9,7 @@ The thesis is structured in two parts:
     - The supplementary information can be found [here]().
     - See below for a description of the workflows used to conduct the analyses included in the manuscript:
 
-## **PART B: Phylogenomics, molecular dating and biogeography of the Cryptocarya group
+## **PART B: Phylogenomics, molecular dating and biogeography of the Cryptocarya group**
 
 Workflows are found in the following folders:
      
@@ -17,8 +17,7 @@ Workflows are found in the following folders:
      
 - [2_Molecular_dating](2_Molecular_dating): Workflow to date the species tree using BEAST [(Drummond , )]().
       
-- [3_Biogeography](3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)]().
+- [3_Biogeography](3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)]().-
+## FY
 
-## **Notice**
-
-Please do not expect all the scipts to run out of the box from your device.
+Please do not expect all the scipts to run out of the box from your dev
