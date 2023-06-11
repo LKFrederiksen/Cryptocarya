@@ -15,7 +15,7 @@ Workflows are found in the following folders:
      
 - [1_Phylogeny](https://github.com/LKFrederiksen/Cryptocarya/tree/6f4d16c606cc2b1afc21b40ea2439306688dddc0/1_Phylogeny): Workflow to reproduce generated ASTRAL species tree of the Cryptocarya group, using the Angiosperms353 probe set [(Johnson et al., 2019)](https://www.ncbi.nlm.nih.gov/pubmed/30535394).
      
-- [2_Molecular_dating]([2_Molecular_dating](https://github.com/LKFrederiksen/Cryptocarya/tree/6f4d16c606cc2b1afc21b40ea2439306688dddc0/2_Molecular_dating)): Workflow to date the species tree using BEAST [(Drummond et al., 2018)](https://www.ncbi.nlm.nih.gov/pubmed/29942656).
+- [2_Molecular_dating](https://github.com/LKFrederiksen/Cryptocarya/tree/6f4d16c606cc2b1afc21b40ea2439306688dddc0/2_Molecular_dating)): Workflow to date the species tree using BEAST [(Drummond et al., 2018)](https://www.ncbi.nlm.nih.gov/pubmed/29942656).
       
 - [3_Biogeography](https://github.com/LKFrederiksen/Cryptocarya/tree/6f4d16c606cc2b1afc21b40ea2439306688dddc0/3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)](https://escholarship.org/content/qt44j7n141/qt44j7n141_noSplash_a25fcfcd2e4c86c599d6f7da5ee1d7f8.pdf?t=pga0we).
 
