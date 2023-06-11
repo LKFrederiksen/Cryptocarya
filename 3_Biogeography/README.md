@@ -4,9 +4,9 @@ All biogeographical analyses were undertaken in the programming language [R]() u
 
 ## Ancestral range estimation
 
-We defined phytogeographical regions based on [Carta et al. (2022)] and assigned extant species based on the [World Checklist of Vascular Plants] [(Govaerts et al., 2021)]().
+We defined phytogeographical regions based on [Carta et al. (2022)](https://doi.org/10.1111%2Fnph.17844) and assigned extant species based on the [World Checklist of Vascular Plants] [(Govaerts et al., 2021)](https://www.nature.com/articles/s41597-021-00997-6.pdf).
 
-Three maximum likelihood (ML) models of ancestral range evolution (DEC, DIVALIKE; BAYAREALIKE) were applied in this study, also including the 'jump dispersal' parameter _j_. Additionally, we conducted time-stratified (TS) analyses by splitting the tree into three time slices (TS1: 80-40 Ma, TS2: 40-20 Ma, TS1: 20-0 Ma) to assign different dispersal rate scalers to each time slice. This was done to account for varying dispersal probabilities through time. The dispersal rate scalers were assigned based on the rules set up in [(Touissant et al., 2017)](). In total 12 models were tested and compared using AIC [(Burnham & Anderson, 2002)]() to select the most likely model.
+Three maximum likelihood (ML) models of ancestral range evolution (DEC, DIVALIKE; BAYAREALIKE) were applied in this study, also including the 'jump dispersal' parameter _j_. Additionally, we conducted time-stratified (TS) analyses by splitting the tree into three time slices (TS1: 80-40 Ma, TS2: 40-20 Ma, TS1: 20-0 Ma) to assign different dispersal rate scalers to each time slice. This was done to account for varying dispersal probabilities through time. The dispersal rate scalers were assigned based on the rules set up in [(Touissant et al., 2017)](https://doi.org/10.1111/jbi.12977). In total 12 models were tested and compared using AIC [(Burnham & Anderson, 2002)](https://doi.org/10.1007/b97636) to select the most likely model.
 
 ### `script without TS`
 
