@@ -40,6 +40,6 @@ Thus, `BioGeoBEARS_TS_3genes.R` within this folder runs the following six models
 
 BSM is programmed to do stochastic mapping on any of the abovementioned biogeographical models (and more variables). In this study BSM was used to explore which speciation mechanisms were dominant in the different time slices and the number of dispersal events (range expansion, d, or jump dispersal, _j_) happening within the different time slices and between the defined biogeographical regions.
 
-### [`BSM individual slice script`]
+### [`3_Biogeography/10_GeoAreas_TS_BSM_3genes_individualSlice.zip`](3_Biogeography/10_GeoAreas_TS_BSM_3genes_individualSlice.zip)
 
 The BSM was therefore conducted for individual time slices using the script `BioGeoBEARS_TS_BSM_3genes.R` based on the following [example script](http://phylo.wikidot.com/biogeographical-stochastic-mapping-example-script#BSM_script).
