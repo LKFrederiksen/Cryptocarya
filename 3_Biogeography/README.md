@@ -2,7 +2,9 @@
 
 All biogeographical analyses were undertaken in the programming language [R]() using  [BioGeoBears](https://github.com/nmatzke/BioGeoBEARS) v. [(Matzke et al., 2013)](). Documentation for all the methods used can be found [here](http://phylo.wikidot.com/biogeobears). The outgroup was excluded from these analyses.
 
-For each of the three analyses a folder including all required files and the outputs of the analyses has been uploaded. The scripts run, should be run from within this folder. Remember to change paths in the script within the folder at the location placed on your device. 
+For each of the three analyses a folder including all required files to run the analyses has been uploaded. To run the analyses, the analyses should be run within each of the respective folders. Remember to change paths in the script within the folder to the location of the folder on your device. 
+
+For the 'Ancestral range estimation' the folders also include the output. This is not the case for the BSM analysis, as the output is too space consuming to be uploaded.
 
 ## Ancestral range estimation
 
@@ -12,9 +14,9 @@ Three maximum likelihood (ML) models of ancestral range evolution (DEC, DIVALIKE
 
 ### [`3_Biogeography/10_GeoAreas_3genes.zip`](3_Biogeography/10_GeoAreas_3genes.zip)
 
-The script `` within the folder is based on the [example BioGeoBEARS script](http://phylo.wikidot.com/biogeobears#script) and runs all the analyses without time stratification and dispersal rate scalers.
+The script `BioGeoBEARS_3genes.R` within the folder is based on the [example BioGeoBEARS script](http://phylo.wikidot.com/biogeobears#script) and runs all the analyses without time stratification and dispersal rate scalers.
 
-Thus, `script without TS` within the folder runs the following six models:
+Thus, `BioGeoBEARS_3genes.R` within the folder runs the following six models:
 - DEC
 - DEC + _j_
 - DIVALIKE
@@ -22,11 +24,11 @@ Thus, `script without TS` within the folder runs the following six models:
 - BAYAREALike
 - BAYAREALIKE + _j_`
 
-### [`3_Biogeography/10_GeoAreas_3genes.zip`](3_Biogeography/10_GeoAreas_3genes.zip)
+### [`3_Biogeography/10_GeoAreas_TS_3genes.zip`](3_Biogeography/10_GeoAreas_TS_3genes.zip)
 
-This script is the same as `no_ts`, but is time-stratified and includes dispersal rate scalers.
+This script is the same as `BioGeoBEARS_TS_3genes.R`, but is time-stratified and includes dispersal rate scalers.
 
-Thus, [`script`]() runs the following six models:
+Thus, `BioGeoBEARS_TS_3genes.R` within this folder runs the following six models:
 - DEC + TS
 - DEC + TS + _j_
 - DIVALIKE + TS
@@ -38,6 +40,6 @@ Thus, [`script`]() runs the following six models:
 
 BSM is programmed to do stochastic mapping on any of the abovementioned biogeographical models (and more variables). In this study BSM was used to explore which speciation mechanisms were dominant in the different time slices and the number of dispersal events (range expansion, d, or jump dispersal, _j_) happening within the different time slices and between the defined biogeographical regions.
 
-### `BSM individual slice script`
+### [`BSM individual slice script`]
 
-The BSM was therefore conducted for individual time slices using [this script]() based on the following [example script](http://phylo.wikidot.com/biogeographical-stochastic-mapping-example-script#BSM_script).
+The BSM was therefore conducted for individual time slices using the script `BioGeoBEARS_TS_BSM_3genes.R` based on the following [example script](http://phylo.wikidot.com/biogeographical-stochastic-mapping-example-script#BSM_script).
