@@ -19,9 +19,9 @@ Workflows are found in the following folders:
       
 - [3_Biogeography](https://github.com/LKFrederiksen/Cryptocarya/tree/6f4d16c606cc2b1afc21b40ea2439306688dddc0/3_Biogeography): Workflow to undertake ancestral range estimation and biogeograhical stochastical mapping (BSM) using BioGeoBEARS [(Matzke, 2013)](https://escholarship.org/content/qt44j7n141/qt44j7n141_noSplash_a25fcfcd2e4c86c599d6f7da5ee1d7f8.pdf?t=pga0we).
 
-## General
+## Miscellaneous
 
-The folder [`\General`](https://github.com/LKFrederiksen/Cryptocarya/tree/c75be30004c57bcb3f6e78a846e54deeddb694b0/General) contains various scripts that may be helpful. E.g., for visualisation of phylogenetic trees or to generate world maps at different points in time.
+The folder [`\Miscellaneous`](https://github.com/LKFrederiksen/Cryptocarya/tree/142f6f032675b593ef73c2ea7d9b6512ece5f551/Miscellaneous) contains various scripts that may be helpful. E.g., for visualisation of phylogenetic trees or to generate world maps at different points in time.
 
 ## For your information
 
