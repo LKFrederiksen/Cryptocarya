@@ -1,4 +1,4 @@
-# Supplementary information for the article manuscript "Long-distance dispersal shaped the pantropical distribution of the geographically structured Cryptocarya group" from the [MSc thesis]() of Laura Kragh Frederiksen.
+# Supplementary information for the article manuscript "Long-distance dispersal shaped the pantropical distribution of the geographically structured Cryptocarya group" from the [MSc thesis](https://github.com/LKFrederiksen/Cryptocarya/blob/480b04f6d3140a1120245a1859ef30cdacf913ee/MSc_thesis_LKF_final.pdf) of Laura Kragh Frederiksen.
 
 ## **APPENDIX**
 
