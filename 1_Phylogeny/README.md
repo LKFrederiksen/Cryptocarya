@@ -48,7 +48,7 @@ I used the Mega353 target file: [(https://github.com/chrisjackson-pellicle/NewTa
 
 ## Running the pipeline
 
-### The entire pipeline can be found in the gollowing scripts [](). All paths and settings are available.
+### The entire pipeline can be found in the following scripts [](). All paths and settings are available.
 
 ### Workflow overview
 
