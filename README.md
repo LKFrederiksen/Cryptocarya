@@ -25,4 +25,4 @@ The folder [`\Miscellaneous`](https://github.com/LKFrederiksen/Cryptocarya/tree/
 
 ## For your information
 
-Please do not expect all the scipts to run out of the box from your device.
+Please do not expect all the scripts to run out of the box from your device.
